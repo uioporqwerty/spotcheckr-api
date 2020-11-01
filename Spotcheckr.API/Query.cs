@@ -7,6 +7,6 @@
 
     public class Greetings
     {
-        public string Hello() => "World";
+        public string Hello() => "World!";
     }
 }
