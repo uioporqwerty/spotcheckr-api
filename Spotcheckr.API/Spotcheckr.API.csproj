@@ -24,6 +24,7 @@
     <PackageReference Include="HotChocolate.Types.Filters" Version="10.5.3" />
     <PackageReference Include="HotChocolate.Types.Sorting" Version="10.5.3" />
     <PackageReference Include="HotChocolate.Subscriptions.InMemory" Version="10.5.3" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
   </ItemGroup>
 
 </Project>
