@@ -1,13 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Spotcheckr.API.Data
 {
 	public class PhoneNumber : IEntityTracking
 	{
-		public User User { get; set; }
-
-		public int UserId { get; set; }
+		public int Id { get; set; }
 
 		[MaxLength(15)]
 		public string Number { get; set; }

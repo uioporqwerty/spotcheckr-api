@@ -4,13 +4,9 @@ namespace Spotcheckr.API.Data
 {
 	public class Company
 	{
-		public int CompanyId { get; set; }
+		public int Id { get; set; }
 
 		[MaxLength(255)]
 		public string Name { get; set; }
-
-		public User User { get; set; }
-
-		public int UserId { get; set; }
 	}
 }

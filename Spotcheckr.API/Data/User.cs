@@ -6,7 +6,7 @@ namespace Spotcheckr.API.Data
 {
 	public class User : IEntityTracking
 	{
-		public int UserId { get; set; }
+		public int Id { get; set; }
 
 		[MaxLength(50)]
 		public string FirstName { get; set; }
