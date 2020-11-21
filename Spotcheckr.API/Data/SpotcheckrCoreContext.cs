@@ -6,10 +6,16 @@ namespace Spotcheckr.API.Data
 	{
 		public DbSet<User> Users { get; set; } = default!;
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		public SpotcheckrCoreContext(DbContextOptions<SpotcheckrCoreContext> options) : base(options) { }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			optionsBuilder.UseSqlServer(
-				"Server=tcp:spotcheckr-sql.database.windows.net,1433;Initial Catalog=Core;Persist Security Info=False;User ID=nsachar;Password=qN42ZxxGm!J!%F6L&6vV;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+			modelBuilder.Entity<Email>().ToTable("Emails");
+			modelBuilder.Entity<PhoneNumber>().ToTable("PhoneNumbers");
+			modelBuilder.Entity<Certificate>().ToTable("Certificates");
+			modelBuilder.Entity<Certification>().ToTable("Certifications");
+			modelBuilder.Entity<Company>().ToTable("Companies");
+			modelBuilder.Entity<Organization>().ToTable("Organizations");
 		}
 	}
 }
