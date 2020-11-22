@@ -47,7 +47,7 @@ namespace Spotcheckr.API
 		        .UseVoyager();
 
         private void ConfigureEntityFramework() => _services.AddDbContext<SpotcheckrCoreContext>(options =>
-	        options.UseSqlServer(Configuration.GetConnectionString("SpotcheckrCore")));
+	        options.UseSqlServer(Configuration.GetConnectionString("SpotcheckrCore")).EnableSensitiveDataLogging());
 
         private static void ConfigureApplicationInsights() => _services.AddApplicationInsightsTelemetry();
 

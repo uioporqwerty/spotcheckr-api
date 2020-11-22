@@ -8,31 +8,33 @@ namespace Spotcheckr.API.Data
 	{
 		public int Id { get; set; }
 
+		public UserType Type { get; set; }
+
 		[MaxLength(50)]
 		public string FirstName { get; set; }
 
 		[MaxLength(50)]
-		public string MiddleName { get; set; }
+		public string? MiddleName { get; set; }
 
 		[MaxLength(50)]
 		public string LastName { get; set; }
 
 		[MaxLength(50)]
-		public string Username { get; set; }
+		public string? Username { get; set; }
 
-		public string Website { get; set; }
+		public string? Website { get; set; }
 
-		public string ProfilePictureUrl { get; set; }
+		public string? ProfilePictureUrl { get; set; }
 
-		public DateTime BirthDate { get; set; }
+		public DateTime? BirthDate { get; set; }
 
-		public decimal Height { get; set; }
+		public decimal? Height { get; set; }
 
-		public decimal Weight { get; set; }
+		public decimal? Weight { get; set; }
 
-		public string Occupation { get; set; }
+		public string? Occupation { get; set; }
 
-		public Company Company { get; set; }
+		public Company? Company { get; set; }
 
 		public DateTime DateCreated { get; set; }
 

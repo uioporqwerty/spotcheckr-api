@@ -1,8 +1,11 @@
-﻿namespace Spotcheckr.API.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Spotcheckr.API.Data
 {
 	public class Organization
 	{
-		public int Id { get; set; }
+		[Key]
+		public string Abbreviation { get; set; }
 
 		public string Name { get; set; }
 	}

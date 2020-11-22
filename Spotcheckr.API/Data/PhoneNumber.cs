@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace Spotcheckr.API.Data
 {
@@ -12,7 +11,7 @@ namespace Spotcheckr.API.Data
 		public string Number { get; set; }
 
 		[MaxLength(11)]
-		public string Extension { get; set; }
+		public string? Extension { get; set; }
 
 		public DateTime DateCreated { get; set; }
 
