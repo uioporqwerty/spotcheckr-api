@@ -20,11 +20,20 @@ namespace Spotcheckr.API.Data
 				return;
 			}
 
-			var users = CreateTestUsers(5);
-			_context.Users.AddRange(users);
-			_context.Organizations.AddRange(TestOrganizations);
-			_context.Certificates.AddRange(TestCertificates);
+			_context.AddRange(TestOrganizations);
+			_context.SaveChanges();
 
+			var issuingOrganization = _context.Organizations.First();
+			foreach (var certificate in TestCertificates)
+			{
+				certificate.Issuer = issuingOrganization;
+			}
+
+			_context.AddRange(TestCertificates);
+			_context.SaveChanges();
+
+			var users = CreateTestUsers(5);
+			_context.AddRange(users);
 			_context.SaveChanges();
 		}
 
@@ -104,7 +113,10 @@ namespace Spotcheckr.API.Data
 		private static IEnumerable<Certification> CreateTestCertifications(int count)
 		{
 			var certifications = new Faker<Certification>()
-				.RuleFor(field => field.DateAchieved, fake => fake.Date.Past(15, DateTime.Now));
+				.RuleFor(field => field.DateAchieved, fake => fake.Date.Past(15, DateTime.Now))
+				.RuleFor(field => field.Verified, fake => fake.PickRandom<bool>(true, false))
+				.RuleFor(field => field.Number, fake => fake.PickRandom(fake.Random.AlphaNumeric(8)))
+				.RuleFor(field => field.Certificate, fake =>fake.PickRandom(TestCertificates));
 
 			return certifications.Generate(count);
 		}

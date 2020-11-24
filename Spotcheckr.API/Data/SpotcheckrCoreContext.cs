@@ -23,7 +23,6 @@ namespace Spotcheckr.API.Data
 			modelBuilder.Entity<PhoneNumber>().ToTable("PhoneNumbers");
 			modelBuilder.Entity<Certification>().ToTable("Certifications");
 			modelBuilder.Entity<Company>().ToTable("Companies");
-
 		}
 	}
 }

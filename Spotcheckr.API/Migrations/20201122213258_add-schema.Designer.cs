@@ -10,8 +10,8 @@ using Spotcheckr.API.Data;
 namespace Spotcheckr.API.Migrations
 {
     [DbContext(typeof(SpotcheckrCoreContext))]
-    [Migration("20201116045856_init")]
-    partial class init
+    [Migration("20201122213258_add-schema")]
+    partial class addschema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,31 @@ namespace Spotcheckr.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("Spotcheckr.API.Data.Certificate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IssuerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IssuerId");
+
+                    b.ToTable("Certificates");
+                });
+
             modelBuilder.Entity("Spotcheckr.API.Data.Certification", b =>
                 {
                     b.Property<int>("Id")
@@ -28,17 +53,28 @@ namespace Spotcheckr.API.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<DateTime>("DateAchieved")
+                    b.Property<int?>("CertificateId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateAchieved")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Verified")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CertificateId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Certification");
+                    b.ToTable("Certifications");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.Company", b =>
@@ -55,7 +91,7 @@ namespace Spotcheckr.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.Email", b =>
@@ -83,7 +119,27 @@ namespace Spotcheckr.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Email");
+                    b.ToTable("Emails");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.Organization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Abbreviation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.PhoneNumber", b =>
@@ -100,7 +156,6 @@ namespace Spotcheckr.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Extension")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
@@ -116,7 +171,7 @@ namespace Spotcheckr.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PhoneNumber");
+                    b.ToTable("PhoneNumbers");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.User", b =>
@@ -126,7 +181,7 @@ namespace Spotcheckr.API.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CompanyId")
@@ -143,8 +198,9 @@ namespace Spotcheckr.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("Height")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal?>("Height")
+                        .HasPrecision(2)
+                        .HasColumnType("decimal(2)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -152,29 +208,28 @@ namespace Spotcheckr.API.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Occupation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Website")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal?>("Weight")
+                        .HasPrecision(2)
+                        .HasColumnType("decimal(2)");
 
                     b.HasKey("Id");
 
@@ -183,11 +238,26 @@ namespace Spotcheckr.API.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Spotcheckr.API.Data.Certificate", b =>
+                {
+                    b.HasOne("Spotcheckr.API.Data.Organization", "Issuer")
+                        .WithMany()
+                        .HasForeignKey("IssuerId");
+
+                    b.Navigation("Issuer");
+                });
+
             modelBuilder.Entity("Spotcheckr.API.Data.Certification", b =>
                 {
+                    b.HasOne("Spotcheckr.API.Data.Certificate", "Certificate")
+                        .WithMany()
+                        .HasForeignKey("CertificateId");
+
                     b.HasOne("Spotcheckr.API.Data.User", null)
                         .WithMany("Certifications")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Certificate");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.Email", b =>

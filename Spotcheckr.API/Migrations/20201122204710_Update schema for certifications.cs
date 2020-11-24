@@ -3,12 +3,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Spotcheckr.API.Migrations
 {
-    public partial class init : Migration
+    public partial class Updateschemaforcertifications : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Company",
+                name: "Certificates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -17,7 +31,19 @@ namespace Spotcheckr.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Company", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Organizations",
+                columns: table => new
+                {
+                    Abbreviation = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Organizations", x => x.Abbreviation);
                 });
 
             migrationBuilder.CreateTable(
@@ -26,16 +52,17 @@ namespace Spotcheckr.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Website = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Height = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Weight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Occupation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Height = table.Column<decimal>(type: "decimal(2)", precision: 2, nullable: true),
+                    Weight = table.Column<decimal>(type: "decimal(2)", precision: 2, nullable: true),
+                    Occupation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -44,27 +71,36 @@ namespace Spotcheckr.API.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Company_CompanyId",
+                        name: "FK_Users_Companies_CompanyId",
                         column: x => x.CompanyId,
-                        principalTable: "Company",
+                        principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Certification",
+                name: "Certifications",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateAchieved = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Verified = table.Column<bool>(type: "bit", nullable: false),
+                    DateAchieved = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CertificateId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Certification", x => x.Id);
+                    table.PrimaryKey("PK_Certifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Certification_Users_UserId",
+                        name: "FK_Certifications_Certificates_CertificateId",
+                        column: x => x.CertificateId,
+                        principalTable: "Certificates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Certifications_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -72,7 +108,7 @@ namespace Spotcheckr.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Email",
+                name: "Emails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -84,9 +120,9 @@ namespace Spotcheckr.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Email", x => x.Id);
+                    table.PrimaryKey("PK_Emails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Email_Users_UserId",
+                        name: "FK_Emails_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -94,22 +130,22 @@ namespace Spotcheckr.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PhoneNumber",
+                name: "PhoneNumbers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Extension = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhoneNumber", x => x.Id);
+                    table.PrimaryKey("PK_PhoneNumbers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PhoneNumber_Users_UserId",
+                        name: "FK_PhoneNumbers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -117,18 +153,23 @@ namespace Spotcheckr.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Certification_UserId",
-                table: "Certification",
+                name: "IX_Certifications_CertificateId",
+                table: "Certifications",
+                column: "CertificateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Certifications_UserId",
+                table: "Certifications",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Email_UserId",
-                table: "Email",
+                name: "IX_Emails_UserId",
+                table: "Emails",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhoneNumber_UserId",
-                table: "PhoneNumber",
+                name: "IX_PhoneNumbers_UserId",
+                table: "PhoneNumbers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -140,19 +181,25 @@ namespace Spotcheckr.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Certification");
+                name: "Certifications");
 
             migrationBuilder.DropTable(
-                name: "Email");
+                name: "Emails");
 
             migrationBuilder.DropTable(
-                name: "PhoneNumber");
+                name: "Organizations");
+
+            migrationBuilder.DropTable(
+                name: "PhoneNumbers");
+
+            migrationBuilder.DropTable(
+                name: "Certificates");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Company");
+                name: "Companies");
         }
     }
 }

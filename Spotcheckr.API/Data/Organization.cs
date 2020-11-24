@@ -4,7 +4,8 @@ namespace Spotcheckr.API.Data
 {
 	public class Organization
 	{
-		[Key]
+		public int Id { get; set; }
+
 		public string Abbreviation { get; set; }
 
 		public string Name { get; set; }
