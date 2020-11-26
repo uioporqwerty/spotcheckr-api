@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spotcheckr.API.Data
 {
+	[Table("Emails")]
 	public class Email : IEntityTracking
 	{
 		public int Id { get; set; }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spotcheckr.API.Data
 {
+	[Table("PhoneNumbers")]
 	public class PhoneNumber : IEntityTracking
 	{
 		public int Id { get; set; }

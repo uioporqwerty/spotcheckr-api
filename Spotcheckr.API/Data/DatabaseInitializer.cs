@@ -24,12 +24,11 @@ namespace Spotcheckr.API.Data
 			_context.SaveChanges();
 
 			var issuingOrganization = _context.Organizations.First();
-			foreach (var certificate in TestCertificates)
-			{
-				certificate.Issuer = issuingOrganization;
-			}
 
-			_context.AddRange(TestCertificates);
+			var certificates = TestCertificates.ToList();
+			certificates.ForEach(cert => cert.Organization = issuingOrganization);
+
+			_context.AddRange(certificates);
 			_context.SaveChanges();
 
 			var users = CreateTestUsers(5);
@@ -74,8 +73,8 @@ namespace Spotcheckr.API.Data
 				.RuleFor(field => field.Website, fake => fake.Person.Website)
 				.RuleFor(field => field.ProfilePictureUrl, fake => fake.Internet.Avatar())
 				.RuleFor(field => field.BirthDate, fake => fake.Person.DateOfBirth)
-				.RuleFor(field => field.Height, fake => fake.Random.Decimal(1200, 2700))
-				.RuleFor(field => field.Weight, fake => fake.Random.Decimal(70, 500))
+				.RuleFor(field => field.Height, fake => Math.Round(fake.Random.Decimal(1200, 2700), 2))
+				.RuleFor(field => field.Weight, fake => Math.Round(fake.Random.Decimal(70, 500), 2))
 				.RuleFor(field => field.Occupation, fake => fake.Name.JobTitle())
 				.RuleFor(field => field.DateCreated, fake =>
 				{
@@ -101,7 +100,7 @@ namespace Spotcheckr.API.Data
 						_ => null
 					};
 				});
-				
+
 			return users.Generate(count);
 		}
 
@@ -112,11 +111,19 @@ namespace Spotcheckr.API.Data
 		
 		private static IEnumerable<Certification> CreateTestCertifications(int count)
 		{
+			var refDateCreated = DateTime.Now;
+
 			var certifications = new Faker<Certification>()
+				.RuleFor(field => field.DateCreated, fake =>
+				{
+					refDateCreated = fake.Date.RecentOffset(365).DateTime;
+					return refDateCreated;
+				})
+				.RuleFor(field => field.DateModified, fake => fake.Date.Between(refDateCreated, DateTime.Now))
 				.RuleFor(field => field.DateAchieved, fake => fake.Date.Past(15, DateTime.Now))
-				.RuleFor(field => field.Verified, fake => fake.PickRandom<bool>(true, false))
+				.RuleFor(field => field.Verified, fake => fake.PickRandom(true, false))
 				.RuleFor(field => field.Number, fake => fake.PickRandom(fake.Random.AlphaNumeric(8)))
-				.RuleFor(field => field.Certificate, fake =>fake.PickRandom(TestCertificates));
+				.RuleFor(field => field.Certificate, fake =>fake.PickRandom(_context.Certificates.ToList()));
 
 			return certifications.Generate(count);
 		}
@@ -142,7 +149,7 @@ namespace Spotcheckr.API.Data
 			var refDateCreated = DateTime.Now;
 
 			var phoneNumbers = new Faker<PhoneNumber>()
-				.RuleFor(field => field.Number, fake => fake.Phone.PhoneNumber())
+				.RuleFor(field => field.Number, fake => fake.Phone.PhoneNumber("###-###-####"))
 				.RuleFor(field => field.DateCreated, fake =>
 				{
 					refDateCreated = fake.Date.RecentOffset(365).DateTime;

@@ -1,17 +1,27 @@
 ﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spotcheckr.API.Data
 {
-	public class Certification
+	[Table("Certifications")]
+	public class Certification : IEntityTracking
 	{
 		public int Id { get; set; }
 
-		public string? Number { get; set; }
+		public string Number { get; set; }
 
-		public bool Verified { get; set; } = false;
+		[DefaultValue(false)]
+		public bool Verified { get; set; }
 
-		public DateTime? DateAchieved { get; set; }
+		public DateTime DateAchieved { get; set; }
+
+		public int CertificateId { get; set; }
 
 		public Certificate Certificate { get; set; }
+
+		public DateTime DateCreated { get; set; }
+
+		public DateTime DateModified { get; set; }
 	}
 }

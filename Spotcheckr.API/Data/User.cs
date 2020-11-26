@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spotcheckr.API.Data
 {
@@ -28,8 +29,10 @@ namespace Spotcheckr.API.Data
 
 		public DateTime? BirthDate { get; set; }
 
+		[Column(TypeName = "decimal(6, 2)")]
 		public decimal? Height { get; set; }
 
+		[Column(TypeName = "decimal(5, 2)")]
 		public decimal? Weight { get; set; }
 
 		public string? Occupation { get; set; }

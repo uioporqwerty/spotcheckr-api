@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Spotcheckr.API.Data
+﻿namespace Spotcheckr.API.Data
 {
 	public class Organization
 	{

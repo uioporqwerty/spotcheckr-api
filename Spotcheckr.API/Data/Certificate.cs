@@ -8,6 +8,8 @@
 
 		public string Description { get; set; }
 
-		public Organization Issuer { get; set; }
+		public int OrganizationId { get; set; }
+
+		public Organization Organization { get; set; }
 	}
 }

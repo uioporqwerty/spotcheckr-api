@@ -16,13 +16,7 @@ namespace Spotcheckr.API.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<User>()
-				.Property(prop => prop.Height).HasColumnType("decimal").HasPrecision(2);
-			modelBuilder.Entity<User>()
-				.Property(prop => prop.Weight).HasColumnType("decimal").HasPrecision(2);
-			modelBuilder.Entity<Email>().ToTable("Emails");
-			modelBuilder.Entity<PhoneNumber>().ToTable("PhoneNumbers");
-			modelBuilder.Entity<Certification>().ToTable("Certifications");
-			modelBuilder.Entity<Company>().ToTable("Companies");
+				.Property(prop => prop.Type).HasConversion<int>();
 		}
 	}
 }
