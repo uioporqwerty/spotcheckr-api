@@ -15,7 +15,7 @@ namespace Spotcheckr.API
     {
 	    private static IServiceCollection _services = default!;
 
-	    private static bool _sensitiveDataLoggingEnabled = false;
+	    private static bool _sensitiveDataLoggingEnabled;
 
 		public IConfiguration Configuration { get;  }
 
