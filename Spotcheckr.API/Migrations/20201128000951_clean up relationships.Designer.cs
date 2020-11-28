@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spotcheckr.API.Data;
 
 namespace Spotcheckr.API.Migrations
 {
     [DbContext(typeof(SpotcheckrCoreContext))]
-    partial class SpotcheckrCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201128000951_clean up relationships")]
+    partial class cleanuprelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

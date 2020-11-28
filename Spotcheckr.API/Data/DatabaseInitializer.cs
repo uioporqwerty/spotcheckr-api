@@ -7,7 +7,7 @@ namespace Spotcheckr.API.Data
 {
 	public static class DatabaseInitializer
 	{
-		private static SpotcheckrCoreContext _context;
+		private static SpotcheckrCoreContext _context = default!;
 		
 		public static void Initialize(SpotcheckrCoreContext context)
 		{
@@ -34,6 +34,72 @@ namespace Spotcheckr.API.Data
 			var users = CreateTestUsers(5);
 			_context.AddRange(users);
 			_context.SaveChanges();
+
+			var exercisePosts = CreateTestExercisePosts(20);
+			_context.AddRange(exercisePosts);
+			_context.SaveChanges();
+
+			var exercisePostComments = CreateTestExercisePostComments(3);
+			_context.AddRange(exercisePostComments);
+			_context.SaveChanges();
+
+			var exercisePostMedia = CreateTestMedia(true,5);
+			var commentMedia = CreateTestMedia(false, 5);
+			_context.AddRange(exercisePostMedia, commentMedia);
+			_context.SaveChanges();
+		}
+
+		private static IEnumerable<Media> CreateTestMedia(bool isExercisePost, int count)
+		{
+			var media = new Faker<Media>()
+				.RuleFor(field => field.URL, fake => fake.Image.LoremFlickrUrl())
+				.RuleFor(field => field.Type, fake => MediaType.Picture);
+
+			if (isExercisePost)
+			{
+				media.RuleFor(field => field.ExercisePost, fake => fake.PickRandom(_context.ExercisePosts.ToList()));
+			}
+			else
+			{
+				media.RuleFor(field => field.Comment, fake => fake.PickRandom(_context.Comments.ToList()));
+			}
+
+			return media.Generate(count);
+		}
+
+		private static IEnumerable<Comment> CreateTestExercisePostComments(int count)
+		{
+			var refDateCreated = DateTime.Now;
+
+			var comments = new Faker<Comment>()
+				.RuleFor(field => field.Text, fake => fake.Lorem.Paragraphs(fake.PickRandom(1, 2, 3)))
+				.RuleFor(field => field.DateCreated, fake =>
+				{
+					refDateCreated = fake.Date.RecentOffset(365).DateTime;
+					return refDateCreated;
+				})
+				.RuleFor(field => field.DateModified, fake => fake.Date.Between(refDateCreated, DateTime.Now))
+				.RuleFor(field => field.ExercisePost, fake => fake.PickRandom(_context.ExercisePosts.ToList()));
+
+			return comments.Generate(count);
+		}
+
+		private static IEnumerable<ExercisePost> CreateTestExercisePosts(int count)
+		{
+			var refDateCreated = DateTime.Now;
+
+			var exercisePosts = new Faker<ExercisePost>()
+				.RuleFor(field => field.Title, fake => fake.Lorem.Lines(1))
+				.RuleFor(field => field.Description, fake => fake.Lorem.Paragraphs(fake.PickRandom(1, 2, 3, 4)))
+				.RuleFor(field => field.DateCreated, fake =>
+				{
+					refDateCreated = fake.Date.RecentOffset(365).DateTime;
+					return refDateCreated;
+				})
+				.RuleFor(field => field.DateModified, fake => fake.Date.Between(refDateCreated, DateTime.Now))
+				.RuleFor(field => field.CreatedBy, fake => fake.PickRandom(_context.Users.ToList()));
+
+			return exercisePosts.Generate(count);
 		}
 
 		private static bool DatabaseHasData => _context.Users.Any();

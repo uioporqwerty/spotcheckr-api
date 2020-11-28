@@ -14,11 +14,17 @@ namespace Spotcheckr.API.Data
 		[DefaultValue(false)]
 		public bool Verified { get; set; }
 
+		public DateTime? DateVerified { get; set; }
+
 		public DateTime DateAchieved { get; set; }
 
 		public int CertificateId { get; set; }
 
 		public Certificate Certificate { get; set; }
+
+		public int UserId { get; set; }
+
+		public User User { get; set; }
 
 		public DateTime DateCreated { get; set; }
 

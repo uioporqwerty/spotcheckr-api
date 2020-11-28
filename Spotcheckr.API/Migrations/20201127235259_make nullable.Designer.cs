@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spotcheckr.API.Data;
 
 namespace Spotcheckr.API.Migrations
 {
     [DbContext(typeof(SpotcheckrCoreContext))]
-    partial class SpotcheckrCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201127235259_make nullable")]
+    partial class makenullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +72,7 @@ namespace Spotcheckr.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Verified")
@@ -148,7 +150,7 @@ namespace Spotcheckr.API.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -269,7 +271,7 @@ namespace Spotcheckr.API.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -396,15 +398,11 @@ namespace Spotcheckr.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Spotcheckr.API.Data.User", "User")
+                    b.HasOne("Spotcheckr.API.Data.User", null)
                         .WithMany("Certifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Certificate");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.Comment", b =>
@@ -420,13 +418,9 @@ namespace Spotcheckr.API.Migrations
 
             modelBuilder.Entity("Spotcheckr.API.Data.Email", b =>
                 {
-                    b.HasOne("Spotcheckr.API.Data.User", "User")
+                    b.HasOne("Spotcheckr.API.Data.User", null)
                         .WithMany("Emails")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.ExercisePost", b =>
@@ -459,13 +453,9 @@ namespace Spotcheckr.API.Migrations
 
             modelBuilder.Entity("Spotcheckr.API.Data.PhoneNumber", b =>
                 {
-                    b.HasOne("Spotcheckr.API.Data.User", "User")
+                    b.HasOne("Spotcheckr.API.Data.User", null)
                         .WithMany("PhoneNumbers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.PostMetrics", b =>

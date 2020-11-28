@@ -110,6 +110,29 @@ namespace Spotcheckr.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExercisePosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExercisePosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExercisePosts_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PhoneNumbers",
                 columns: table => new
                 {
@@ -140,6 +163,7 @@ namespace Spotcheckr.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Verified = table.Column<bool>(type: "bit", nullable: false),
+                    DateVerified = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateAchieved = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CertificateId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -163,6 +187,94 @@ namespace Spotcheckr.API.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
+                    ExercisePostId = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_ExercisePosts_ExercisePostId",
+                        column: x => x.ExercisePostId,
+                        principalTable: "ExercisePosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Media",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExercisePostId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Media", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Media_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Media_ExercisePosts_ExercisePostId",
+                        column: x => x.ExercisePostId,
+                        principalTable: "ExercisePosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostMetrics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ExercisePostId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false),
+                    Vote = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostMetrics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostMetrics_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PostMetrics_ExercisePosts_ExercisePostId",
+                        column: x => x.ExercisePostId,
+                        principalTable: "ExercisePosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PostMetrics_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Certificates_OrganizationId",
                 table: "Certificates",
@@ -179,13 +291,48 @@ namespace Spotcheckr.API.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_ExercisePostId",
+                table: "Comments",
+                column: "ExercisePostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Emails_UserId",
                 table: "Emails",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExercisePosts_CreatedById",
+                table: "ExercisePosts",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Media_CommentId",
+                table: "Media",
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Media_ExercisePostId",
+                table: "Media",
+                column: "ExercisePostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PhoneNumbers_UserId",
                 table: "PhoneNumbers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostMetrics_CommentId",
+                table: "PostMetrics",
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostMetrics_ExercisePostId",
+                table: "PostMetrics",
+                column: "ExercisePostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostMetrics_UserId",
+                table: "PostMetrics",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -203,16 +350,28 @@ namespace Spotcheckr.API.Migrations
                 name: "Emails");
 
             migrationBuilder.DropTable(
+                name: "Media");
+
+            migrationBuilder.DropTable(
                 name: "PhoneNumbers");
+
+            migrationBuilder.DropTable(
+                name: "PostMetrics");
 
             migrationBuilder.DropTable(
                 name: "Certificates");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Organizations");
+
+            migrationBuilder.DropTable(
+                name: "ExercisePosts");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Companies");

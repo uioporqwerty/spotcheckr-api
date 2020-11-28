@@ -10,7 +10,7 @@ using Spotcheckr.API.Data;
 namespace Spotcheckr.API.Migrations
 {
     [DbContext(typeof(SpotcheckrCoreContext))]
-    [Migration("20201126195626_init")]
+    [Migration("20201127234924_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,9 @@ namespace Spotcheckr.API.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DateVerified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,6 +85,34 @@ namespace Spotcheckr.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Certifications");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExercisePostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExercisePostId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.Company", b =>
@@ -127,6 +158,75 @@ namespace Spotcheckr.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Emails");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.ExercisePost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ExercisePosts");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.Media", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExercisePostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("ExercisePostId");
+
+                    b.ToTable("Media");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.Organization", b =>
@@ -179,6 +279,42 @@ namespace Spotcheckr.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PhoneNumbers");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.PostMetrics", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExercisePostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Vote")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("ExercisePostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostMetrics");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.User", b =>
@@ -269,11 +405,50 @@ namespace Spotcheckr.API.Migrations
                     b.Navigation("Certificate");
                 });
 
+            modelBuilder.Entity("Spotcheckr.API.Data.Comment", b =>
+                {
+                    b.HasOne("Spotcheckr.API.Data.ExercisePost", "ExercisePost")
+                        .WithMany()
+                        .HasForeignKey("ExercisePostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExercisePost");
+                });
+
             modelBuilder.Entity("Spotcheckr.API.Data.Email", b =>
                 {
                     b.HasOne("Spotcheckr.API.Data.User", null)
                         .WithMany("Emails")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.ExercisePost", b =>
+                {
+                    b.HasOne("Spotcheckr.API.Data.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.Media", b =>
+                {
+                    b.HasOne("Spotcheckr.API.Data.Comment", "Comment")
+                        .WithMany("Media")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spotcheckr.API.Data.ExercisePost", "ExercisePost")
+                        .WithMany("Media")
+                        .HasForeignKey("ExercisePostId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("ExercisePost");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.PhoneNumber", b =>
@@ -283,6 +458,31 @@ namespace Spotcheckr.API.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("Spotcheckr.API.Data.PostMetrics", b =>
+                {
+                    b.HasOne("Spotcheckr.API.Data.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spotcheckr.API.Data.ExercisePost", "ExercisePost")
+                        .WithMany()
+                        .HasForeignKey("ExercisePostId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spotcheckr.API.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("ExercisePost");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Spotcheckr.API.Data.User", b =>
                 {
                     b.HasOne("Spotcheckr.API.Data.Company", "Company")
@@ -290,6 +490,16 @@ namespace Spotcheckr.API.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.Comment", b =>
+                {
+                    b.Navigation("Media");
+                });
+
+            modelBuilder.Entity("Spotcheckr.API.Data.ExercisePost", b =>
+                {
+                    b.Navigation("Media");
                 });
 
             modelBuilder.Entity("Spotcheckr.API.Data.User", b =>
