@@ -2,7 +2,7 @@
 
 namespace Spotcheckr.API.Data
 {
-	public class SpotcheckrCoreContext : DbContext
+	public sealed class SpotcheckrCoreContext : DbContext
 	{
 		public DbSet<User> Users { get; set; } = default!;
 
@@ -14,7 +14,10 @@ namespace Spotcheckr.API.Data
 
 		public DbSet<Certificate> Certificates { get; set; } = default!;
 
-		public SpotcheckrCoreContext(DbContextOptions<SpotcheckrCoreContext> options) : base(options) { }
+		public SpotcheckrCoreContext(DbContextOptions<SpotcheckrCoreContext> options) : base(options)
+		{
+			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
