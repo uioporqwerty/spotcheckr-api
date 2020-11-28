@@ -6,19 +6,24 @@ using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Voyager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Spotcheckr.API.Data;
 
 namespace Spotcheckr.API
 {
     public class Startup
     {
-	    private static IServiceCollection _services;
+	    private static IServiceCollection _services = default!;
+
+	    private static bool _sensitiveDataLoggingEnabled = false;
 
 		public IConfiguration Configuration { get;  }
 
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+			_sensitiveDataLoggingEnabled =
+				bool.Parse(Configuration.GetSection("EntityFramework")["SensitiveDataLoggingEnabled"]);
 		}
 
         public void ConfigureServices(IServiceCollection services)
@@ -46,8 +51,10 @@ namespace Spotcheckr.API
 		        .UsePlayground()
 		        .UseVoyager();
 
-        private void ConfigureEntityFramework() => _services.AddDbContext<SpotcheckrCoreContext>(options =>
-	        options.UseSqlServer(Configuration.GetConnectionString("SpotcheckrCore")).EnableSensitiveDataLogging());
+        private void ConfigureEntityFramework() =>
+	        _services.AddDbContext<SpotcheckrCoreContext>(options =>
+		        options.UseSqlServer(Configuration.GetConnectionString("SpotcheckrCore"))
+												  .EnableSensitiveDataLogging(_sensitiveDataLoggingEnabled));
 
         private static void ConfigureApplicationInsights() => _services.AddApplicationInsightsTelemetry();
 
