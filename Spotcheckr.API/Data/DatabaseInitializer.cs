@@ -39,13 +39,14 @@ namespace Spotcheckr.API.Data
 			_context.AddRange(exercisePosts);
 			_context.SaveChanges();
 
-			var exercisePostComments = CreateTestExercisePostComments(3);
+			var exercisePostComments = CreateTestExercisePostComments(20);
 			_context.AddRange(exercisePostComments);
 			_context.SaveChanges();
 
 			var exercisePostMedia = CreateTestMedia(true,5);
 			var commentMedia = CreateTestMedia(false, 5);
-			_context.AddRange(exercisePostMedia, commentMedia);
+			_context.AddRange(exercisePostMedia);
+			_context.AddRange(commentMedia);
 			_context.SaveChanges();
 		}
 
