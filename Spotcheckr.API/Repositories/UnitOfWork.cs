@@ -8,6 +8,7 @@ namespace Spotcheckr.API.Repositories
 		private readonly SpotcheckrCoreContext _context;
 
 		public IUserRepository UserRepository { get; }
+
 		public IExercisePostRepository ExercisePostRepository { get; }
 
 		public UnitOfWork(SpotcheckrCoreContext context)
