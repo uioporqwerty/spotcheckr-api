@@ -4,7 +4,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Spotcheckr.API.Data;
+using Spotcheckr.Data;
 
 namespace Spotcheckr.API
 {

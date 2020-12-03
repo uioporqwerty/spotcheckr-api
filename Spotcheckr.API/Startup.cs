@@ -6,8 +6,7 @@ using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Voyager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Spotcheckr.API.Data;
+using Spotcheckr.Data;
 
 namespace Spotcheckr.API
 {
