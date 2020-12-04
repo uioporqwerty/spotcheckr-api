@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spotcheckr.Domain
 {
@@ -11,16 +9,12 @@ namespace Spotcheckr.Domain
 
 		public UserType Type { get; set; }
 
-		[MaxLength(50)]
 		public string FirstName { get; set; }
 
-		[MaxLength(50)]
 		public string? MiddleName { get; set; }
 
-		[MaxLength(50)]
 		public string LastName { get; set; }
 
-		[MaxLength(50)]
 		public string? Username { get; set; }
 
 		public string? Website { get; set; }
@@ -29,10 +23,8 @@ namespace Spotcheckr.Domain
 
 		public DateTime? BirthDate { get; set; }
 
-		[Column(TypeName = "decimal(6, 2)")]
 		public decimal? Height { get; set; }
 
-		[Column(TypeName = "decimal(5, 2)")]
 		public decimal? Weight { get; set; }
 
 		public string? Occupation { get; set; }

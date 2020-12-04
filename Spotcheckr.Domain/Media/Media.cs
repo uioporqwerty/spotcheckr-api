@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Spotcheckr.Domain
 {
@@ -15,7 +14,6 @@ namespace Spotcheckr.Domain
 
 		public Comment Comment { get; set; }
 
-		[MaxLength(2000)]
 		public string URL { get; set; }
 
 		public MediaType Type { get; set; }

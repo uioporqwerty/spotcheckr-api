@@ -22,29 +22,69 @@ namespace Spotcheckr.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Company>()
+				.ToTable("Companies")
+				.Property(prop => prop.Name).HasMaxLength(255);
+
 			modelBuilder.Entity<User>()
 				.Property(prop => prop.Type).HasConversion<int>();
 
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.FirstName).HasMaxLength(50);
+
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.LastName).HasMaxLength(50);
+
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.MiddleName).HasMaxLength(50);
+
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.Username).HasMaxLength(50);
+
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.Website).HasMaxLength(2000);
+
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.Height).HasColumnType("decimal(6, 2)");
+
+			modelBuilder.Entity<User>()
+				.Property(prop => prop.Weight).HasColumnType("decimal(5, 2)");
+
 			modelBuilder.Entity<Certification>()
+				.ToTable("Certifications")
 				.HasOne(prop => prop.User)
 				.WithMany(prop => prop.Certifications)
 				.HasForeignKey(prop => prop.UserId)
 				.IsRequired()
 				.OnDelete(DeleteBehavior.Restrict);
 
+			modelBuilder.Entity<Certification>()
+				.Property(prop => prop.Verified).HasDefaultValue(false);
+
 			modelBuilder.Entity<Email>()
+				.ToTable("Emails")
 				.HasOne(prop => prop.User)
 				.WithMany(prop => prop.Emails)
 				.HasForeignKey(prop => prop.UserId)
 				.IsRequired()
 				.OnDelete(DeleteBehavior.Restrict);
 
+			modelBuilder.Entity<Email>()
+				.Property(prop => prop.Address).HasMaxLength(254);
+
 			modelBuilder.Entity<PhoneNumber>()
+				.ToTable("PhoneNumbers")
 				.HasOne(prop => prop.User)
 				.WithMany(prop => prop.PhoneNumbers)
 				.HasForeignKey(prop => prop.UserId)
 				.IsRequired()
 				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<PhoneNumber>()
+				.Property(prop => prop.Number).HasMaxLength(15);
+
+			modelBuilder.Entity<PhoneNumber>()
+				.Property(prop => prop.Extension).HasMaxLength(11);
 
 			modelBuilder.Entity<PostMetrics>()
 				.Property(prop => prop.Vote).HasConversion<int>();
@@ -79,6 +119,20 @@ namespace Spotcheckr.Data
 				.HasForeignKey(prop => prop.CommentId)
 				.IsRequired(false)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<Media>()
+				.Property(prop => prop.URL).HasMaxLength(2000);
+
+			modelBuilder.Entity<Comment>()
+				.ToTable("Comments")
+				.Property(prop => prop.Text).HasMaxLength(10000);
+
+			modelBuilder.Entity<ExercisePost>()
+				.ToTable("ExercisePosts")
+				.Property(prop => prop.Title).HasMaxLength(1000);
+
+			modelBuilder.Entity<ExercisePost>()
+				.Property(prop => prop.Description).HasMaxLength(10000);
 		}
 	}
 }
