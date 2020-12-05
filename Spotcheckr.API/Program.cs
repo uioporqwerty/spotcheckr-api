@@ -16,7 +16,7 @@ namespace Spotcheckr.API
 
 			CreateDatabase(host);
 
-		    return host.StartAsync();
+		    return host.RunAsync();
 	    } 
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

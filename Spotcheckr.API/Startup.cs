@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Voyager;
 using Microsoft.EntityFrameworkCore;
@@ -28,27 +27,17 @@ namespace Spotcheckr.API
         public void ConfigureServices(IServiceCollection services)
         {
 	        _services = services;
-            // If you need dependency injection with your query object add your query type as a services.
-            // services.AddSingleton<Query>();
-
-            // enable InMemory messaging services for subscription support.
-            // services.AddInMemorySubscriptions();
-
-            // this enables you to use DataLoader in your resolvers.
-            services.AddDataLoaderRegistry();
-
+            
             ConfigureEntityFramework();
 			ConfigureApplicationInsights();
             ConfigureGraphQL();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
-	        app
-		        .UseRouting()
-		        .UseWebSockets()
-		        .UseGraphQL()
-		        .UsePlayground()
-		        .UseVoyager();
+				app.UseRouting()
+					.UseEndpoints(endpoints => endpoints.MapGraphQL())
+					.UsePlayground()
+					.UseVoyager();
 
         private void ConfigureEntityFramework() =>
 	        _services.AddDbContext<SpotcheckrCoreContext>(options =>
@@ -57,6 +46,6 @@ namespace Spotcheckr.API
 
         private static void ConfigureApplicationInsights() => _services.AddApplicationInsightsTelemetry();
 
-		private static void ConfigureGraphQL() => _services.AddGraphQL(SchemaBuilder.New().AddQueryType<Query>());
+		private static void ConfigureGraphQL() => _services.AddGraphQLServer().AddQueryType<Query>();
 	}
 }
