@@ -1,10 +1,12 @@
-﻿using Spotcheckr.API.Users;
-using Spotcheckr.Domain.Identifiers;
+﻿using System.Threading.Tasks;
+using Spotcheckr.API.Types.Users;
 
 namespace Spotcheckr.API.Services.User
 {
 	public interface IUserService
 	{
-		PersonalTrainer GetPersonalTrainer(UserID id);
+		Task<Athlete> GetAthlete(int id);
+
+		Task<PersonalTrainer> GetPersonalTrainer(int id);
 	}
 }

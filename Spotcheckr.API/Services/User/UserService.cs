@@ -1,26 +1,50 @@
-﻿using Spotcheckr.API.Users;
+﻿using System.Threading.Tasks;
+using Spotcheckr.API.Types.Identity;
+using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
-using Spotcheckr.Domain.Identifiers;
 
 namespace Spotcheckr.API.Services.User
 {
 	public class UserService : IUserService
 	{
-		public SpotcheckrCoreContext _context;
+		public SpotcheckrCoreContext Context;
 
 		public UserService(SpotcheckrCoreContext context)
 		{
-			_context = context;
+			Context = context;
 		}
 
-		public PersonalTrainer GetPersonalTrainer(UserID id)
+		public Task<Athlete> GetAthlete(int id)
 		{
-			using (var unitOfWork = new UnitOfWork(_context))
+			using var unitOfWork = new UnitOfWork(Context);
+			var user = unitOfWork.Users.Get(id);
+
+			return Task.FromResult(new Athlete
 			{
-				var user = unitOfWork.Users.Get(id.Value);
-				return new PersonalTrainer(user.Id, user.Username);
-			}
+				ID = id,
+				Username = user.Username,
+				IdentityInformation = new IdentityInformation
+				{
+					FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate
+				}
+			});
+		}
+
+		public Task<PersonalTrainer> GetPersonalTrainer(int id)
+		{
+			using var unitOfWork = new UnitOfWork(Context);
+			var user = unitOfWork.Users.Get(id);
+
+			return Task.FromResult(new PersonalTrainer
+			{
+				ID = id,
+				Username = user.Username,
+				IdentityInformation = new IdentityInformation
+				{
+					FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate
+				}
+			});
 		}
 	}
 }

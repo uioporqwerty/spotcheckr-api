@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Spotcheckr.API.Queries;
 using Spotcheckr.API.Services.User;
-using Spotcheckr.API.Users;
+using Spotcheckr.API.Types;
+using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 
 namespace Spotcheckr.API
@@ -53,8 +54,10 @@ namespace Spotcheckr.API
 
 		private static void ConfigureGraphQL() =>
 			_services.AddGraphQLServer()
-				.AddQueryType(d => d.Name("Query"))
+					 .EnableRelaySupport()
+					 .AddQueryType(d => d.Name("Query"))
 					 .AddType<UserQueries>()
-					 .AddType<PersonalTrainer>();
+					 .AddType<PersonalTrainerType>()
+					 .AddType<AthleteType>();
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Spotcheckr.Domain;
+﻿using System.Collections.Generic;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.Data.Repositories
 {
