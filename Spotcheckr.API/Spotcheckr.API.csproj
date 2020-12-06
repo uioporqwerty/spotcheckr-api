@@ -30,7 +30,6 @@
     <Folder Include="Extensions\" />
     <Folder Include="Attributes\" />
     <Folder Include="Subscriptions\" />
-    <Folder Include="Queries\" />
     <Folder Include="Resolvers\" />
     <Folder Include="Types\" />
   </ItemGroup>

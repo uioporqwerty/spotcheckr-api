@@ -5,6 +5,9 @@ using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Voyager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Spotcheckr.API.Queries;
+using Spotcheckr.API.Services.User;
+using Spotcheckr.API.Users;
 using Spotcheckr.Data;
 
 namespace Spotcheckr.API
@@ -27,7 +30,9 @@ namespace Spotcheckr.API
         public void ConfigureServices(IServiceCollection services)
         {
 	        _services = services;
-            
+
+	        _services.AddTransient<IUserService, UserService>();
+
             ConfigureEntityFramework();
 			ConfigureApplicationInsights();
             ConfigureGraphQL();
@@ -46,6 +51,10 @@ namespace Spotcheckr.API
 
         private static void ConfigureApplicationInsights() => _services.AddApplicationInsightsTelemetry();
 
-		private static void ConfigureGraphQL() => _services.AddGraphQLServer().AddQueryType<Query>();
+		private static void ConfigureGraphQL() =>
+			_services.AddGraphQLServer()
+				.AddQueryType(d => d.Name("Query"))
+					 .AddType<UserQueries>()
+					 .AddType<PersonalTrainer>();
 	}
 }

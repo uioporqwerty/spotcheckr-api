@@ -4,9 +4,9 @@ namespace Spotcheckr.Data.Repositories
 {
 	public interface IUnitOfWork : IDisposable
 	{
-		IUserRepository UserRepository { get; }
+		IUserRepository Users { get; }
 
-		IExercisePostRepository ExercisePostRepository { get; }
+		IExercisePostRepository ExercisePosts { get; }
 
 		int Complete();
 	}

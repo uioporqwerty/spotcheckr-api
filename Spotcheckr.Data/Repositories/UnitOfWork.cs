@@ -4,16 +4,16 @@
 	{
 		private readonly SpotcheckrCoreContext _context;
 
-		public IUserRepository UserRepository { get; }
+		public IUserRepository Users { get; }
 
-		public IExercisePostRepository ExercisePostRepository { get; }
+		public IExercisePostRepository ExercisePosts { get; }
 
 		public UnitOfWork(SpotcheckrCoreContext context)
 		{
 			_context = context;
 
-			UserRepository = new UserRepository(_context);
-			ExercisePostRepository = new ExercisePostRepository(_context);
+			Users = new UserRepository(_context);
+			ExercisePosts = new ExercisePostRepository(_context);
 		}
 
 		public void Dispose() => _context.Dispose();
