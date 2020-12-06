@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Spotcheckr.Data.Repositories
@@ -17,7 +18,11 @@ namespace Spotcheckr.Data.Repositories
 
 		public TEntity Get(int id) => _context.Set<TEntity>().Find(id);
 
+		public async Task<TEntity> GetAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
+
 		public IEnumerable<TEntity> GetAll() => _context.Set<TEntity>().ToList();
+
+		public async Task<IEnumerable<TEntity>> GetAllAsync() => await _context.Set<TEntity>().ToListAsync();
 
 		public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate) => _context.Set<TEntity>().Where(predicate);
 
