@@ -5,8 +5,8 @@ namespace Spotcheckr.API.Services.User
 {
 	public interface IUserService
 	{
-		Task<Athlete> GetAthlete(int id);
+		Task<Athlete> GetAthleteAsync(int id);
 
-		Task<PersonalTrainer> GetPersonalTrainer(int id);
+		Task<PersonalTrainer> GetPersonalTrainerAsync(int id);
 	}
 }

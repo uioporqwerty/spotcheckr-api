@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Spotcheckr.Domain;
 
-namespace Spotcheckr.API.Types.Contact
+namespace Spotcheckr.Domain
 {
 	public class ContactInformation
 	{

@@ -1,8 +1,6 @@
 ﻿using System;
 using HotChocolate;
-using Spotcheckr.API.Types.Contact;
-using Spotcheckr.API.Types.Identity;
-using Spotcheckr.API.Types.Relay;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.Types.Users
 {
@@ -19,6 +17,6 @@ namespace Spotcheckr.API.Types.Users
 		public IdentityInformation IdentityInformation { get; set; }
 
 		[GraphQLDescription("Contact details for the user.")]
-		public ContactInformation ContactInformation { get; set; }
+		public ContactInformation? ContactInformation { get; set; }
 	}
 }

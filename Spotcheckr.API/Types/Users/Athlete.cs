@@ -1,7 +1,6 @@
 ﻿using System;
 using HotChocolate.Types.Relay;
-using Spotcheckr.API.Types.Contact;
-using Spotcheckr.API.Types.Identity;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.Types.Users
 {
@@ -15,6 +14,6 @@ namespace Spotcheckr.API.Types.Users
 
 		public IdentityInformation IdentityInformation { get; set; }
 
-		public ContactInformation ContactInformation { get; set; }
+		public ContactInformation? ContactInformation { get; set; }
 	}
 }

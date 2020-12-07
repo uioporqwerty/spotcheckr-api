@@ -13,7 +13,7 @@ namespace Spotcheckr.API.Types.Users
 				.ResolveNode((resolver, id) =>
 				{
 					var userService = resolver.Service<IUserService>();
-					return Task.FromResult(userService.GetAthlete(id).Result);
+					return Task.FromResult(userService.GetAthleteAsync(id).Result);
 				});
 		}
 	}

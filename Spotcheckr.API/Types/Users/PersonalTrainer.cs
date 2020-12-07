@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using HotChocolate;
-using Spotcheckr.API.Types.Contact;
 using Spotcheckr.API.Types.Identity;
 using Spotcheckr.API.Types.Relay;
 using Spotcheckr.Domain;
@@ -19,7 +18,7 @@ namespace Spotcheckr.API.Types.Users
 
 		public IdentityInformation IdentityInformation { get; set; }
 
-		public ContactInformation ContactInformation { get; set; }
+		public ContactInformation? ContactInformation { get; set; }
 
 		[GraphQLDescription("Business or personal website for the personal trainer.")]
 		public Uri? Website { get; set; }

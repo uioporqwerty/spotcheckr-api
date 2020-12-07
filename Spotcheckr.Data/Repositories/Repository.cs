@@ -9,29 +9,29 @@ namespace Spotcheckr.Data.Repositories
 {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
-		private readonly DbContext _context;
+		protected readonly DbContext Context;
 
 		public Repository(DbContext context)
 		{
-			_context = context;
+			Context = context;
 		}
 
-		public TEntity Get(int id) => _context.Set<TEntity>().Find(id);
+		public TEntity Get(int id) => Context.Set<TEntity>().Find(id);
 
-		public async Task<TEntity> GetAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
+		public async Task<TEntity> GetAsync(int id) => await Context.Set<TEntity>().FindAsync(id);
 
-		public IEnumerable<TEntity> GetAll() => _context.Set<TEntity>().ToList();
+		public IEnumerable<TEntity> GetAll() => Context.Set<TEntity>().ToList();
 
-		public async Task<IEnumerable<TEntity>> GetAllAsync() => await _context.Set<TEntity>().ToListAsync();
+		public async Task<IEnumerable<TEntity>> GetAllAsync() => await Context.Set<TEntity>().ToListAsync();
 
-		public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate) => _context.Set<TEntity>().Where(predicate);
+		public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate) => Context.Set<TEntity>().Where(predicate);
 
-		public void Add(TEntity entity) => _context.Set<TEntity>().Add(entity);
+		public void Add(TEntity entity) => Context.Set<TEntity>().Add(entity);
 
-		public void AddRange(IEnumerable<TEntity> entities) => _context.Set<TEntity>().AddRange(entities);
+		public void AddRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().AddRange(entities);
 
-		public void Remove(TEntity entity) => _context.Set<TEntity>().Remove(entity);
+		public void Remove(TEntity entity) => Context.Set<TEntity>().Remove(entity);
 
-		public void RemoveRange(IEnumerable<TEntity> entities) => _context.Set<TEntity>().RemoveRange(entities);
+		public void RemoveRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().RemoveRange(entities);
 	}
 }

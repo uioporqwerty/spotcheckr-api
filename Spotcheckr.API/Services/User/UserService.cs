@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
-using Spotcheckr.API.Types.Identity;
+﻿using System;
+using System.Threading.Tasks;
 using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.Services.User
 {
@@ -15,36 +16,50 @@ namespace Spotcheckr.API.Services.User
 			Context = context;
 		}
 
-		public Task<Athlete> GetAthlete(int id)
+		public async Task<Athlete> GetAthleteAsync(int id)
 		{
 			using var unitOfWork = new UnitOfWork(Context);
-			var user = unitOfWork.Users.Get(id);
+			var user = await unitOfWork.Users.GetAsync(id);
+			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
 
-			return Task.FromResult(new Athlete
+			if (user.Type != UserType.Athlete)
+			{
+				throw new Exception($"User is not an athlete. Requested user is a {user.Type.ToString()}.");
+			}
+
+			return new Athlete
 			{
 				ID = id,
 				Username = user.Username,
 				IdentityInformation = new IdentityInformation
 				{
 					FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate
-				}
-			});
+				},
+				ContactInformation = userContactInformation
+			};
 		}
 
-		public Task<PersonalTrainer> GetPersonalTrainer(int id)
+		public async Task<PersonalTrainer> GetPersonalTrainerAsync(int id)
 		{
 			using var unitOfWork = new UnitOfWork(Context);
-			var user = unitOfWork.Users.Get(id);
+			var user = await unitOfWork.Users.GetAsync(id);
+			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
 
-			return Task.FromResult(new PersonalTrainer
+			if (user.Type != UserType.PersonalTrainer)
+			{
+				throw new Exception($"User is not a personal trainer. Requested user is a {user.Type.ToString()}.");
+			}
+
+			return new PersonalTrainer
 			{
 				ID = id,
 				Username = user.Username,
 				IdentityInformation = new IdentityInformation
 				{
 					FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate
-				}
-			});
+				},
+				ContactInformation = userContactInformation
+			};
 		}
 	}
 }
