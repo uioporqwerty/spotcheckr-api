@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;

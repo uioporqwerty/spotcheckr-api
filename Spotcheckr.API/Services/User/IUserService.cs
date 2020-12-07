@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Spotcheckr.API.Types.Users;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.Services.User
 {

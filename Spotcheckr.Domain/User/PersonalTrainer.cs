@@ -1,10 +1,9 @@
 ﻿using System;
-using HotChocolate.Types.Relay;
-using Spotcheckr.Domain;
+using System.Collections.Generic;
 
-namespace Spotcheckr.API.Types.Users
+namespace Spotcheckr.Domain
 {
-	public class Athlete : IUser, INode
+	public class PersonalTrainer : IUser
 	{
 		public int ID { get; set; }
 
@@ -15,5 +14,9 @@ namespace Spotcheckr.API.Types.Users
 		public IdentityInformation IdentityInformation { get; set; }
 
 		public ContactInformation? ContactInformation { get; set; }
+
+		public Uri? Website { get; set; }
+
+		public IEnumerable<Certification>? Certifications { get; set; }
 	}
 }
