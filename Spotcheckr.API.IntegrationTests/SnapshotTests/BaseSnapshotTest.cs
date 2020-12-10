@@ -15,25 +15,23 @@ namespace Spotcheckr.API.IntegrationTests.SnapshotTests
 	{
 		protected async Task<IRequestExecutor> GetRequestExecutor()
 		{
-			var executor = await new ServiceCollection()
-				.AddPooledDbContextFactory<SpotcheckrCoreContext>(
-					options => options.UseInMemoryDatabase("Spotcheckr-Core")
-						.EnableSensitiveDataLogging(true))
-				.AddTransient<IUserService, UserService>()
-				.AddGraphQLServer()
-				.AddQueryType(d => d.Name("Query"))
-				.AddType<UserQueries>()
-				.AddType<PersonalTrainerType>()
-				.AddType<AthleteType>()
-				.AddType<ContactInformationType>()
-				.AddType<IdentityInformationType>()
-				.EnableRelaySupport()
-				.BuildRequestExecutorAsync();
+			var serviceCollection = new ServiceCollection();
+			serviceCollection.AddTransient<IUserService, UserService>();
+			serviceCollection.AddDbContext<SpotcheckrCoreContext>(options =>
+				options.UseInMemoryDatabase("Spotcheckr-Core").EnableSensitiveDataLogging());
 
-			using var scope = executor.Services.CreateScope();
-			var services = scope.ServiceProvider;
+			var executor = await serviceCollection.AddGraphQLServer()
+					 .AddQueryType(d => d.Name("Query"))
+					 .AddType<UserQueries>()
+					 .AddType<PersonalTrainerType>()
+					 .AddType<AthleteType>()
+					 .AddType<ContactInformationType>()
+					 .AddType<IdentityInformationType>()
+					 .EnableRelaySupport()
+					 .BuildRequestExecutorAsync();
 
-			DatabaseInitializer.Initialize(services.GetRequiredService<SpotcheckrCoreContext>());
+			var serviceProvider = serviceCollection.BuildServiceProvider();
+			DatabaseInitializer.Initialize(serviceProvider.GetRequiredService<SpotcheckrCoreContext>());
 
 			return executor;
 		}

@@ -11,16 +11,17 @@ using Spotcheckr.API.Types.Contact;
 using Spotcheckr.API.Types.Identity;
 using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.API
 {
-    public class Startup
-    {
-	    private static IServiceCollection _services = default!;
+	public class Startup
+	{
+		private static IServiceCollection _services = default!;
 
-	    private static bool _sensitiveDataLoggingEnabled;
+		private static bool _sensitiveDataLoggingEnabled;
 
-		public IConfiguration Configuration { get;  }
+		public IConfiguration Configuration { get; }
 
 		public Startup(IConfiguration configuration)
 		{
@@ -29,29 +30,29 @@ namespace Spotcheckr.API
 				bool.Parse(Configuration.GetSection("EntityFramework")["SensitiveDataLoggingEnabled"]);
 		}
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-	        _services = services;
+		public void ConfigureServices(IServiceCollection services)
+		{
+			_services = services;
 
-	        _services.AddTransient<IUserService, UserService>();
+			_services.AddTransient<IUserService, UserService>();
 
-            ConfigureEntityFramework();
+			ConfigureEntityFramework();
 			ConfigureApplicationInsights();
-            ConfigureGraphQL();
-        }
+			ConfigureGraphQL();
+		}
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
 				app.UseRouting()
 					.UseEndpoints(endpoints => endpoints.MapGraphQL())
 					.UsePlayground()
 					.UseVoyager();
 
-        private void ConfigureEntityFramework() =>
-	        _services.AddDbContext<SpotcheckrCoreContext>(options =>
-		        options.UseSqlServer(Configuration.GetConnectionString("SpotcheckrCore"))
+		private void ConfigureEntityFramework() =>
+			_services.AddDbContext<SpotcheckrCoreContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("SpotcheckrCore"))
 												  .EnableSensitiveDataLogging(_sensitiveDataLoggingEnabled));
 
-        private static void ConfigureApplicationInsights() => _services.AddApplicationInsightsTelemetry();
+		private static void ConfigureApplicationInsights() => _services.AddApplicationInsightsTelemetry();
 
 		private static void ConfigureGraphQL() =>
 			_services.AddGraphQLServer()

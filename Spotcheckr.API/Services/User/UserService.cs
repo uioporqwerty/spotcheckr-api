@@ -23,16 +23,18 @@ namespace Spotcheckr.API.Services.User
 
 			if (user?.Type != UserType.Athlete)
 			{
-				throw new Exception($"User is not an athlete. Requested user is a {user.Type.ToString()}.");
+				throw new Exception($"User is not an athlete. Requested user is a {user?.Type}.");
 			}
 
 			return new Athlete
 			{
-				ID = id,
+				Id = id,
 				Username = user.Username,
 				IdentityInformation = new IdentityInformation
 				{
-					FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate
+					FirstName = user.FirstName,
+					LastName = user.LastName,
+					BirthDate = user.BirthDate
 				},
 				ContactInformation = userContactInformation
 			};
@@ -51,14 +53,53 @@ namespace Spotcheckr.API.Services.User
 
 			return new PersonalTrainer
 			{
-				ID = id,
+				Id = id,
 				Username = user.Username,
 				IdentityInformation = new IdentityInformation
 				{
-					FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate
+					FirstName = user.FirstName,
+					LastName = user.LastName,
+					BirthDate = user.BirthDate
 				},
 				ContactInformation = userContactInformation
 			};
+		}
+
+		public async Task<IUser> GetUser(int id)
+		{
+			using var unitOfWork = new UnitOfWork(Context);
+			var user = await unitOfWork.Users.GetAsync(id);
+			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
+
+			return (user?.Type) switch
+			{
+				UserType.PersonalTrainer => new PersonalTrainer
+				{
+					Id = id,
+					Username = user.Username,
+					IdentityInformation = new IdentityInformation
+					{
+						FirstName = user.FirstName,
+						LastName = user.LastName,
+						BirthDate = user.BirthDate
+					},
+					ContactInformation = userContactInformation
+				},
+				UserType.Athlete => new Athlete
+				{
+					Id = id,
+					Username = user.Username,
+					IdentityInformation = new IdentityInformation
+					{
+						FirstName = user.FirstName,
+						LastName = user.LastName,
+						BirthDate = user.BirthDate
+					},
+					ContactInformation = userContactInformation
+				},
+				_ => throw new Exception("Invalid user type."),
+			};
+			throw new Exception("User not found.");
 		}
 	}
 }

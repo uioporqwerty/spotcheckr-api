@@ -5,7 +5,7 @@ namespace Spotcheckr.Domain
 {
 	public class PersonalTrainer : IUser
 	{
-		public int ID { get; set; }
+		public int Id { get; set; }
 
 		public string? Username { get; set; }
 

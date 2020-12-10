@@ -15,10 +15,7 @@ namespace Spotcheckr.Data
 
 		public DbSet<Certificate> Certificates { get; set; } = default!;
 
-		public SpotcheckrCoreContext(DbContextOptions<SpotcheckrCoreContext> options) : base(options)
-		{
-			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-		}
+		public SpotcheckrCoreContext(DbContextOptions<SpotcheckrCoreContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

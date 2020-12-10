@@ -8,5 +8,7 @@ namespace Spotcheckr.API.Services.User
 		Task<Athlete> GetAthleteAsync(int id);
 
 		Task<PersonalTrainer> GetPersonalTrainerAsync(int id);
+
+		Task<IUser> GetUser(int id);
 	}
 }

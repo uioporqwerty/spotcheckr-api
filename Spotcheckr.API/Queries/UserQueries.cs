@@ -10,10 +10,6 @@ namespace Spotcheckr.API.Queries
 	[ExtendObjectType(Name = "Query")]
 	public class UserQueries
 	{
-		public async Task<Athlete> GetAthleteAsync(int id, [Service] IUserService userService) =>
-			await userService.GetAthleteAsync(id);
-
-		public async Task<PersonalTrainer> GetPersonalTrainerAsync([ID(nameof(PersonalTrainer))]int id,
-			[Service] IUserService userService) => await userService.GetPersonalTrainerAsync(id);
+		public async Task<IUser> GetUserAsync(/*[ID(nameof(IUser))]*/ int id, [Service] IUserService userService) => await userService.GetUser(id);
 	}
 }

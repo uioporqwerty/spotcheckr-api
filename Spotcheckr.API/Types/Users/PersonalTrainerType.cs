@@ -10,7 +10,7 @@ namespace Spotcheckr.API.Types.Users
 		protected override void Configure(IObjectTypeDescriptor<PersonalTrainer> descriptor)
 		{
 			descriptor.Description("Personal trainer type of user with details specific to a personal trainer.");
-			descriptor.Field(field => field.ID).Description("Unique identifier for the user.");
+			descriptor.Field(field => field.Id).Description("Unique identifier for the user.");
 			descriptor.Field(field => field.Username).Description("Username for the user.");
 			descriptor.Field(field => field.ProfilePicture)
 				.Description("URL for the profile picture uploaded by the user.");
@@ -22,7 +22,7 @@ namespace Spotcheckr.API.Types.Users
 			descriptor.Field(field => field.Certifications)
 				.Description("Certifications achieved by the personal trainer.");
 			descriptor.ImplementsNode()
-					  .IdField(prop => prop.ID)
+					  .IdField(prop => prop.Id)
 					  .ResolveNode((resolver, id) =>
 					  {
 						  var userService = resolver.Service<IUserService>();
