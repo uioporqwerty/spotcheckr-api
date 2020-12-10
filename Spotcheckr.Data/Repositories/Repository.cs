@@ -16,9 +16,9 @@ namespace Spotcheckr.Data.Repositories
 			Context = context;
 		}
 
-		public TEntity Get(int id) => Context.Set<TEntity>().Find(id);
+		public TEntity? Get(int id) => Context.Set<TEntity>().Find(id);
 
-		public async Task<TEntity> GetAsync(int id) => await Context.Set<TEntity>().FindAsync(id);
+		public async Task<TEntity?> GetAsync(int id) => await Context.Set<TEntity>().FindAsync(id);
 
 		public IEnumerable<TEntity> GetAll() => Context.Set<TEntity>().ToList();
 

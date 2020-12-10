@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Spotcheckr.API.Queries;
 using Spotcheckr.API.Services.User;
-using Spotcheckr.API.Types;
 using Spotcheckr.API.Types.Contact;
 using Spotcheckr.API.Types.Identity;
 using Spotcheckr.API.Types.Users;

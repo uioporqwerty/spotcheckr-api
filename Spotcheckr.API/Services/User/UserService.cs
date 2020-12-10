@@ -21,7 +21,7 @@ namespace Spotcheckr.API.Services.User
 			var user = await unitOfWork.Users.GetAsync(id);
 			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
 
-			if (user.Type != UserType.Athlete)
+			if (user?.Type != UserType.Athlete)
 			{
 				throw new Exception($"User is not an athlete. Requested user is a {user.Type.ToString()}.");
 			}
