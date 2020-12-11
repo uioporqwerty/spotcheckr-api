@@ -6,11 +6,12 @@ using HotChocolate.AspNetCore.Voyager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Spotcheckr.API.Queries;
-using Spotcheckr.API.Services.User;
+using Spotcheckr.API.Services;
 using Spotcheckr.API.Types.Contact;
 using Spotcheckr.API.Types.Identity;
 using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
+using Spotcheckr.API.Mutations;
 using Spotcheckr.Domain;
 
 namespace Spotcheckr.API
@@ -58,10 +59,14 @@ namespace Spotcheckr.API
 			_services.AddGraphQLServer()
 					 .EnableRelaySupport()
 					 .AddQueryType(d => d.Name("Query"))
+					 .AddMutationType(d => d.Name("Mutation"))
 					 .AddType<UserQueries>()
 					 .AddType<PersonalTrainerType>()
 					 .AddType<AthleteType>()
 					 .AddType<ContactInformationType>()
-					 .AddType<IdentityInformationType>();
+					 .AddType<IdentityInformationType>()
+					 .AddType<UserMutations>()
+					 .AddEnumType<UserType>()
+					 .AddInterfaceType<INode>();
 	}
 }

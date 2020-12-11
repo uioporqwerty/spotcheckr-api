@@ -4,7 +4,7 @@ using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.API.Services.User
+namespace Spotcheckr.API.Services
 {
 	public class UserService : IUserService
 	{
@@ -13,56 +13,6 @@ namespace Spotcheckr.API.Services.User
 		public UserService(SpotcheckrCoreContext context)
 		{
 			Context = context;
-		}
-
-		public async Task<Athlete> GetAthleteAsync(int id)
-		{
-			using var unitOfWork = new UnitOfWork(Context);
-			var user = await unitOfWork.Users.GetAsync(id);
-			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
-
-			if (user?.Type != UserType.Athlete)
-			{
-				throw new Exception($"User is not an athlete. Requested user is a {user?.Type}.");
-			}
-
-			return new Athlete
-			{
-				Id = id,
-				Username = user.Username,
-				IdentityInformation = new IdentityInformation
-				{
-					FirstName = user.FirstName,
-					LastName = user.LastName,
-					BirthDate = user.BirthDate
-				},
-				ContactInformation = userContactInformation
-			};
-		}
-
-		public async Task<PersonalTrainer> GetPersonalTrainerAsync(int id)
-		{
-			using var unitOfWork = new UnitOfWork(Context);
-			var user = await unitOfWork.Users.GetAsync(id);
-			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
-
-			if (user.Type != UserType.PersonalTrainer)
-			{
-				throw new Exception($"User is not a personal trainer. Requested user is a {user.Type.ToString()}.");
-			}
-
-			return new PersonalTrainer
-			{
-				Id = id,
-				Username = user.Username,
-				IdentityInformation = new IdentityInformation
-				{
-					FirstName = user.FirstName,
-					LastName = user.LastName,
-					BirthDate = user.BirthDate
-				},
-				ContactInformation = userContactInformation
-			};
 		}
 
 		public async Task<IUser> GetUser(int id)
@@ -75,7 +25,7 @@ namespace Spotcheckr.API.Services.User
 			{
 				UserType.PersonalTrainer => new PersonalTrainer
 				{
-					Id = id,
+					Id = id.ToString(),
 					Username = user.Username,
 					IdentityInformation = new IdentityInformation
 					{
@@ -87,7 +37,7 @@ namespace Spotcheckr.API.Services.User
 				},
 				UserType.Athlete => new Athlete
 				{
-					Id = id,
+					Id = id.ToString(),
 					Username = user.Username,
 					IdentityInformation = new IdentityInformation
 					{
@@ -100,6 +50,28 @@ namespace Spotcheckr.API.Services.User
 				_ => throw new Exception("Invalid user type."),
 			};
 			throw new Exception("User not found.");
+		}
+
+		public IUser CreateUser(UserType userType)
+		{
+			using var unitOfWork = new UnitOfWork(Context);
+
+			var user = new User { Type = userType };
+			unitOfWork.Users.Add(user);
+			unitOfWork.Complete();
+
+			return userType switch
+			{
+				UserType.Athlete => new Athlete
+				{
+					Id = user.Id.ToString()
+				},
+				UserType.PersonalTrainer => new PersonalTrainer
+				{
+					Id = user.Id.ToString()
+				},
+				_ => throw new Exception("Unrecognized user type.")
+			};
 		}
 	}
 }

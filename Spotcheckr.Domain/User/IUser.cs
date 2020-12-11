@@ -2,7 +2,7 @@
 
 namespace Spotcheckr.Domain
 {
-	public interface IUser
+	public interface IUser : INode
 	{
 		public string? Username { get; set; }
 

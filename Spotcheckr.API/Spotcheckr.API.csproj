@@ -20,6 +20,10 @@
     <PackageReference Include="HotChocolate.Types.Filters" Version="11.0.1" />
     <PackageReference Include="HotChocolate.Types.Sorting" Version="11.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spotcheckr.Data\Spotcheckr.Data.csproj" />
@@ -31,5 +35,7 @@
     <Folder Include="Attributes\" />
     <Folder Include="Subscriptions\" />
     <Folder Include="Resolvers\" />
+    <Folder Include="Mutations\Payloads\" />
+    <Folder Include="Mutations\Payloads\User\" />
   </ItemGroup>
 </Project>

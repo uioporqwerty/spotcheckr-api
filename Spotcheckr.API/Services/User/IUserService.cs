@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.API.Services.User
+namespace Spotcheckr.API.Services
 {
 	public interface IUserService
 	{
-		Task<Athlete> GetAthleteAsync(int id);
-
-		Task<PersonalTrainer> GetPersonalTrainerAsync(int id);
-
 		Task<IUser> GetUser(int id);
+
+		IUser CreateUser(UserType userType);
 	}
 }

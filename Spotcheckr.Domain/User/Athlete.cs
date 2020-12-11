@@ -4,7 +4,7 @@ namespace Spotcheckr.Domain
 {
 	public class Athlete : IUser
 	{
-		public int Id { get; set; }
+		public string Id { get; set; }
 
 		public string? Username { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using HotChocolate.Types;
-using Spotcheckr.API.Services.User;
+using Spotcheckr.API.Services;
 using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.Types.Users
@@ -22,7 +22,7 @@ namespace Spotcheckr.API.Types.Users
 				.ResolveNode((resolver, id) =>
 				{
 					var userService = resolver.Service<IUserService>();
-					return Task.FromResult(userService.GetAthleteAsync(id).Result);
+					return Task.FromResult((Athlete)userService.GetUser(int.Parse(id)).Result);
 				});
 		}
 	}
