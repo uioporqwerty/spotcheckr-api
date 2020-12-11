@@ -44,8 +44,7 @@ namespace Spotcheckr.API
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
 				app.UseRouting()
-					.UseEndpoints(endpoints => endpoints.MapGraphQL())
-					.UsePlayground()
+					.UseEndpoints(endpoints => endpoints.MapGraphQL().WithOptions(new GraphQLServerOptions { Tool = { Enable = true } }))
 					.UseVoyager();
 
 		private void ConfigureEntityFramework() =>
@@ -57,16 +56,15 @@ namespace Spotcheckr.API
 
 		private static void ConfigureGraphQL() =>
 			_services.AddGraphQLServer()
-					 .EnableRelaySupport()
 					 .AddQueryType(d => d.Name("Query"))
+						.AddType<UserQueries>()
 					 .AddMutationType(d => d.Name("Mutation"))
-					 .AddType<UserQueries>()
+						.AddType<UserMutations>()
 					 .AddType<PersonalTrainerType>()
 					 .AddType<AthleteType>()
 					 .AddType<ContactInformationType>()
 					 .AddType<IdentityInformationType>()
-					 .AddType<UserMutations>()
 					 .AddEnumType<UserType>()
-					 .AddInterfaceType<INode>();
+					 .EnableRelaySupport();
 	}
 }

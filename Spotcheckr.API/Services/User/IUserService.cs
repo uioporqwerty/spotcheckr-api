@@ -5,8 +5,10 @@ namespace Spotcheckr.API.Services
 {
 	public interface IUserService
 	{
-		Task<IUser> GetUser(int id);
+		Task<IUser> GetUserAsync(int id);
 
 		IUser CreateUser(UserType userType);
+
+		Task<int> DeleteUserAsync(int id);
 	}
 }

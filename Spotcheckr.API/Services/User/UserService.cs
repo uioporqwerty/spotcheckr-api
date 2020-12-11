@@ -15,7 +15,7 @@ namespace Spotcheckr.API.Services
 			Context = context;
 		}
 
-		public async Task<IUser> GetUser(int id)
+		public async Task<IUser> GetUserAsync(int id)
 		{
 			using var unitOfWork = new UnitOfWork(Context);
 			var user = await unitOfWork.Users.GetAsync(id);
@@ -25,7 +25,7 @@ namespace Spotcheckr.API.Services
 			{
 				UserType.PersonalTrainer => new PersonalTrainer
 				{
-					Id = id.ToString(),
+					Id = id,
 					Username = user.Username,
 					IdentityInformation = new IdentityInformation
 					{
@@ -37,7 +37,7 @@ namespace Spotcheckr.API.Services
 				},
 				UserType.Athlete => new Athlete
 				{
-					Id = id.ToString(),
+					Id = id,
 					Username = user.Username,
 					IdentityInformation = new IdentityInformation
 					{
@@ -64,14 +64,30 @@ namespace Spotcheckr.API.Services
 			{
 				UserType.Athlete => new Athlete
 				{
-					Id = user.Id.ToString()
+					Id = user.Id
 				},
 				UserType.PersonalTrainer => new PersonalTrainer
 				{
-					Id = user.Id.ToString()
+					Id = user.Id
 				},
 				_ => throw new Exception("Unrecognized user type.")
 			};
+		}
+
+		public async Task<int> DeleteUserAsync(int id)
+		{
+			using var unitOfWork = new UnitOfWork(Context);
+			var user = await unitOfWork.Users.GetAsync(id);
+
+			if (user == null)
+			{
+				throw new Exception($"User {id} does not exist.");
+			}
+
+			unitOfWork.Users.Remove(user);
+			unitOfWork.Complete();
+
+			return user.Id;
 		}
 	}
 }
