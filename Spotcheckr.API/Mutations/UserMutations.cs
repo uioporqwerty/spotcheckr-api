@@ -17,10 +17,10 @@ namespace Spotcheckr.API.Mutations
 			return new CreateUserPayload(newUser);
 		}
 
-		public async Task<DeleteUserPayload> DeleteUserAsync([ID] int id, [Service] IUserService userService)
+		public async Task<DeleteUserPayload> DeleteUserAsync(DeleteUserInput input, [Service] IUserService userService)
 		{
-			_ = await userService.DeleteUserAsync(id);
-			return new DeleteUserPayload(id);
+			_ = await userService.DeleteUserAsync(input.Id);
+			return new DeleteUserPayload(input.Id);
 		}
 	}
 }
