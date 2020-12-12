@@ -17,6 +17,7 @@ namespace Spotcheckr.API.Types.Users
 			descriptor.Field(field => field.ContactInformation).Description("Contact details for the user.");
 			descriptor.Field(field => field.Website).Description("Business or personal website for the personal trainer.");
 			descriptor.Field(field => field.Certifications).Description("Certifications achieved by the personal trainer.");
+			descriptor.Implements<IUserType>();
 			descriptor.ImplementsNode()
 					  .IdField(prop => prop.Id)
 					  .ResolveNode(async (resolver, id) =>

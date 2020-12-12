@@ -2,8 +2,10 @@
 
 namespace Spotcheckr.Domain
 {
-	public interface IUser : INode
+	public interface IUser
 	{
+		public int Id { get; set; }
+
 		public string? Username { get; set; }
 
 		public Uri? ProfilePicture { get; set; }
