@@ -9,6 +9,8 @@ namespace Spotcheckr.API.Services
 
 		IUser CreateUser(UserType userType);
 
+		Task<IUser> UpdateUserProfileAsync(IUser updatedUser);
+
 		Task<int> DeleteUserAsync(int id);
 	}
 }

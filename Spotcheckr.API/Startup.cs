@@ -13,6 +13,8 @@ using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 using Spotcheckr.API.Mutations;
 using Spotcheckr.Domain;
+using AutoMapper;
+using Spotcheckr.Data.Repositories;
 
 namespace Spotcheckr.API
 {
@@ -35,8 +37,8 @@ namespace Spotcheckr.API
 		{
 			_services = services;
 
-			_services.AddTransient<IUserService, UserService>();
-
+			ConfigureServices();
+			ConfigureAutoMapper();
 			ConfigureEntityFramework();
 			ConfigureApplicationInsights();
 			ConfigureGraphQL();
@@ -46,6 +48,13 @@ namespace Spotcheckr.API
 				app.UseRouting()
 					.UseEndpoints(endpoints => endpoints.MapGraphQL().WithOptions(new GraphQLServerOptions { Tool = { Enable = true } }))
 					.UseVoyager();
+
+		private static void ConfigureServices() => _services
+			.AddTransient<IUserService, UserService>()
+			.AddTransient<IUnitOfWork, UnitOfWork>()
+			.AddSingleton<DbContext, SpotcheckrCoreContext>();
+
+		private static void ConfigureAutoMapper() => _services.AddAutoMapper(typeof(Startup).Assembly);
 
 		private void ConfigureEntityFramework() =>
 			_services.AddDbContext<SpotcheckrCoreContext>(options =>

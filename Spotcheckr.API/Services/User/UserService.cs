@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Spotcheckr.Data;
+using AutoMapper;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
 
@@ -8,18 +8,20 @@ namespace Spotcheckr.API.Services
 {
 	public class UserService : IUserService
 	{
-		public SpotcheckrCoreContext Context;
+		private readonly IMapper Mapper;
 
-		public UserService(SpotcheckrCoreContext context)
+		private readonly IUnitOfWork UnitOfWork;
+
+		public UserService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			Context = context;
+			UnitOfWork = unitOfWork;
+			Mapper = mapper;
 		}
 
 		public async Task<IUser> GetUserAsync(int id)
 		{
-			using var unitOfWork = new UnitOfWork(Context);
-			var user = await unitOfWork.Users.GetAsync(id);
-			var userContactInformation = await unitOfWork.Users.GetContactInformationAsync(id);
+			var user = await UnitOfWork.Users.GetAsync(id);
+			var userContactInformation = await UnitOfWork.Users.GetContactInformationAsync(id);
 
 			return (user?.Type) switch
 			{
@@ -49,16 +51,13 @@ namespace Spotcheckr.API.Services
 				},
 				_ => throw new Exception("Invalid user type."),
 			};
-			throw new Exception("User not found.");
 		}
 
 		public IUser CreateUser(UserType userType)
 		{
-			using var unitOfWork = new UnitOfWork(Context);
-
 			var user = new User { Type = userType };
-			unitOfWork.Users.Add(user);
-			unitOfWork.Complete();
+			UnitOfWork.Users.Add(user);
+			UnitOfWork.Complete();
 
 			return userType switch
 			{
@@ -76,18 +75,32 @@ namespace Spotcheckr.API.Services
 
 		public async Task<int> DeleteUserAsync(int id)
 		{
-			using var unitOfWork = new UnitOfWork(Context);
-			var user = await unitOfWork.Users.GetAsync(id);
+			var user = await UnitOfWork.Users.GetAsync(id);
 
 			if (user == null)
 			{
 				throw new Exception($"User {id} does not exist.");
 			}
 
-			unitOfWork.Users.Remove(user);
-			unitOfWork.Complete();
+			UnitOfWork.Users.Remove(user);
+			UnitOfWork.Complete();
 
 			return user.Id;
+		}
+
+		public async Task<IUser> UpdateUserProfileAsync(IUser updatedUser)
+		{
+			var user = await UnitOfWork.Users.GetAsync(updatedUser.Id);
+
+			user.Username = updatedUser.Username;
+			user.FirstName = updatedUser.IdentityInformation?.FirstName;
+			user.MiddleName = updatedUser.IdentityInformation?.MiddleName;
+			user.LastName = updatedUser.IdentityInformation?.LastName;
+			user.BirthDate = updatedUser.IdentityInformation?.BirthDate;
+
+			UnitOfWork.Complete();
+
+			return updatedUser;
 		}
 	}
 }
