@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Spotcheckr.Data.Repositories;
@@ -98,6 +100,20 @@ namespace Spotcheckr.API.Services
 			user.LastName = updatedUser.IdentityInformation?.LastName;
 			user.BirthDate = updatedUser.IdentityInformation?.BirthDate;
 
+			UnitOfWork.Complete();
+
+			return updatedUser;
+		}
+
+		public async Task<IUser> UpdateUserContactInformationAsync(IUser updatedUser)
+		{
+			var user = await UnitOfWork.Users.GetAsync(updatedUser.Id);
+			var applicableEmailAddresses = new HashSet<int>(updatedUser?.ContactInformation?.EmailAddresses.Select(email => email.Id) ?? Enumerable.Empty<int>());
+			var existingUserEmailAddresses = user.Emails.ToList();
+			existingUserEmailAddresses.RemoveAll(email => !applicableEmailAddresses.Contains(email.Id));
+			user.Emails = existingUserEmailAddresses;
+
+			UnitOfWork.Users.Add(user);
 			UnitOfWork.Complete();
 
 			return updatedUser;

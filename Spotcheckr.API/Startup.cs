@@ -15,6 +15,7 @@ using Spotcheckr.API.Mutations;
 using Spotcheckr.Domain;
 using AutoMapper;
 using Spotcheckr.Data.Repositories;
+using Spotcheckr.API.Mutations.Inputs;
 
 namespace Spotcheckr.API
 {
@@ -73,6 +74,8 @@ namespace Spotcheckr.API
 					 .AddType<AthleteType>()
 					 .AddType<ContactInformationType>()
 					 .AddType<IdentityInformationType>()
+					 .AddType<EmailType>()
+					 .AddType<PhoneNumberType>()
 					 .AddEnumType<UserType>()
 					 .EnableRelaySupport();
 	}
