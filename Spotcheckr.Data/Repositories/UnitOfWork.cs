@@ -8,12 +8,15 @@
 
 		public IExercisePostRepository ExercisePosts { get; }
 
+		public IEmailRepository Emails { get; }
+
 		public UnitOfWork(SpotcheckrCoreContext context)
 		{
 			_context = context;
 
 			Users = new UserRepository(_context);
 			ExercisePosts = new ExercisePostRepository(_context);
+			Emails = new EmailRepository(_context);
 		}
 
 		public void Dispose() => _context.Dispose();

@@ -16,9 +16,9 @@ namespace Spotcheckr.Data.Repositories
 			Context = context;
 		}
 
-		public TEntity Get(int id) => Context.Set<TEntity>().Find(id) ?? throw new InvalidOperationException($"User {id} not found.");
+		public TEntity Get(int id) => Context.Set<TEntity>().Find(id) ?? throw new InvalidOperationException($"Record {id} not found.");
 
-		public async Task<TEntity> GetAsync(int id) => await Context.Set<TEntity>().FindAsync(id) ?? throw new InvalidOperationException($"User {id} not found.");
+		public async Task<TEntity> GetAsync(int id) => await Context.Set<TEntity>().FindAsync(id) ?? throw new InvalidOperationException($"Record {id} not found.");
 
 		public IEnumerable<TEntity> GetAll() => Context.Set<TEntity>().ToList();
 

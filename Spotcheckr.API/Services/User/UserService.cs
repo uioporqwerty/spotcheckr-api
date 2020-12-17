@@ -105,18 +105,20 @@ namespace Spotcheckr.API.Services
 			return updatedUser;
 		}
 
-		public async Task<IUser> UpdateUserContactInformationAsync(IUser updatedUser)
+		public Task<IUser> UpdateUserContactInformation(int userId, ContactInformation updatedContactInformation)
 		{
-			var user = await UnitOfWork.Users.GetAsync(updatedUser.Id);
-			var applicableEmailAddresses = new HashSet<int>(updatedUser?.ContactInformation?.EmailAddresses.Select(email => email.Id) ?? Enumerable.Empty<int>());
-			var existingUserEmailAddresses = user.Emails.ToList();
-			existingUserEmailAddresses.RemoveAll(email => !applicableEmailAddresses.Contains(email.Id));
-			user.Emails = existingUserEmailAddresses;
+			var existingEmailAddresses = UnitOfWork.Emails.GetEmailsByUserId(userId);
+			var updatedEmailAddresses = new HashSet<Email>(updatedContactInformation.EmailAddresses.Select(email => email) ?? Enumerable.Empty<Email>());
+			foreach (var existingEmail in existingEmailAddresses)
+			{
+				if (updatedEmailAddresses.Contains(existingEmail))
+				{
+					existingEmail.Address = updatedEmailAddresses.Where(email => email.Id == existingEmail.Id).First().Address;
+				}
+			}
 
-			UnitOfWork.Users.Add(user);
 			UnitOfWork.Complete();
-
-			return updatedUser;
+			return GetUserAsync(userId);
 		}
 	}
 }

@@ -3,9 +3,9 @@ using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.Types.Contact
 {
-	public class EmailType : ObjectType<Email>
+	public class EmailInputType : InputObjectType<Email>
 	{
-		protected override void Configure(IObjectTypeDescriptor<Email> descriptor)
+		protected override void Configure(IInputObjectTypeDescriptor<Email> descriptor)
 		{
 			descriptor.Field(field => field.Id).ID(nameof(Email));
 			descriptor.Field(field => field.UserId).Ignore();

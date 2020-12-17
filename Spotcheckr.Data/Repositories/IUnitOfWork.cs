@@ -8,6 +8,8 @@ namespace Spotcheckr.Data.Repositories
 
 		IExercisePostRepository ExercisePosts { get; }
 
+		IEmailRepository Emails { get; }
+
 		int Complete();
 	}
 }

@@ -8,14 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Spotcheckr.API.Queries;
 using Spotcheckr.API.Services;
 using Spotcheckr.API.Types.Contact;
-using Spotcheckr.API.Types.Identity;
 using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 using Spotcheckr.API.Mutations;
 using Spotcheckr.Domain;
 using AutoMapper;
 using Spotcheckr.Data.Repositories;
-using Spotcheckr.API.Mutations.Inputs;
 
 namespace Spotcheckr.API
 {
@@ -72,10 +70,10 @@ namespace Spotcheckr.API
 						.AddType<UserMutations>()
 					 .AddType<PersonalTrainerType>()
 					 .AddType<AthleteType>()
-					 .AddType<ContactInformationType>()
-					 .AddType<IdentityInformationType>()
 					 .AddType<EmailType>()
+					 .AddType<EmailInputType>()
 					 .AddType<PhoneNumberType>()
+					 .AddType<PhoneNumberInputType>()
 					 .AddEnumType<UserType>()
 					 .EnableRelaySupport();
 	}

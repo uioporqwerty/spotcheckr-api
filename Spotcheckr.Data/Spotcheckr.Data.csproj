@@ -13,10 +13,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="EFCore.BulkExtensions" Version="3.2.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Contact\" />
+  </ItemGroup>
 </Project>

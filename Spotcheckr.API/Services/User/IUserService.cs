@@ -11,7 +11,7 @@ namespace Spotcheckr.API.Services
 
 		Task<IUser> UpdateUserProfileAsync(IUser updatedUser);
 
-		Task<IUser> UpdateUserContactInformationAsync(IUser updatedUser);
+		Task<IUser> UpdateUserContactInformationAsync(int userId, ContactInformation updatedContactInformation);
 
 		Task<int> DeleteUserAsync(int id);
 	}

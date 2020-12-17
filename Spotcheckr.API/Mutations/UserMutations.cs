@@ -35,10 +35,9 @@ namespace Spotcheckr.API.Mutations
 
 		public async Task<UpdateUserContactInformationPayload> UpdateUserContactInformationAsync(UpdateUserContactInformationInput input, [Service] IUserService userService)
 		{
-			var user = await userService.GetUserAsync(input.Id);
-			var mappedUser = Mapper.Map(input, user, typeof(UpdateUserProfileInput), user.GetType()) as IUser;
-			await userService.UpdateUserContactInformationAsync(mappedUser);
-			return new UpdateUserContactInformationPayload(mappedUser);
+			var updatedContactInformation = Mapper.Map<ContactInformation>(input);
+			var user = await userService.UpdateUserContactInformationAsync(input.Id, updatedContactInformation);
+			return new UpdateUserContactInformationPayload(user);
 		}
 
 		public async Task<DeleteUserPayload> DeleteUserAsync(DeleteUserInput input, [Service] IUserService userService)

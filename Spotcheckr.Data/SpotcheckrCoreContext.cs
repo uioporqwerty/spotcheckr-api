@@ -7,6 +7,10 @@ namespace Spotcheckr.Data
 	{
 		public DbSet<User> Users { get; set; } = default!;
 
+		public DbSet<Email> Emails { get; set; } = default!;
+
+		public DbSet<PhoneNumber> PhoneNumbers { get; set; } = default!;
+
 		public DbSet<ExercisePost> ExercisePosts { get; set; } = default!;
 
 		public DbSet<Comment> Comments { get; set; } = default!;
