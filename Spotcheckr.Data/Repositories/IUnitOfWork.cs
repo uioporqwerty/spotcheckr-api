@@ -10,6 +10,8 @@ namespace Spotcheckr.Data.Repositories
 
 		IEmailRepository Emails { get; }
 
+		IPhoneNumberRepository PhoneNumbers { get; }
+
 		int Complete();
 	}
 }

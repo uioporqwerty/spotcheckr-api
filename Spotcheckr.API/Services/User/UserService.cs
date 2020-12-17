@@ -105,9 +105,21 @@ namespace Spotcheckr.API.Services
 			return updatedUser;
 		}
 
-		public Task<IUser> UpdateUserContactInformation(int userId, ContactInformation updatedContactInformation)
+		public Task<IUser> UpdateUserContactInformationAsync(int userId, ContactInformation updatedContactInformation)
 		{
 			var existingEmailAddresses = UnitOfWork.Emails.GetEmailsByUserId(userId);
+			UpdateEmailAddresses(updatedContactInformation, existingEmailAddresses);
+
+			var existingPhoneNumbers = UnitOfWork.PhoneNumbers.GetPhoneNumbersByUserId(userId);
+			UpdatePhoneNumbers(updatedContactInformation, existingPhoneNumbers);
+
+			UnitOfWork.Complete();
+
+			return GetUserAsync(userId);
+		}
+
+		private static void UpdateEmailAddresses(ContactInformation updatedContactInformation, IEnumerable<Email> existingEmailAddresses)
+		{
 			var updatedEmailAddresses = new HashSet<Email>(updatedContactInformation.EmailAddresses.Select(email => email) ?? Enumerable.Empty<Email>());
 			foreach (var existingEmail in existingEmailAddresses)
 			{
@@ -116,9 +128,20 @@ namespace Spotcheckr.API.Services
 					existingEmail.Address = updatedEmailAddresses.Where(email => email.Id == existingEmail.Id).First().Address;
 				}
 			}
+		}
 
-			UnitOfWork.Complete();
-			return GetUserAsync(userId);
+		private static void UpdatePhoneNumbers(ContactInformation updatedContactInformation, IEnumerable<PhoneNumber> existingPhoneNumbers)
+		{
+			var updatedPhoneNumbers = new HashSet<PhoneNumber>(updatedContactInformation.PhoneNumbers.Select(phoneNumber => phoneNumber) ?? Enumerable.Empty<PhoneNumber>());
+			foreach (var existingPhoneNumber in existingPhoneNumbers)
+			{
+				if (updatedPhoneNumbers.Contains(existingPhoneNumber))
+				{
+					var updatedPhoneNumber = updatedPhoneNumbers.Where(phoneNumber => phoneNumber.Id == existingPhoneNumber.Id).First();
+					existingPhoneNumber.Number = updatedPhoneNumber.Number;
+					existingPhoneNumber.Extension = updatedPhoneNumber.Extension;
+				}
+			}
 		}
 	}
 }

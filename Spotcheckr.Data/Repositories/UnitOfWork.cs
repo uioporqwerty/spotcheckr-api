@@ -10,6 +10,8 @@
 
 		public IEmailRepository Emails { get; }
 
+		public IPhoneNumberRepository PhoneNumbers { get; }
+
 		public UnitOfWork(SpotcheckrCoreContext context)
 		{
 			_context = context;
@@ -17,6 +19,7 @@
 			Users = new UserRepository(_context);
 			ExercisePosts = new ExercisePostRepository(_context);
 			Emails = new EmailRepository(_context);
+			PhoneNumbers = new PhoneNumberRepository(_context);
 		}
 
 		public void Dispose() => _context.Dispose();
