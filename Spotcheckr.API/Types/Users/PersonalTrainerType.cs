@@ -2,7 +2,7 @@
 using Spotcheckr.API.Services;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.API.Types.Users
+namespace Spotcheckr.API.Types
 {
 	public class PersonalTrainerType : ObjectType<PersonalTrainer>
 	{

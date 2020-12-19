@@ -22,5 +22,8 @@
 
   <ItemGroup>
     <Folder Include="Repositories\Contact\" />
+    <Folder Include="Repositories\Certification\" />
+    <Folder Include="Repositories\Organization\" />
+    <Folder Include="Repositories\Certificate\" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 using HotChocolate.Types;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.API.Types.Contact
+namespace Spotcheckr.API.Types
 {
 	public class PhoneNumberInputType : InputObjectType<PhoneNumber>
 	{

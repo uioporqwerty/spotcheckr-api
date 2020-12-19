@@ -1,7 +1,7 @@
 ﻿using HotChocolate.Types;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.API.Types.Users
+namespace Spotcheckr.API.Types
 {
 	public class IUserType : InterfaceType<IUser>
 	{

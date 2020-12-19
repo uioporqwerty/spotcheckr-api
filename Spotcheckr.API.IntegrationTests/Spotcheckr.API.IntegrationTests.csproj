@@ -25,4 +25,9 @@
     <ProjectReference Include="..\Spotcheckr.API\Spotcheckr.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Services\Certification\" />
+    <Folder Include="Services\Certification\Validators\" />
+  </ItemGroup>
 </Project>

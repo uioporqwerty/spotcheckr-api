@@ -7,13 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Spotcheckr.API.Queries;
 using Spotcheckr.API.Services;
-using Spotcheckr.API.Types.Contact;
-using Spotcheckr.API.Types.Users;
 using Spotcheckr.Data;
 using Spotcheckr.API.Mutations;
 using Spotcheckr.Domain;
 using AutoMapper;
 using Spotcheckr.Data.Repositories;
+using Spotcheckr.API.Types;
 
 namespace Spotcheckr.API
 {
@@ -50,6 +49,7 @@ namespace Spotcheckr.API
 
 		private static void ConfigureServices() => _services
 			.AddTransient<IUserService, UserService>()
+			.AddTransient<ICertificationService, CertificationService>()
 			.AddTransient<IUnitOfWork, UnitOfWork>()
 			.AddSingleton<DbContext, SpotcheckrCoreContext>();
 
@@ -68,12 +68,15 @@ namespace Spotcheckr.API
 						.AddType<UserQueries>()
 					 .AddMutationType(d => d.Name("Mutation"))
 						.AddType<UserMutations>()
+						.AddType<CertificationMutations>()
 					 .AddType<PersonalTrainerType>()
 					 .AddType<AthleteType>()
 					 .AddType<EmailType>()
 					 .AddType<EmailInputType>()
 					 .AddType<PhoneNumberType>()
 					 .AddType<PhoneNumberInputType>()
+					 .AddType<CertificateType>()
+					 .AddType<CertificationType>()
 					 .AddEnumType<UserType>()
 					 .EnableRelaySupport();
 	}

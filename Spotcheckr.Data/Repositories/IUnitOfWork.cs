@@ -12,6 +12,12 @@ namespace Spotcheckr.Data.Repositories
 
 		IPhoneNumberRepository PhoneNumbers { get; }
 
+		ICertificationRepository Certifications { get; }
+
+		IOrganizationRepository Organizations { get; }
+
+		ICertificateRepository Certificates { get; }
+
 		int Complete();
 	}
 }

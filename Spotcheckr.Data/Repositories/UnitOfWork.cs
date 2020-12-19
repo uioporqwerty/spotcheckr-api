@@ -12,6 +12,12 @@
 
 		public IPhoneNumberRepository PhoneNumbers { get; }
 
+		public ICertificationRepository Certifications { get; }
+
+		public IOrganizationRepository Organizations { get; }
+
+		public ICertificateRepository Certificates { get; }
+
 		public UnitOfWork(SpotcheckrCoreContext context)
 		{
 			_context = context;
@@ -20,6 +26,9 @@
 			ExercisePosts = new ExercisePostRepository(_context);
 			Emails = new EmailRepository(_context);
 			PhoneNumbers = new PhoneNumberRepository(_context);
+			Certifications = new CertificationRepository(_context);
+			Certificates = new CertificateRepository(_context);
+			Organizations = new OrganizationRepository(_context);
 		}
 
 		public void Dispose() => _context.Dispose();

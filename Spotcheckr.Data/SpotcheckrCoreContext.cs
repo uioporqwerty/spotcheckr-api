@@ -19,6 +19,8 @@ namespace Spotcheckr.Data
 
 		public DbSet<Certificate> Certificates { get; set; } = default!;
 
+		public DbSet<Certification> Certifications { get; set; } = default!;
+
 		public SpotcheckrCoreContext(DbContextOptions<SpotcheckrCoreContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
