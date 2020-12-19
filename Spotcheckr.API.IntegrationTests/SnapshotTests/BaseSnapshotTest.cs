@@ -2,11 +2,13 @@
 using HotChocolate.Execution;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Spotcheckr.API.Mutations;
 using Spotcheckr.API.Queries;
 using Spotcheckr.API.Services;
-using Spotcheckr.API.Types.Users;
+using Spotcheckr.API.Types;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
+using Spotcheckr.Domain;
 
 namespace Spotcheckr.API.IntegrationTests.SnapshotTests
 {
@@ -25,9 +27,19 @@ namespace Spotcheckr.API.IntegrationTests.SnapshotTests
 
 			var executor = await serviceCollection.AddGraphQLServer()
 					 .AddQueryType(d => d.Name("Query"))
-					 .AddType<UserQueries>()
+						.AddType<UserQueries>()
+					 .AddMutationType(d => d.Name("Mutation"))
+						.AddType<UserMutations>()
+						.AddType<CertificationMutations>()
 					 .AddType<PersonalTrainerType>()
 					 .AddType<AthleteType>()
+					 .AddType<EmailType>()
+					 .AddType<EmailInputType>()
+					 .AddType<PhoneNumberType>()
+					 .AddType<PhoneNumberInputType>()
+					 .AddType<CertificateType>()
+					 .AddType<CertificationType>()
+					 .AddEnumType<UserType>()
 					 .EnableRelaySupport()
 					 .BuildRequestExecutorAsync();
 
