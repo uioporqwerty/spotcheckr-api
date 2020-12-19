@@ -22,6 +22,7 @@ namespace Spotcheckr.API.Services.Validators
 				Headless = true,
 				Args = new[] { "--single-process",
 							   "--enable-automation",
+							   "--no-sandbox",
 							   "--no-zygote"}
 			});
 			var validationResponses = new List<CertificationValidationResponse>();
