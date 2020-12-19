@@ -19,12 +19,24 @@ namespace Spotcheckr.API.Mutations
 			Mapper = mapper;
 		}
 
+		/// <summary>
+		/// Create an Athlete or Personal Trainer type of user.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="userService"></param>
+		/// <returns></returns>
 		public async Task<CreateUserPayload> CreateUserAsync(CreateUserInput input, [Service] IUserService userService)
 		{
 			var newUser = userService.CreateUser(input.UserType);
 			return new CreateUserPayload(newUser);
 		}
 
+		/// <summary>
+		/// Update user profile information.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="userService"></param>
+		/// <returns></returns>
 		public async Task<UpdateUserProfilePayload> UpdateUserProfileAsync(UpdateUserProfileInput input, [Service] IUserService userService)
 		{
 			var user = await userService.GetUserAsync(input.Id);
@@ -33,6 +45,12 @@ namespace Spotcheckr.API.Mutations
 			return new UpdateUserProfilePayload(mappedUser);
 		}
 
+		/// <summary>
+		/// Update user contact information.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="userService"></param>
+		/// <returns></returns>
 		public async Task<UpdateUserContactInformationPayload> UpdateUserContactInformationAsync(UpdateUserContactInformationInput input, [Service] IUserService userService)
 		{
 			var updatedContactInformation = Mapper.Map<ContactInformation>(input);
@@ -40,6 +58,12 @@ namespace Spotcheckr.API.Mutations
 			return new UpdateUserContactInformationPayload(user);
 		}
 
+		/// <summary>
+		/// Delete a user and all of their related information. This operation is permanent.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="userService"></param>
+		/// <returns></returns>
 		public async Task<DeleteUserPayload> DeleteUserAsync(DeleteUserInput input, [Service] IUserService userService)
 		{
 			_ = await userService.DeleteUserAsync(input.Id);
