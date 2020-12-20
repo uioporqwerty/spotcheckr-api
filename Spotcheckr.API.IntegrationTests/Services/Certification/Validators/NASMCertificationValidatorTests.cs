@@ -20,7 +20,7 @@ namespace Spotcheckr.API.IntegrationTests.Services.Validators
 		public async void Validate_WithCertificateID_ReturnsValidValidationResponse()
 		{
 			var searchCriteria = new CertificationValidationSearchCriteria(TestCertificateId);
-			var validationResponses = await NASMValidator.Validate(searchCriteria);
+			var validationResponses = await NASMValidator.ValidateAsync(searchCriteria);
 
 			Assert.Single(validationResponses);
 

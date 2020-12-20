@@ -17,7 +17,7 @@ namespace Spotcheckr.API.Services.Validators
 			RestClient = restClient;
 		}
 
-		public async Task<IEnumerable<CertificationValidationResponse>> Validate(CertificationValidationSearchCriteria searchCriteria)
+		public async Task<IEnumerable<CertificationValidationResponse>> ValidateAsync(CertificationValidationSearchCriteria searchCriteria)
 		{
 			var responses = new List<CertificationValidationResponse>();
 			var web = new HtmlWeb();

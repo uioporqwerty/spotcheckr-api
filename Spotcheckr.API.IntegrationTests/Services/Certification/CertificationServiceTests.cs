@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services;
+using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
 using Xunit;
 
@@ -8,10 +9,12 @@ namespace Spotcheckr.API.IntegrationTests.Services
 	public class CertificationServiceTests : BaseTest
 	{
 		private ICertificationService Service;
+		private IUnitOfWork UnitOfWork;
 
 		public CertificationServiceTests()
 		{
 			Service = ServiceProvider.GetRequiredService<ICertificationService>();
+			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
 		}
 
 		[Fact]

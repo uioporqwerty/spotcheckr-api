@@ -42,7 +42,7 @@ namespace Spotcheckr.API.Services
 
 				var searchCriteria = new CertificationValidationSearchCriteria(certificateNumber);
 
-				var validationResults = await validator.Validate(searchCriteria);
+				var validationResults = await validator.ValidateAsync(searchCriteria);
 
 				if (validationResults.Any())
 				{

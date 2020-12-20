@@ -13,8 +13,6 @@ namespace Spotcheckr.API.IntegrationTests
 	public abstract class BaseTest
 	{
 		protected ServiceProvider ServiceProvider { get; }
-		protected IUnitOfWork UnitOfWork { get; }
-		protected IMapper Mapper { get; }
 
 		public BaseTest()
 		{
@@ -24,17 +22,12 @@ namespace Spotcheckr.API.IntegrationTests
 							 .AddTransient<IUnitOfWork, UnitOfWork>()
 							 .AddTransient<IRestClient, RestClient>()
 							 .AddSingleton<NASMCertificationValidator>()
-							 .AddSingleton<DbContext, SpotcheckrCoreContext>()
+							 .AddTransient<DbContext, SpotcheckrCoreContext>()
 							 .AddAutoMapper(typeof(Startup).Assembly)
 							 .AddDbContext<SpotcheckrCoreContext>(options =>
 																  options.UseInMemoryDatabase("Spotcheckr-Core")
 																		 .EnableSensitiveDataLogging());
 			ServiceProvider = serviceCollection.BuildServiceProvider();
-
-			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
-			Mapper = ServiceProvider.GetRequiredService<IMapper>();
-
-			DatabaseInitializer.Initialize(ServiceProvider.GetRequiredService<SpotcheckrCoreContext>());
 		}
 	}
 }
