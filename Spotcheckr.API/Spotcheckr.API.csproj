@@ -41,7 +41,6 @@
         <Folder Include="Extensions\" />
         <Folder Include="Attributes\" />
         <Folder Include="Subscriptions\" />
-        <Folder Include="Resolvers\" />
         <Folder Include="Mutations\Payloads\" />
         <Folder Include="Mutations\Payloads\User\" />
         <Folder Include="Mutations\Inputs\" />
@@ -52,5 +51,7 @@
         <Folder Include="Types\Certificate\" />
         <Folder Include="Mutations\Payloads\Certificate\" />
         <Folder Include="Mutations\Inputs\Certificate\" />
+        <Folder Include="Types\Business\" />
+        <Folder Include="Services\Business\" />
     </ItemGroup>
 </Project>

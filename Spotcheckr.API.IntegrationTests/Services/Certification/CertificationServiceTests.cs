@@ -26,10 +26,7 @@ namespace Spotcheckr.API.IntegrationTests.Services
 				LastName = "Smith",
 			};
 			UnitOfWork.Users.Add(user);
-			var org = new Organization
-			{
-				Abbreviation = "NASM"
-			};
+			var org = new Organization("NASM", "National Academy of Sport Medicine");
 			UnitOfWork.Organizations.Add(org);
 			var certificate = new Certificate { Code = "NASM-CPT", Organization = org };
 			UnitOfWork.Certificates.Add(certificate);

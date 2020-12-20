@@ -14,7 +14,6 @@ using AutoMapper;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.API.Types;
 using RestSharp;
-using HtmlAgilityPack;
 using Spotcheckr.API.Services.Validators;
 
 namespace Spotcheckr.API
@@ -53,6 +52,7 @@ namespace Spotcheckr.API
 		private static void ConfigureServices() => _services
 			.AddTransient<IUserService, UserService>()
 			.AddTransient<ICertificationService, CertificationService>()
+			.AddTransient<IOrganizationService, OrganizationService>()
 			.AddTransient<IUnitOfWork, UnitOfWork>()
 			.AddTransient<IRestClient, RestClient>()
 			.AddSingleton<NASMCertificationValidator>()

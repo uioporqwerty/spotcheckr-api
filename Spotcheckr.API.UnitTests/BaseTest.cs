@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RestSharp;
@@ -8,7 +7,7 @@ using Spotcheckr.API.Services.Validators;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
 
-namespace Spotcheckr.API.IntegrationTests
+namespace Spotcheckr.API.UnitTests
 {
 	public abstract class BaseTest
 	{
@@ -29,6 +28,9 @@ namespace Spotcheckr.API.IntegrationTests
 																  options.UseInMemoryDatabase("Spotcheckr-Core")
 																		 .EnableSensitiveDataLogging());
 			ServiceProvider = serviceCollection.BuildServiceProvider();
+			var context = ServiceProvider.GetRequiredService<DbContext>();
+			context.Database.EnsureDeleted();
+			context.Database.EnsureCreated();
 		}
 	}
 }

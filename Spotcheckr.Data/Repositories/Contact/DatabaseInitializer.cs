@@ -14,7 +14,7 @@ namespace Spotcheckr.Data
 		public static void Initialize(SpotcheckrCoreContext context)
 		{
 			_context = context;
-			
+
 			_context.Database.EnsureCreated();
 
 			if (DatabaseHasData)
@@ -45,7 +45,7 @@ namespace Spotcheckr.Data
 			_context.AddRange(exercisePostComments);
 			_context.SaveChanges();
 
-			var exercisePostMedia = CreateTestMedia(true,5);
+			var exercisePostMedia = CreateTestMedia(true, 5);
 			var commentMedia = CreateTestMedia(false, 5);
 			_context.AddRange(exercisePostMedia);
 			_context.AddRange(commentMedia);
@@ -193,7 +193,7 @@ namespace Spotcheckr.Data
 
 		private static IEnumerable<Organization> TestOrganizations => new List<Organization>
 		{
-			new Organization { Name = "National Academy of Sports Medicine", Abbreviation = "NASM" }
+			new Organization("NASM", "National Academy of Sports Medicine")
 		};
 
 		private static IEnumerable<User> CreateTestUsers(int count)
@@ -248,7 +248,7 @@ namespace Spotcheckr.Data
 													 .RuleFor(field => field.Name, fake => fake.Company.CompanyName())
 													 .Generate(1)
 													 .First();
-		
+
 		private static IEnumerable<Certification> CreateTestCertifications(int count)
 		{
 			var certifications = new Faker<Certification>()
@@ -261,7 +261,7 @@ namespace Spotcheckr.Data
 				.RuleFor(field => field.DateAchieved, fake => fake.Date.Past(15, DateTime.Now))
 				.RuleFor(field => field.Verified, fake => fake.PickRandom(true, false))
 				.RuleFor(field => field.Number, fake => fake.PickRandom(fake.Random.AlphaNumeric(8)))
-				.RuleFor(field => field.Certificate, fake =>fake.PickRandom(_context.Certificates.ToList()));
+				.RuleFor(field => field.Certificate, fake => fake.PickRandom(_context.Certificates.ToList()));
 
 			return certifications.Generate(count);
 		}

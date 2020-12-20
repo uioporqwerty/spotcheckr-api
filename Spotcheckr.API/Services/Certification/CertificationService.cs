@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using RestSharp;
 using Spotcheckr.API.Services.Validators;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
@@ -11,8 +9,6 @@ namespace Spotcheckr.API.Services
 {
 	public class CertificationService : ICertificationService
 	{
-		private readonly IMapper Mapper;
-
 		private readonly IUnitOfWork UnitOfWork;
 
 		private readonly ICertificationValidator NASMValidator;
@@ -20,11 +16,9 @@ namespace Spotcheckr.API.Services
 		private readonly IDictionary<string, ICertificationValidator> Validators;
 
 		public CertificationService(IUnitOfWork unitOfWork,
-									IMapper mapper,
 									NASMCertificationValidator nasmValidator)
 		{
 			UnitOfWork = unitOfWork;
-			Mapper = mapper;
 			NASMValidator = nasmValidator;
 			Validators = new Dictionary<string, ICertificationValidator>
 			{
