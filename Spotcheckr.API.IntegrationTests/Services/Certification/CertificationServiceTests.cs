@@ -1,4 +1,5 @@
-﻿using Spotcheckr.API.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Spotcheckr.API.Services;
 using Spotcheckr.Domain;
 using Xunit;
 
@@ -6,10 +7,16 @@ namespace Spotcheckr.API.IntegrationTests.Services
 {
 	public class CertificationServiceTests : BaseTest
 	{
+		private ICertificationService Service;
+
+		public CertificationServiceTests()
+		{
+			Service = ServiceProvider.GetRequiredService<ICertificationService>();
+		}
+
 		[Fact]
 		public async void ValidateCertification_WithCertification_ReturnsStatus()
 		{
-			var service = CreateCertificationService();
 			var user = new User
 			{
 				FirstName = "Will",
@@ -33,12 +40,10 @@ namespace Spotcheckr.API.IntegrationTests.Services
 			UnitOfWork.Certifications.Add(certification);
 			UnitOfWork.Complete();
 
-			var actualResult = await service.ValidateCertification(certification.Id);
+			var actualResult = await Service.ValidateCertification(certification.Id);
 
 			Assert.True(actualResult);
 			Assert.True(certification.Verified);
 		}
-
-		private ICertificationService CreateCertificationService() => new CertificationService(UnitOfWork, Mapper);
 	}
 }

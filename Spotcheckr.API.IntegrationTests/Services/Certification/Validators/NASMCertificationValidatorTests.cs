@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services.Validators;
 using Xunit;
 
 namespace Spotcheckr.API.IntegrationTests.Services.Validators
 {
-	public class NASMCertificationValidatorTests
+	public class NASMCertificationValidatorTests : BaseTest
 	{
 		private readonly string TestCertificateId = "1190326987";
 		private readonly ICertificationValidator NASMValidator;
 
 		public NASMCertificationValidatorTests()
 		{
-			NASMValidator = new NASMCertificationValidator();
+			NASMValidator = ServiceProvider.GetRequiredService<NASMCertificationValidator>();
 		}
 
 		[Fact]

@@ -1,92 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PuppeteerSharp;
+using RestSharp;
+using HtmlAgilityPack;
+using System.Linq;
 
 namespace Spotcheckr.API.Services.Validators
 {
 	public class NASMCertificationValidator : ICertificationValidator
 	{
 		private readonly Uri BaseValidationUrl = new("https://www.nasm.org/resources/validate-credentials");
-		private readonly string CertificationIdInputSelector = "#MainContent_C001_ctl00_ctl00_txtCertId";
-		private readonly string SearchByCertInputSelector = "#MainContent_C001_ctl00_ctl00_btnSearchByCertId";
-		private readonly string ResultsContainerSelector = "#MainContent_C001_ctl00_ctl00_gvCertResults";
-		private readonly string IndividualResultContainerSelector = "#MainContent_C001_ctl00_ctl00_gvCertResults tr";
-		private readonly string IndividualResultDataContainerSelector = "td";
+		private readonly IRestClient RestClient;
+
+		public NASMCertificationValidator(IRestClient restClient)
+		{
+			RestClient = restClient;
+		}
 
 		public async Task<IEnumerable<CertificationValidationResponse>> Validate(CertificationValidationSearchCriteria searchCriteria)
 		{
-			await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
-			var browser = await Puppeteer.LaunchAsync(new LaunchOptions
+			var responses = new List<CertificationValidationResponse>();
+			var web = new HtmlWeb();
+			var doc = await web.LoadFromWebAsync(BaseValidationUrl.AbsoluteUri);
+			var __EVENTTARGET = "ctl00$MainContent$C001$ctl00$ctl00$btnSearchByCertId";
+			var __VIEWSTATE = doc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATE\"]").Attributes["value"].Value;
+			var __EVENTVALIDATION = doc.DocumentNode.SelectSingleNode("//*[@id=\"__EVENTVALIDATION\"]").Attributes["value"].Value;
+			var __CERTIFICATEPARAMETER = "ctl00$MainContent$C001$ctl00$ctl00$txtCertId";
+
+			RestClient.BaseUrl = BaseValidationUrl;
+			var request = new RestRequest(Method.POST);
+			request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+			request.AddParameter(nameof(__EVENTTARGET), __EVENTTARGET);
+			request.AddParameter(nameof(__VIEWSTATE), __VIEWSTATE);
+			request.AddParameter(nameof(__EVENTVALIDATION), __EVENTVALIDATION);
+			request.AddParameter(__CERTIFICATEPARAMETER, searchCriteria.CertificationId);
+
+			var response = await RestClient.ExecuteAsync(request);
+
+			var htmlDoc = new HtmlDocument();
+			htmlDoc.LoadHtml(response.Content);
+			var certificateNodes = htmlDoc.DocumentNode.SelectNodes("//tr[@class='RowStyle']|//tr[@class='AlternateRowStyle']");
+
+			foreach (var node in certificateNodes)
 			{
-				Headless = true,
-				Args = new[] { "--single-process",
-							   "--enable-automation",
-							   "--no-sandbox",
-							   "--no-zygote"}
-			});
-			var validationResponses = new List<CertificationValidationResponse>();
-
-			try
-			{
-				var page = await browser.NewPageAsync();
-				await page.GoToAsync(BaseValidationUrl.AbsoluteUri);
-
-				if (!string.IsNullOrWhiteSpace(searchCriteria.CertificationId))
+				var dataNodes = node.ChildNodes.Where(dataNode => dataNode.Name == "td").ToArray();
+				var fullName = dataNodes[0].InnerText;
+				var certificateId = dataNodes[2].InnerText;
+				var expiration = dataNodes[3].InnerText;
+				var isExpirationDateParsed = DateTime.TryParse(expiration, out var expirationDate);
+				responses.Add(new CertificationValidationResponse
 				{
-					var certificateInput = await page.QuerySelectorAsync(CertificationIdInputSelector);
-					await certificateInput.TypeAsync(searchCriteria.CertificationId);
-					await page.ClickAsync(SearchByCertInputSelector);
-				}
-				else
-				{
-					throw new InvalidOperationException("No search criteria provided. First name and last name, or certificate number, must be provided.");
-				}
-
-
-				await page.WaitForSelectorAsync(ResultsContainerSelector);
-
-				var certificationResultsTable = await page.QuerySelectorAsync(ResultsContainerSelector);
-				if (certificationResultsTable != null)
-				{
-					var results = await page.QuerySelectorAllAsync(IndividualResultContainerSelector);
-
-					for (var i = 1; i < results.Length; i++)
-					{
-						var result = results[i];
-						var dataCells = await result.QuerySelectorAllAsync(IndividualResultDataContainerSelector);
-						var certificationValidationResponse = new CertificationValidationResponse();
-
-						for (var j = 0; j < dataCells.Length; j++)
-						{
-							var value = await (await dataCells[j].GetPropertyAsync("innerHTML")).JsonValueAsync<string>();
-							if (j == 0)
-							{
-								certificationValidationResponse.FullName = value;
-							}
-							else if (j == 2)
-							{
-								certificationValidationResponse.CertificationNumber = value;
-							}
-							else if (j == 3)
-							{
-								var parsedExpirationDate = DateTime.TryParse(value, out var expirationDate);
-								if (parsedExpirationDate)
-								{
-									certificationValidationResponse.ExpirationDate = expirationDate;
-								}
-							}
-						}
-						validationResponses.Add(certificationValidationResponse);
-					}
-				}
-			}
-			finally
-			{
-				await browser.CloseAsync();
+					FullName = fullName,
+					CertificationNumber = certificateId,
+					ExpirationDate = isExpirationDateParsed ? expirationDate : null
+				});
 			}
 
-			return validationResponses;
+			return responses;
 		}
 	}
 }

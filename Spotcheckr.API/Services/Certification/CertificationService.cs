@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using RestSharp;
 using Spotcheckr.API.Services.Validators;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
@@ -14,15 +15,21 @@ namespace Spotcheckr.API.Services
 
 		private readonly IUnitOfWork UnitOfWork;
 
-		private readonly IDictionary<string, ICertificationValidator> Validators = new Dictionary<string, ICertificationValidator>
-		{
-			{ "NASM", new NASMCertificationValidator() }
-		};
+		private readonly ICertificationValidator NASMValidator;
 
-		public CertificationService(IUnitOfWork unitOfWork, IMapper mapper)
+		private readonly IDictionary<string, ICertificationValidator> Validators;
+
+		public CertificationService(IUnitOfWork unitOfWork,
+									IMapper mapper,
+									NASMCertificationValidator nasmValidator)
 		{
 			UnitOfWork = unitOfWork;
 			Mapper = mapper;
+			NASMValidator = nasmValidator;
+			Validators = new Dictionary<string, ICertificationValidator>
+			{
+				{ "NASM", NASMValidator }
+			};
 		}
 
 		public async Task<bool> ValidateCertification(int certificationId)
