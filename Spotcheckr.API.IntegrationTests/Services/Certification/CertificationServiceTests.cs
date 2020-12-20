@@ -28,7 +28,10 @@ namespace Spotcheckr.API.IntegrationTests.Services
 			UnitOfWork.Users.Add(user);
 			var org = new Organization("NASM", "National Academy of Sport Medicine");
 			UnitOfWork.Organizations.Add(org);
-			var certificate = new Certificate { Code = "NASM-CPT", Organization = org };
+			var certificate = new Certificate(code: "NASM-CPT", description: "Certified Personal Trainer")
+			{
+				Organization = org
+			};
 			UnitOfWork.Certificates.Add(certificate);
 			var certification = new Certification
 			{
@@ -40,7 +43,7 @@ namespace Spotcheckr.API.IntegrationTests.Services
 			UnitOfWork.Certifications.Add(certification);
 			UnitOfWork.Complete();
 
-			var actualResult = await Service.ValidateCertification(certification.Id);
+			var actualResult = await Service.ValidateCertificationAsync(certification.Id);
 
 			Assert.True(actualResult);
 			Assert.True(certification.Verified);

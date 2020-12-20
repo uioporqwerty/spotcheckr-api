@@ -20,6 +20,7 @@ namespace Spotcheckr.API.IntegrationTests
 			serviceCollection.AddTransient<IUserService, UserService>()
 							 .AddTransient<ICertificationService, CertificationService>()
 							 .AddTransient<IOrganizationService, OrganizationService>()
+							 .AddTransient<ICertificateService, CertificateService>()
 							 .AddTransient<IUnitOfWork, UnitOfWork>()
 							 .AddTransient<IRestClient, RestClient>()
 							 .AddSingleton<NASMCertificationValidator>()

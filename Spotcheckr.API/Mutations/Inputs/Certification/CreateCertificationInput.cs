@@ -5,7 +5,7 @@ using Spotcheckr.Domain;
 namespace Spotcheckr.API.Mutations.Input
 {
 	public record CreateCertificationInput([ID] int UserId,
-										   [ID(nameof(Organization))] int OrganizationId,
+										   [ID]
 										   string CertificationNumber,
 										   DateTime? DateAchieved
 										   );

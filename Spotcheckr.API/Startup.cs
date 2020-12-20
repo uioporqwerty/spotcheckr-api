@@ -53,6 +53,7 @@ namespace Spotcheckr.API
 			.AddTransient<IUserService, UserService>()
 			.AddTransient<ICertificationService, CertificationService>()
 			.AddTransient<IOrganizationService, OrganizationService>()
+			.AddTransient<ICertificateService, CertificateService>()
 			.AddTransient<IUnitOfWork, UnitOfWork>()
 			.AddTransient<IRestClient, RestClient>()
 			.AddSingleton<NASMCertificationValidator>()
@@ -71,6 +72,7 @@ namespace Spotcheckr.API
 			_services.AddGraphQLServer()
 					 .AddQueryType(d => d.Name("Query"))
 						.AddType<UserQueries>()
+						.AddType<CertificateQueries>()
 					 .AddMutationType(d => d.Name("Mutation"))
 						.AddType<UserMutations>()
 						.AddType<CertificationMutations>()
@@ -81,7 +83,9 @@ namespace Spotcheckr.API
 					 .AddType<PhoneNumberType>()
 					 .AddType<PhoneNumberInputType>()
 					 .AddType<CertificateType>()
+					 .AddType<CertificateInputType>()
 					 .AddType<CertificationType>()
+					 .AddType<OrganizationType>()
 					 .AddEnumType<UserType>()
 					 .EnableRelaySupport();
 	}

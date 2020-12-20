@@ -10,13 +10,13 @@ using Xunit;
 
 namespace Spotcheckr.API.UnitTests.Services
 {
-	public class OrganizationServicesTests : BaseTest
+	public class OrganizationServiceTests : BaseTest
 	{
 		private readonly IUnitOfWork UnitOfWork;
 
 		private readonly IOrganizationService Service;
 
-		public OrganizationServicesTests()
+		public OrganizationServiceTests()
 		{
 			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
 			Service = ServiceProvider.GetRequiredService<IOrganizationService>();

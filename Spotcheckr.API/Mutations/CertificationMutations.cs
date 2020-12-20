@@ -21,7 +21,7 @@ namespace Spotcheckr.API.Mutations
 		public async Task<ValidateCertificationPayload> ValidateCertificationAsync(ValidateCertificationInput input,
 																				   [Service] ICertificationService certificationService)
 		{
-			var validationStatus = await certificationService.ValidateCertification(input.CertificationId);
+			var validationStatus = await certificationService.ValidateCertificationAsync(input.CertificationId);
 			return new ValidateCertificationPayload(validationStatus);
 		}
 

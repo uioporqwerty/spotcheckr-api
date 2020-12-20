@@ -26,7 +26,7 @@ namespace Spotcheckr.API.Services
 			};
 		}
 
-		public async Task<bool> ValidateCertification(int certificationId)
+		public async Task<bool> ValidateCertificationAsync(int certificationId)
 		{
 			var certificationDetails = await UnitOfWork.Certifications.GetCertificationDetails(certificationId);
 			if (!certificationDetails.Verified)

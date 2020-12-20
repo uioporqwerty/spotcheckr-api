@@ -181,14 +181,14 @@ namespace Spotcheckr.Data
 
 		private static IEnumerable<Certificate> TestCertificates => new List<Certificate>
 		{
-			new Certificate { Code = "NASM-CPT", Description = "Certified Personal Trainer" },
-			new Certificate { Code = "NASM-CNC", Description = "Nutrition Certification" },
-			new Certificate { Code = "NASM-CES", Description = "Corrective Exercise Specialization" },
-			new Certificate { Code = "NASM-PES", Description = "Performance Enhancement Specialization" },
-			new Certificate { Code = "NASM-VCS", Description = "Virtual Coaching Specialization" },
-			new Certificate { Code = "NASM-WLS", Description = "Weight Loss Specialization" },
-			new Certificate { Code = "NASM-GPTS", Description = "Group Personal Training Specialization Program" },
-			new Certificate { Code = "NASM-YES", Description = "Youth Exercise Specialization" }
+			new Certificate(code: "NASM-CPT", description: "Certified Personal Trainer"),
+			new Certificate(code: "NASM-CNC", description: "Nutrition Certification"),
+			new Certificate(code: "NASM-CES", description: "Corrective Exercise Specialization"),
+			new Certificate(code: "NASM-PES", description: "Performance Enhancement Specialization"),
+			new Certificate(code: "NASM-VCS", description: "Virtual Coaching Specialization"),
+			new Certificate(code: "NASM-WLS", description: "Weight Loss Specialization"),
+			new Certificate(code: "NASM-GPTS", description: "Group Personal Training Specialization Program"),
+			new Certificate(code: "NASM-YES", description: "Youth Exercise Specialization")
 		};
 
 		private static IEnumerable<Organization> TestOrganizations => new List<Organization>
