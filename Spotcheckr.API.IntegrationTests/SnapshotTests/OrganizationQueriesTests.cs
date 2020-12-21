@@ -9,35 +9,35 @@ using Xunit;
 
 namespace Spotcheckr.API.IntegrationTests.SnapshotTests
 {
-	public class CertificateQueriesTests : BaseSnapshotTest
+	public class OrganizationQueriesTests : BaseSnapshotTest
 	{
 		private readonly IUnitOfWork UnitOfWork;
 
-		public CertificateQueriesTests()
+		public OrganizationQueriesTests()
 		{
 			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
 		}
 
 		[Fact]
-		public async void GetCertificates_WithGet_ReturnsCertificates()
+		public async void GetOrganizations_WithGet_ReturnsOrganizations()
 		{
-			var certificates = new List<Certificate>
+			var organizations = new List<Organization>
 			{
-				new Certificate("NASM-CPT", "Some cert description"),
-				new Certificate("NASM-CPP", "Some other cert description")
+				new Organization("CPT", "Some Name"),
+				new Organization("CPP", "Some other name")
 			};
-			UnitOfWork.Certificates.AddRange(certificates);
+			UnitOfWork.Organizations.AddRange(organizations);
 			UnitOfWork.Complete();
+
 			var executor = await GetRequestExecutorAsync();
 			var result = await executor.ExecuteAsync(@"
 				query {
-					certificates() {
-						code
-						description
+					organizations {
+						abbreviation
+						name
 					}
 				}
 			");
-
 			result.ToJson().MatchSnapshot();
 		}
 	}

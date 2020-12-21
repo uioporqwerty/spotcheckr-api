@@ -1,52 +1,14 @@
 ﻿{
-  "Label": null,
-  "Path": null,
-  "Data": {
+  "data": {
     "certificates": [
       {
-        "id": "Q2VydGlmaWNhdGUKaTE=",
         "code": "NASM-CPT",
-        "description": "Certified Personal Trainer"
+        "description": "Some cert description"
       },
       {
-        "id": "Q2VydGlmaWNhdGUKaTI=",
-        "code": "NASM-CNC",
-        "description": "Nutrition Certification"
-      },
-      {
-        "id": "Q2VydGlmaWNhdGUKaTM=",
-        "code": "NASM-CES",
-        "description": "Corrective Exercise Specialization"
-      },
-      {
-        "id": "Q2VydGlmaWNhdGUKaTQ=",
-        "code": "NASM-PES",
-        "description": "Performance Enhancement Specialization"
-      },
-      {
-        "id": "Q2VydGlmaWNhdGUKaTU=",
-        "code": "NASM-VCS",
-        "description": "Virtual Coaching Specialization"
-      },
-      {
-        "id": "Q2VydGlmaWNhdGUKaTY=",
-        "code": "NASM-WLS",
-        "description": "Weight Loss Specialization"
-      },
-      {
-        "id": "Q2VydGlmaWNhdGUKaTc=",
-        "code": "NASM-GPTS",
-        "description": "Group Personal Training Specialization Program"
-      },
-      {
-        "id": "Q2VydGlmaWNhdGUKaTg=",
-        "code": "NASM-YES",
-        "description": "Youth Exercise Specialization"
+        "code": "NASM-CPP",
+        "description": "Some other cert description"
       }
     ]
-  },
-  "Errors": null,
-  "Extensions": null,
-  "ContextData": null,
-  "HasNext": null
+  }
 }

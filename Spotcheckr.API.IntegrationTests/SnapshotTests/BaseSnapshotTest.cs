@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using HotChocolate.Execution;
 using Microsoft.EntityFrameworkCore;
@@ -17,26 +18,39 @@ namespace Spotcheckr.API.IntegrationTests.SnapshotTests
 {
 	public abstract class BaseSnapshotTest
 	{
-		protected async Task<IRequestExecutor> GetRequestExecutorAsync()
+		protected IServiceProvider ServiceProvider { get; }
+
+		private readonly IServiceCollection ServiceCollection;
+
+		public BaseSnapshotTest()
 		{
-			var serviceCollection = new ServiceCollection();
-			serviceCollection.AddTransient<IUserService, UserService>()
+			ServiceCollection = new ServiceCollection();
+			ServiceCollection.AddTransient<IUserService, UserService>()
 							 .AddTransient<IUnitOfWork, UnitOfWork>()
 							 .AddTransient<IOrganizationService, OrganizationService>()
 							 .AddTransient<ICertificateService, CertificateService>()
 							 .AddTransient<IRestClient, RestClient>()
 							 .AddSingleton<NASMCertificationValidator>()
-							 .AddSingleton<DbContext, SpotcheckrCoreContext>()
+							 .AddTransient<DbContext, SpotcheckrCoreContext>()
 							 .AddAutoMapper(typeof(Startup).Assembly)
 							 .AddDbContext<SpotcheckrCoreContext>(options =>
 																  options.UseInMemoryDatabase("Spotcheckr-Core")
 																		 .EnableSensitiveDataLogging());
 
+			ServiceProvider = ServiceCollection.BuildServiceProvider();
 
-			var executor = await serviceCollection.AddGraphQLServer()
+			var context = ServiceProvider.GetRequiredService<DbContext>();
+			context.Database.EnsureDeleted();
+			context.Database.EnsureCreated();
+		}
+
+		protected async Task<IRequestExecutor> GetRequestExecutorAsync()
+		{
+			var executor = await ServiceCollection.AddGraphQLServer()
 					 .AddQueryType(d => d.Name("Query"))
 						.AddType<UserQueries>()
 						.AddType<CertificateQueries>()
+						.AddType<OrganizationQueries>()
 					 .AddMutationType(d => d.Name("Mutation"))
 						.AddType<UserMutations>()
 						.AddType<CertificationMutations>()
@@ -48,14 +62,10 @@ namespace Spotcheckr.API.IntegrationTests.SnapshotTests
 					 .AddType<PhoneNumberInputType>()
 					 .AddType<CertificateType>()
 					 .AddType<CertificationType>()
+					 .AddType<OrganizationType>()
 					 .AddEnumType<UserType>()
 					 .EnableRelaySupport()
 					 .BuildRequestExecutorAsync();
-
-			var serviceProvider = serviceCollection.BuildServiceProvider();
-			var context = serviceProvider.GetRequiredService<DbContext>();
-			context.Database.EnsureDeleted();
-			DatabaseInitializer.Initialize(serviceProvider.GetRequiredService<SpotcheckrCoreContext>());
 
 			return executor;
 		}

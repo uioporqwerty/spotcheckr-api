@@ -1,0 +1,14 @@
+﻿{
+  "data": {
+    "organizations": [
+      {
+        "abbreviation": "CPT",
+        "name": "Some Name"
+      },
+      {
+        "abbreviation": "CPP",
+        "name": "Some other name"
+      }
+    ]
+  }
+}

@@ -73,6 +73,7 @@ namespace Spotcheckr.API
 					 .AddQueryType(d => d.Name("Query"))
 						.AddType<UserQueries>()
 						.AddType<CertificateQueries>()
+						.AddType<OrganizationQueries>()
 					 .AddMutationType(d => d.Name("Mutation"))
 						.AddType<UserMutations>()
 						.AddType<CertificationMutations>()
