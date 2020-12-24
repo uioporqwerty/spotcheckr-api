@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services;
-using Spotcheckr.Data;
-using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
 using Xunit;
 

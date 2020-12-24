@@ -18,17 +18,24 @@
 
 		public ICertificateRepository Certificates { get; }
 
-		public UnitOfWork(SpotcheckrCoreContext context)
+		public UnitOfWork(SpotcheckrCoreContext context,
+						  IUserRepository userRepository,
+						  IExercisePostRepository exercisePostRepository,
+						  IEmailRepository emailRepository,
+						  IPhoneNumberRepository phoneNumberRepository,
+						  ICertificationRepository certificationRepository,
+						  ICertificateRepository certificateRepository,
+						  IOrganizationRepository organizationRepository)
 		{
 			_context = context;
 
-			Users = new UserRepository(_context);
-			ExercisePosts = new ExercisePostRepository(_context);
-			Emails = new EmailRepository(_context);
-			PhoneNumbers = new PhoneNumberRepository(_context);
-			Certifications = new CertificationRepository(_context);
-			Certificates = new CertificateRepository(_context);
-			Organizations = new OrganizationRepository(_context);
+			Users = userRepository;
+			ExercisePosts = exercisePostRepository;
+			Emails = emailRepository;
+			PhoneNumbers = phoneNumberRepository;
+			Certifications = certificationRepository;
+			Certificates = certificateRepository;
+			Organizations = organizationRepository;
 		}
 
 		public void Dispose() => _context.Dispose();

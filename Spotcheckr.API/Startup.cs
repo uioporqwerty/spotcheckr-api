@@ -50,11 +50,18 @@ namespace Spotcheckr.API
 					.UseVoyager();
 
 		private static void ConfigureServices() => _services
-			.AddTransient<IUserService, UserService>()
-			.AddTransient<ICertificationService, CertificationService>()
-			.AddTransient<IOrganizationService, OrganizationService>()
-			.AddTransient<ICertificateService, CertificateService>()
+			.AddScoped<IUserService, UserService>()
+			.AddScoped<ICertificationService, CertificationService>()
+			.AddScoped<IOrganizationService, OrganizationService>()
+			.AddScoped<ICertificateService, CertificateService>()
 			.AddScoped<IUnitOfWork, UnitOfWork>()
+			.AddScoped<IUserRepository, UserRepository>()
+			.AddScoped<IExercisePostRepository, ExercisePostRepository>()
+			.AddScoped<IEmailRepository, EmailRepository>()
+			.AddScoped<IPhoneNumberRepository, PhoneNumberRepository>()
+			.AddScoped<ICertificationRepository, CertificationRepository>()
+			.AddScoped<ICertificateRepository, CertificateRepository>()
+			.AddScoped<IOrganizationRepository, OrganizationRepository>()
 			.AddTransient<IRestClient, RestClient>()
 			.AddSingleton<NASMCertificationValidator>();
 

@@ -21,6 +21,8 @@ namespace Spotcheckr.API.UnitTests
 			ServiceProvider = serviceFixture.ServiceProvider;
 			Context = serviceFixture.ServiceProvider.GetRequiredService<SpotcheckrCoreContext>();
 			UnitOfWork = serviceFixture.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+			Context.Database.EnsureCreated();
 		}
 
 		public void Dispose()
