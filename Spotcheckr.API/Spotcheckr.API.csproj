@@ -35,6 +35,9 @@
     <ItemGroup>
         <ProjectReference Include="..\Spotcheckr.Data\Spotcheckr.Data.csproj" />
         <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.Domain.csproj" />
+        <ProjectReference Include="..\Spotcheckr.Models\Spotcheckr.Models.csproj">
+          <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+        </ProjectReference>
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Mutations\" />

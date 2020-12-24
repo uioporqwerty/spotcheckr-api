@@ -9,7 +9,7 @@ namespace Spotcheckr.Data.Repositories
 	{
 		public CertificationRepository(SpotcheckrCoreContext context) : base(context) { }
 
-		public SpotcheckrCoreContext SpotcheckrCoreContext => Context as SpotcheckrCoreContext;
+		public SpotcheckrCoreContext SpotcheckrCoreContext => Context;
 
 		public async Task<Certification> GetCertificationDetails(int certificationId) => SpotcheckrCoreContext.Certifications.Where(cert => cert.Id == certificationId)
 													   .Include(cert => cert.User)

@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Types
 {

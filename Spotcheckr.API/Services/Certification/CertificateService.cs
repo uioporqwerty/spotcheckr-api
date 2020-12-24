@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Spotcheckr.Data.Repositories;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Services
 {
@@ -9,21 +11,25 @@ namespace Spotcheckr.API.Services
 	{
 		private readonly IUnitOfWork UnitOfWork;
 
-		public CertificateService(IUnitOfWork unitOfWork)
+		private readonly IMapper Mapper;
+
+		public CertificateService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			UnitOfWork = unitOfWork;
+			Mapper = mapper;
 		}
 
 		public async Task<Certificate> GetCertificateAsync(int id)
 		{
 			var certificate = await UnitOfWork.Certificates.GetAsync(id);
-			return certificate;
+			return Mapper.Map<Certificate>(certificate);
 		}
 
 		public async Task<IEnumerable<Certificate>> GetCertificatesAsync()
 		{
 			var certificates = new List<Certificate>();
-			certificates.AddRange(await UnitOfWork.Certificates.GetAllAsync());
+			var allExistingCertificates = await UnitOfWork.Certificates.GetAllAsync();
+			certificates.AddRange(Mapper.Map<IEnumerable<Certificate>>(allExistingCertificates));
 			return certificates;
 		}
 	}

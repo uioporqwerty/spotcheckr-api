@@ -9,9 +9,9 @@ namespace Spotcheckr.Data.Repositories
 {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
-		protected readonly DbContext Context;
+		protected readonly SpotcheckrCoreContext Context;
 
-		public Repository(DbContext context)
+		public Repository(SpotcheckrCoreContext context)
 		{
 			Context = context;
 		}

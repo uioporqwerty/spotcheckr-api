@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Types
 {
@@ -7,10 +7,6 @@ namespace Spotcheckr.API.Types
 	{
 		protected override void Configure(IObjectTypeDescriptor<Certification> descriptor)
 		{
-			descriptor.Field(field => field.DateCreated).Ignore();
-			descriptor.Field(field => field.DateModified).Ignore();
-			descriptor.Field(field => field.UserId).Ignore();
-			descriptor.Field(field => field.CertificateId).Ignore();
 		}
 	}
 }

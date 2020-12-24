@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Spotcheckr.Data.Repositories;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Services
 {
@@ -9,21 +10,25 @@ namespace Spotcheckr.API.Services
 	{
 		private readonly IUnitOfWork UnitOfWork;
 
-		public OrganizationService(IUnitOfWork unitOfWork)
+		private readonly IMapper Mapper;
+
+		public OrganizationService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			UnitOfWork = unitOfWork;
+			Mapper = mapper;
 		}
 
 		public async Task<Organization> GetOrganizationAsync(int id)
 		{
 			var organization = await UnitOfWork.Organizations.GetAsync(id);
-			return organization;
+			return Mapper.Map<Organization>(organization);
 		}
 
 		public async Task<IEnumerable<Organization>> GetOrganizationsAsync()
 		{
 			var organizations = new List<Organization>();
-			organizations.AddRange(await UnitOfWork.Organizations.GetAllAsync());
+			var allExistingOrganizations = await UnitOfWork.Organizations.GetAllAsync();
+			organizations.AddRange(Mapper.Map<IEnumerable<Organization>>(allExistingOrganizations));
 			return organizations;
 		}
 	}

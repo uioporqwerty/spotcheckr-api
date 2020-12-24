@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Spotcheckr.Domain;
 
 namespace Spotcheckr.Data.Repositories
@@ -8,20 +10,19 @@ namespace Spotcheckr.Data.Repositories
 	{
 		public UserRepository(SpotcheckrCoreContext context) : base(context) { }
 
-		public SpotcheckrCoreContext SpotcheckrCoreContext => Context as SpotcheckrCoreContext;
+		public SpotcheckrCoreContext SpotcheckrCoreContext => Context;
 
-		public Task<ContactInformation> GetContactInformationAsync(int userID)
+		public Task<User> GetUserDetailsWithContactInformationAsync(int userID)
 		{
-			var emails = SpotcheckrCoreContext.Emails.Where(email => email.UserId == userID).ToList();
-			var phoneNumbers = SpotcheckrCoreContext.PhoneNumbers.Where(phoneNumber => phoneNumber.UserId == userID).ToList();
-
-			var contactInformation = new ContactInformation
+			var user = SpotcheckrCoreContext.Users.Where(user => user.Id == userID)
+												  .Include(user => user.Emails)
+												  .Include(user => user.PhoneNumbers).FirstOrDefault();
+			if (user == null)
 			{
-				EmailAddresses = emails,
-				PhoneNumbers = phoneNumbers
-			};
+				throw new InvalidOperationException($"User {userID} not found.");
+			}
 
-			return Task.FromResult(contactInformation);
+			return Task.FromResult(user);
 		}
 	}
 }

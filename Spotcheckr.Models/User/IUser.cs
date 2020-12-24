@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Spotcheckr.Domain
+namespace Spotcheckr.Models
 {
-	/// <summary>
-	/// Personal trainer type of user with details specific to a personal trainer.
-	/// </summary>
-	public class PersonalTrainer : IUser
+	public interface IUser
 	{
 		/// <summary>
 		/// Unique identifier for the user.
@@ -32,15 +28,5 @@ namespace Spotcheckr.Domain
 		/// Contact details for the user.
 		/// </summary>
 		public ContactInformation? ContactInformation { get; set; }
-
-		/// <summary>
-		/// Business or personal website for the personal trainer.
-		/// </summary>
-		public Uri? Website { get; set; }
-
-		/// <summary>
-		/// Certifications achieved by the personal trainer.
-		/// </summary>
-		public IEnumerable<Certification>? Certifications { get; set; }
 	}
 }

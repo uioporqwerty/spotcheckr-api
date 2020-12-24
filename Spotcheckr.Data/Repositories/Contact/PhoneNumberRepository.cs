@@ -8,7 +8,7 @@ namespace Spotcheckr.Data.Repositories
 	{
 		public PhoneNumberRepository(SpotcheckrCoreContext context) : base(context) { }
 
-		public SpotcheckrCoreContext SpotcheckrCoreContext => Context as SpotcheckrCoreContext;
+		public SpotcheckrCoreContext SpotcheckrCoreContext => Context;
 
 		public IEnumerable<PhoneNumber> GetPhoneNumbersByUserId(int userId) => SpotcheckrCoreContext.PhoneNumbers.Where(phoneNumber => phoneNumber.UserId == userId);
 	}

@@ -9,7 +9,7 @@ using Spotcheckr.API.Queries;
 using Spotcheckr.API.Services;
 using Spotcheckr.Data;
 using Spotcheckr.API.Mutations;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 using AutoMapper;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.API.Types;
@@ -54,10 +54,9 @@ namespace Spotcheckr.API
 			.AddTransient<ICertificationService, CertificationService>()
 			.AddTransient<IOrganizationService, OrganizationService>()
 			.AddTransient<ICertificateService, CertificateService>()
-			.AddTransient<IUnitOfWork, UnitOfWork>()
+			.AddScoped<IUnitOfWork, UnitOfWork>()
 			.AddTransient<IRestClient, RestClient>()
-			.AddSingleton<NASMCertificationValidator>()
-			.AddSingleton<DbContext, SpotcheckrCoreContext>();
+			.AddSingleton<NASMCertificationValidator>();
 
 		private static void ConfigureAutoMapper() => _services.AddAutoMapper(typeof(Startup).Assembly);
 

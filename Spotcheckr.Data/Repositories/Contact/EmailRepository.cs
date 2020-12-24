@@ -8,7 +8,7 @@ namespace Spotcheckr.Data.Repositories
 	{
 		public EmailRepository(SpotcheckrCoreContext context) : base(context) { }
 
-		public SpotcheckrCoreContext SpotcheckrCoreContext => Context as SpotcheckrCoreContext;
+		public SpotcheckrCoreContext SpotcheckrCoreContext => Context;
 
 		public IEnumerable<Email> GetEmailsByUserId(int userId) => SpotcheckrCoreContext.Emails.Where(email => email.UserId == userId);
 	}

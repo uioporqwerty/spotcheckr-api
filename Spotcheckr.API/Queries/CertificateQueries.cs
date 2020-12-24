@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
 using Spotcheckr.API.Services;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Queries
 {

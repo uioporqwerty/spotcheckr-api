@@ -1,8 +1,11 @@
 ﻿using System;
 
-namespace Spotcheckr.Domain
+namespace Spotcheckr.Models
 {
-	public interface IUser
+	/// <summary>
+	/// Athlete type of user with details specific to an athlete.
+	/// </summary>
+	public class Athlete : IUser
 	{
 		/// <summary>
 		/// Unique identifier for the user.
@@ -22,7 +25,7 @@ namespace Spotcheckr.Domain
 		/// <summary>
 		/// Details surrounding the identity of the user.
 		/// </summary>
-		public IdentityInformation? IdentityInformation { get; set; }
+		public IdentityInformation IdentityInformation { get; set; }
 
 		/// <summary>
 		/// Contact details for the user.

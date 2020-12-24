@@ -3,7 +3,7 @@ using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
 using Spotcheckr.API.Services;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Queries
 {

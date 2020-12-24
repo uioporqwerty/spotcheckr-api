@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spotcheckr.Domain
+namespace Spotcheckr.Models
 {
 	/// <summary>
 	/// Identity details for the user.

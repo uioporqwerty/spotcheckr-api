@@ -6,6 +6,6 @@ namespace Spotcheckr.Data.Repositories
 	{
 		public CertificateRepository(SpotcheckrCoreContext context) : base(context) { }
 
-		public SpotcheckrCoreContext SpotcheckrCoreContext => Context as SpotcheckrCoreContext;
+		public SpotcheckrCoreContext SpotcheckrCoreContext => Context;
 	}
 }

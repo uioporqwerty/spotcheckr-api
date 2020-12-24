@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Spotcheckr.API.Mutations.Inputs;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.AutoMapper
 {
@@ -11,6 +11,11 @@ namespace Spotcheckr.API.AutoMapper
 			CreateMap<UpdateUserProfileInput, Athlete>();
 			CreateMap<UpdateUserProfileInput, PersonalTrainer>();
 			CreateMap<UpdateUserContactInformationInput, ContactInformation>();
+			CreateMap<Domain.Organization, Organization>();
+			CreateMap<Domain.Certificate, Certificate>();
+			CreateMap<Domain.User, Athlete>();
+			CreateMap<Domain.User, PersonalTrainer>();
+			CreateMap<Domain.UserType, UserType>();
 		}
 	}
 }

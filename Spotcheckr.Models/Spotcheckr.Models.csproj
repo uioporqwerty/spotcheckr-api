@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="User\" />
+    <Folder Include="Identity\" />
+    <Folder Include="Time\" />
+    <Folder Include="Contact\" />
+    <Folder Include="Business\" />
+    <Folder Include="Certificate\" />
+  </ItemGroup>
+</Project>

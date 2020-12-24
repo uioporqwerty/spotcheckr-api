@@ -21,10 +21,9 @@ namespace Spotcheckr.API.IntegrationTests
 							 .AddTransient<ICertificationService, CertificationService>()
 							 .AddTransient<IOrganizationService, OrganizationService>()
 							 .AddTransient<ICertificateService, CertificateService>()
-							 .AddTransient<IUnitOfWork, UnitOfWork>()
+							 .AddScoped<IUnitOfWork, UnitOfWork>()
 							 .AddTransient<IRestClient, RestClient>()
 							 .AddSingleton<NASMCertificationValidator>()
-							 .AddTransient<DbContext, SpotcheckrCoreContext>()
 							 .AddAutoMapper(typeof(Startup).Assembly)
 							 .AddDbContext<SpotcheckrCoreContext>(options =>
 																  options.UseInMemoryDatabase("Spotcheckr-Core")

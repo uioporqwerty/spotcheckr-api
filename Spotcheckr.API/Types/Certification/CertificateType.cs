@@ -1,6 +1,6 @@
 ﻿using HotChocolate.Types;
 using Spotcheckr.API.Services;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Types
 {
@@ -11,7 +11,6 @@ namespace Spotcheckr.API.Types
 			descriptor.ImplementsNode()
 				.IdField(field => field.Id)
 				.ResolveNode(async (ctx, id) => await ctx.Service<ICertificateService>().GetCertificateAsync(id));
-			descriptor.Field(field => field.OrganizationId).Ignore();
 		}
 	}
 }

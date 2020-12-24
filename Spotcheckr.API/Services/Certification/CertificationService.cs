@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Spotcheckr.API.Services.Validators;
 using Spotcheckr.Data.Repositories;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
 
 namespace Spotcheckr.API.Services
 {

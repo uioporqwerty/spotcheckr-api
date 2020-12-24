@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spotcheckr.Data", "Spotchec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotcheckr.API.IntegrationTests", "Spotcheckr.API.IntegrationTests\Spotcheckr.API.IntegrationTests.csproj", "{253107A6-C526-47D4-834E-9BFB3FFA7176}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotcheckr.Models", "Spotcheckr.Models\Spotcheckr.Models.csproj", "{016917A6-AB3F-46FE-91D1-CCEE60F5932C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,18 @@ Global
 		{253107A6-C526-47D4-834E-9BFB3FFA7176}.Release|x64.Build.0 = Release|Any CPU
 		{253107A6-C526-47D4-834E-9BFB3FFA7176}.Release|x86.ActiveCfg = Release|Any CPU
 		{253107A6-C526-47D4-834E-9BFB3FFA7176}.Release|x86.Build.0 = Release|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Debug|x64.Build.0 = Debug|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Debug|x86.Build.0 = Debug|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Release|x64.ActiveCfg = Release|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Release|x64.Build.0 = Release|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Release|x86.ActiveCfg = Release|Any CPU
+		{016917A6-AB3F-46FE-91D1-CCEE60F5932C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,13 +12,10 @@ namespace Spotcheckr.API.UnitTests.Services
 {
 	public class OrganizationServiceTests : BaseTest
 	{
-		private readonly IUnitOfWork UnitOfWork;
-
 		private readonly IOrganizationService Service;
 
 		public OrganizationServiceTests()
 		{
-			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
 			Service = ServiceProvider.GetRequiredService<IOrganizationService>();
 		}
 

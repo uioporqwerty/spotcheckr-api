@@ -1,8 +1,5 @@
 ﻿namespace Spotcheckr.Domain
 {
-	/// <summary>
-	/// Fitness service provider specific certificates issued to personal trainers.
-	/// </summary>
 	public class Certificate
 	{
 		public Certificate(string code, string description)
@@ -11,27 +8,14 @@
 			Description = description;
 		}
 
-		/// <summary>
-		/// Unique identifier for a certificate.
-		/// </summary>
 		public int Id { get; set; }
 
-		/// <summary>
-		/// Organization issued code for a certificate. Unique across all certificates for
-		/// a given organization.
-		/// </summary>
 		public string Code { get; set; }
 
-		/// <summary>
-		/// Brief description of the certificate.
-		/// </summary>
 		public string Description { get; set; }
 
 		public int OrganizationId { get; set; }
 
-		/// <summary>
-		/// Issuing organization for a certificate.
-		/// </summary>
 		public Organization Organization { get; set; }
 	}
 }

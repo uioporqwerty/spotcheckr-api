@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Spotcheckr.Data.Repositories;
-using Spotcheckr.Domain;
+using Spotcheckr.Models;
+using DomainUserType = Spotcheckr.Domain.UserType;
+using DomainEmail = Spotcheckr.Domain.Email;
+using DomainPhoneNumber = Spotcheckr.Domain.PhoneNumber;
 
 namespace Spotcheckr.API.Services
 {
@@ -22,55 +25,26 @@ namespace Spotcheckr.API.Services
 
 		public async Task<IUser> GetUserAsync(int id)
 		{
-			var user = await UnitOfWork.Users.GetAsync(id);
-			var userContactInformation = await UnitOfWork.Users.GetContactInformationAsync(id);
+			var user = await UnitOfWork.Users.GetUserDetailsWithContactInformationAsync(id);
 
 			return (user?.Type) switch
 			{
-				UserType.PersonalTrainer => new PersonalTrainer
-				{
-					Id = id,
-					Username = user.Username,
-					IdentityInformation = new IdentityInformation
-					{
-						FirstName = user.FirstName,
-						LastName = user.LastName,
-						BirthDate = user.BirthDate
-					},
-					ContactInformation = userContactInformation
-				},
-				UserType.Athlete => new Athlete
-				{
-					Id = id,
-					Username = user.Username,
-					IdentityInformation = new IdentityInformation
-					{
-						FirstName = user.FirstName,
-						LastName = user.LastName,
-						BirthDate = user.BirthDate
-					},
-					ContactInformation = userContactInformation
-				},
+				DomainUserType.PersonalTrainer => Mapper.Map<PersonalTrainer>(user),
+				DomainUserType.Athlete => Mapper.Map<Athlete>(user),
 				_ => throw new Exception("Invalid user type."),
 			};
 		}
 
 		public IUser CreateUser(UserType userType)
 		{
-			var user = new User { Type = userType };
+			var user = new Domain.User { Type = userType == UserType.Athlete ? DomainUserType.Athlete : DomainUserType.PersonalTrainer };
 			UnitOfWork.Users.Add(user);
 			UnitOfWork.Complete();
 
 			return userType switch
 			{
-				UserType.Athlete => new Athlete
-				{
-					Id = user.Id
-				},
-				UserType.PersonalTrainer => new PersonalTrainer
-				{
-					Id = user.Id
-				},
+				UserType.Athlete => Mapper.Map<Athlete>(user),
+				UserType.PersonalTrainer => Mapper.Map<PersonalTrainer>(user),
 				_ => throw new Exception("Unrecognized user type.")
 			};
 		}
@@ -118,9 +92,9 @@ namespace Spotcheckr.API.Services
 			return GetUserAsync(userId);
 		}
 
-		private static void UpdateEmailAddresses(ContactInformation updatedContactInformation, IEnumerable<Email> existingEmailAddresses)
+		private static void UpdateEmailAddresses(ContactInformation updatedContactInformation, IEnumerable<DomainEmail> existingEmailAddresses)
 		{
-			var updatedEmailAddresses = new HashSet<Email>(updatedContactInformation.EmailAddresses.Select(email => email) ?? Enumerable.Empty<Email>());
+			var updatedEmailAddresses = new HashSet<DomainEmail>(updatedContactInformation.EmailAddresses.Select(email => new DomainEmail { Id = email.Id, Address = email.Address }) ?? Enumerable.Empty<DomainEmail>());
 			foreach (var existingEmail in existingEmailAddresses)
 			{
 				if (updatedEmailAddresses.Contains(existingEmail))
@@ -130,9 +104,14 @@ namespace Spotcheckr.API.Services
 			}
 		}
 
-		private static void UpdatePhoneNumbers(ContactInformation updatedContactInformation, IEnumerable<PhoneNumber> existingPhoneNumbers)
+		private static void UpdatePhoneNumbers(ContactInformation updatedContactInformation, IEnumerable<DomainPhoneNumber> existingPhoneNumbers)
 		{
-			var updatedPhoneNumbers = new HashSet<PhoneNumber>(updatedContactInformation.PhoneNumbers.Select(phoneNumber => phoneNumber) ?? Enumerable.Empty<PhoneNumber>());
+			var updatedPhoneNumbers = new HashSet<DomainPhoneNumber>(updatedContactInformation.PhoneNumbers.Select(phoneNumber => new DomainPhoneNumber
+			{
+				Id = phoneNumber.Id,
+				Number = phoneNumber.Number,
+				Extension = phoneNumber.Extension
+			}) ?? Enumerable.Empty<DomainPhoneNumber>());
 			foreach (var existingPhoneNumber in existingPhoneNumbers)
 			{
 				if (updatedPhoneNumbers.Contains(existingPhoneNumber))

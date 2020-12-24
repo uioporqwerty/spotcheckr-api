@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Spotcheckr.Domain
+namespace Spotcheckr.Models
 {
 	public static class SpotcheckrTimeUtilities
 	{
