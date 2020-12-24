@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services.Validators;
+using Spotcheckr.API.Tests.Common;
+using Spotcheckr.API.Tests.Common.Fixtures;
 using Xunit;
 
 namespace Spotcheckr.API.IntegrationTests.Services.Validators
@@ -11,7 +13,7 @@ namespace Spotcheckr.API.IntegrationTests.Services.Validators
 		private readonly string TestCertificateId = "1190326987";
 		private readonly ICertificationValidator NASMValidator;
 
-		public NASMCertificationValidatorTests()
+		public NASMCertificationValidatorTests(ServiceFixture serviceFixture) : base(serviceFixture)
 		{
 			NASMValidator = ServiceProvider.GetRequiredService<NASMCertificationValidator>();
 		}

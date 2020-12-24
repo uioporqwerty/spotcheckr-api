@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Fixtures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spotcheckr.API\Spotcheckr.API.csproj" />
+    <ProjectReference Include="..\Spotcheckr.Data\Spotcheckr.Data.csproj" />
+    <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.Domain.csproj" />
+    <ProjectReference Include="..\Spotcheckr.Models\Spotcheckr.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
+</Project>

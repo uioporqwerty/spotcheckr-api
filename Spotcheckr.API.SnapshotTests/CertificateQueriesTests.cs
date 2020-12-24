@@ -1,21 +1,17 @@
 ﻿using System.Collections.Generic;
 using HotChocolate;
 using HotChocolate.Execution;
-using Microsoft.Extensions.DependencyInjection;
 using Snapshooter.Xunit;
-using Spotcheckr.Data.Repositories;
+using Spotcheckr.API.Tests.Common.Fixtures;
 using Spotcheckr.Domain;
 using Xunit;
 
-namespace Spotcheckr.API.IntegrationTests.SnapshotTests
+namespace Spotcheckr.API.SnapshotTests
 {
 	public class CertificateQueriesTests : BaseSnapshotTest
 	{
-		private readonly IUnitOfWork UnitOfWork;
-
-		public CertificateQueriesTests()
+		public CertificateQueriesTests(ServiceFixture serviceFixture) : base(serviceFixture)
 		{
-			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
 		}
 
 		[Fact]

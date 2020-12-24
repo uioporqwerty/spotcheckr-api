@@ -7,16 +7,18 @@ using Spotcheckr.API.Services.Validators;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
 
-namespace Spotcheckr.API.UnitTests
+namespace Spotcheckr.API.Tests.Common.Fixtures
 {
 	public class ServiceFixture
 	{
 		public ServiceProvider ServiceProvider { get; }
 
+		public IServiceCollection ServiceCollection { get; }
+
 		public ServiceFixture()
 		{
-			var serviceCollection = new ServiceCollection();
-			serviceCollection.AddScoped<IUserService, UserService>()
+			ServiceCollection = new ServiceCollection();
+			ServiceCollection.AddScoped<IUserService, UserService>()
 							 .AddScoped<ICertificationService, CertificationService>()
 							 .AddScoped<IOrganizationService, OrganizationService>()
 							 .AddScoped<ICertificateService, CertificateService>()
@@ -33,9 +35,8 @@ namespace Spotcheckr.API.UnitTests
 							 .AddAutoMapper(typeof(Startup).Assembly)
 							 .AddDbContext<SpotcheckrCoreContext>(options =>
 																  options.UseInMemoryDatabase("Spotcheckr-Core")
-																		 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
 																		 .EnableSensitiveDataLogging());
-			ServiceProvider = serviceCollection.BuildServiceProvider();
+			ServiceProvider = ServiceCollection.BuildServiceProvider();
 		}
 	}
 }

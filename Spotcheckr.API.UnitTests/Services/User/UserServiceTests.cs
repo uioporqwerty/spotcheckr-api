@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services;
-using Spotcheckr.Data;
-using Spotcheckr.Data.Repositories;
-using Spotcheckr.Domain;
+using Spotcheckr.API.Tests.Common;
+using Spotcheckr.API.Tests.Common.Fixtures;
 using Spotcheckr.Models;
 using Xunit;
 
