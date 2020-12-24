@@ -1,42 +1,32 @@
 ﻿using System;
-using AutoMapper;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using RestSharp;
-using Spotcheckr.API.Services;
-using Spotcheckr.API.Services.Validators;
 using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
-using Xunit.Abstractions;
+using Xunit;
 
 namespace Spotcheckr.API.UnitTests
 {
-	public abstract class BaseTest
+	public abstract class BaseTest : IClassFixture<ServiceFixture>, IDisposable
 	{
-		protected ServiceProvider ServiceProvider { get; }
+		protected readonly ServiceProvider ServiceProvider;
 
-		protected IUnitOfWork UnitOfWork { get; }
+		protected readonly IUnitOfWork UnitOfWork;
 
-		public BaseTest()
+		private readonly SpotcheckrCoreContext Context;
+
+		public BaseTest(ServiceFixture serviceFixture)
 		{
-			var serviceCollection = new ServiceCollection();
-			serviceCollection.AddTransient<IUserService, UserService>()
-							 .AddTransient<ICertificationService, CertificationService>()
-							 .AddTransient<IOrganizationService, OrganizationService>()
-							 .AddTransient<ICertificateService, CertificateService>()
-							 .AddScoped<IUnitOfWork, UnitOfWork>()
-							 .AddTransient<IRestClient, RestClient>()
-							 .AddSingleton<NASMCertificationValidator>()
-							 .AddAutoMapper(typeof(Startup).Assembly)
-							 .AddDbContext<SpotcheckrCoreContext>(options =>
-																  options.UseInMemoryDatabase("Spotcheckr-Core")
-																		 .EnableSensitiveDataLogging());
-			ServiceProvider = serviceCollection.BuildServiceProvider();
-			var context = ServiceProvider.GetRequiredService<SpotcheckrCoreContext>();
-			context.Database.EnsureDeleted();
-			context.Database.EnsureCreated();
-			UnitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork>();
+			ServiceProvider = serviceFixture.ServiceProvider;
+			Context = serviceFixture.ServiceProvider.GetRequiredService<SpotcheckrCoreContext>();
+			UnitOfWork = serviceFixture.ServiceProvider.GetRequiredService<IUnitOfWork>();
+		}
+
+		public void Dispose()
+		{
+			Context.ChangeTracker.Entries().ToList().ForEach(entry => entry.State = EntityState.Detached);
+			Context.Database.EnsureDeleted();
 		}
 	}
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services;
+using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
 using Spotcheckr.Models;
@@ -12,9 +15,9 @@ namespace Spotcheckr.API.UnitTests.Services
 	{
 		private readonly IUserService Service;
 
-		public UserServiceTests()
+		public UserServiceTests(ServiceFixture serviceFixture) : base(serviceFixture)
 		{
-			Service = ServiceProvider.GetRequiredService<IUserService>();
+			Service = serviceFixture.ServiceProvider.GetRequiredService<IUserService>();
 		}
 
 		[Fact]

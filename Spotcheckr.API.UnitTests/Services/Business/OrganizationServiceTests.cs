@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services;
+using Spotcheckr.Data;
 using Spotcheckr.Data.Repositories;
 using Spotcheckr.Domain;
 using Xunit;
@@ -14,7 +16,7 @@ namespace Spotcheckr.API.UnitTests.Services
 	{
 		private readonly IOrganizationService Service;
 
-		public OrganizationServiceTests()
+		public OrganizationServiceTests(ServiceFixture serviceFixture) : base(serviceFixture)
 		{
 			Service = ServiceProvider.GetRequiredService<IOrganizationService>();
 		}
@@ -52,10 +54,6 @@ namespace Spotcheckr.API.UnitTests.Services
 		[Fact]
 		public async void GetOrganization_WithInvalidId_ThrowsException()
 		{
-			var organizations = GenerateOrganizations();
-			UnitOfWork.Organizations.AddRange(organizations);
-			UnitOfWork.Complete();
-
 			await Assert.ThrowsAsync<InvalidOperationException>(async () => await Service.GetOrganizationAsync(-1));
 		}
 
