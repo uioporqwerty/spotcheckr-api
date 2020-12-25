@@ -26,14 +26,30 @@ namespace Spotcheckr.API.UnitTests.Services
 		[Fact]
 		public void CreateUser_UserTypeAthlete_CreatesAthleteUser()
 		{
-			var result = Service.CreateUser(Models.UserType.Athlete);
+			var result = Service.CreateUser(UserType.Athlete);
 			Assert.IsType<Athlete>(result);
 		}
 
 		[Fact]
 		public void CreateUser_UserTypePersonalTrainer_CreatesPersonalTrainerUser()
 		{
-			var result = Service.CreateUser(Models.UserType.PersonalTrainer);
+			var result = Service.CreateUser(UserType.PersonalTrainer);
+			Assert.IsType<PersonalTrainer>(result);
+		}
+
+		[Fact]
+		public async void GetUser_WithAthlete_ReturnsAthleteType()
+		{
+			var newUser = Service.CreateUser(UserType.Athlete);
+			var result = await Service.GetUserAsync(newUser.Id);
+			Assert.IsType<Athlete>(result);
+		}
+
+		[Fact]
+		public async void GetUser_WithPersonalTrainer_ReturnsPersonalTrainerType()
+		{
+			var newUser = Service.CreateUser(UserType.PersonalTrainer);
+			var result = await Service.GetUserAsync(newUser.Id);
 			Assert.IsType<PersonalTrainer>(result);
 		}
 	}
