@@ -12,11 +12,12 @@ namespace Spotcheckr.Data.Repositories
 
 		public SpotcheckrCoreContext SpotcheckrCoreContext => Context;
 
-		public Task<User> GetUserDetailsWithContactInformationAsync(int userID)
+		public Task<User> GetUserDetailsAsync(int userID)
 		{
 			var user = SpotcheckrCoreContext.Users.Where(user => user.Id == userID)
 												  .Include(user => user.Emails)
-												  .Include(user => user.PhoneNumbers).FirstOrDefault();
+												  .Include(user => user.PhoneNumbers)
+												  .Include(user => user.Certifications).FirstOrDefault();
 			if (user == null)
 			{
 				throw new InvalidOperationException($"User {userID} not found.");

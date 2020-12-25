@@ -25,7 +25,7 @@ namespace Spotcheckr.API.Services
 
 		public async Task<IUser> GetUserAsync(int id)
 		{
-			var user = await UnitOfWork.Users.GetUserDetailsWithContactInformationAsync(id);
+			var user = await UnitOfWork.Users.GetUserDetailsAsync(id);
 
 			return (user?.Type) switch
 			{

@@ -5,6 +5,6 @@ namespace Spotcheckr.Data.Repositories
 {
 	public interface IUserRepository : IRepository<User>
 	{
-		Task<User> GetUserDetailsWithContactInformationAsync(int userID);
+		Task<User> GetUserDetailsAsync(int userID);
 	}
 }
