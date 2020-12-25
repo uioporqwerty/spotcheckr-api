@@ -38,5 +38,12 @@ namespace Spotcheckr.API.Mutations
 			var newCertification = await certificationService.CreateCertificationAsync(input.UserId, input.CertificateId, input.CertificationNumber, input.DateAchieved);
 			return new CreateCertificationPayload(newCertification);
 		}
+
+		public async Task<DeleteCertificationPayload> DeleteCertificationAsync(DeleteCertificationInput input,
+																			   [Service] ICertificationService certificationService)
+		{
+			await certificationService.DeleteCertificationAsync(input.certificationId);
+			return new DeleteCertificationPayload(input.certificationId);
+		}
 	}
 }

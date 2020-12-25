@@ -12,5 +12,7 @@ namespace Spotcheckr.API.Services
 															int certificateId,
 															string certificationNumber,
 															DateTime? dateAchieved);
+
+		public Task<int> DeleteCertificationAsync(int certificateId);
 	}
 }

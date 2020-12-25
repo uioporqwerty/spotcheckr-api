@@ -19,17 +19,39 @@ namespace Spotcheckr.API.UnitTests.Services
 		[Fact]
 		public async void CreateCertification_ForUser_ReturnsNewCertification()
 		{
-			var user = new Domain.User
-			{
-				Type = Domain.UserType.PersonalTrainer
-			};
+			var user = GetPersonalTrainer;
+			var certificate = GetCertificate;
 			UnitOfWork.Users.Add(user);
-			var certificate = new Domain.Certificate(code: "NASM-CPT", description: "CPT Certificate");
 			UnitOfWork.Certificates.Add(certificate);
 			UnitOfWork.Complete();
 			var certificationNumber = "12345";
 			var newCertification = await Service.CreateCertificationAsync(user.Id, certificate.Id, certificationNumber, dateAchieved: new DateTime(1990, 3, 17));
 			Assert.Equal(newCertification.Number, certificationNumber);
 		}
+
+		[Fact]
+		public async void DeleteCertification_ForUser_RemovesCertification()
+		{
+			var user = GetPersonalTrainer;
+			var certificate = GetCertificate;
+			UnitOfWork.Users.Add(user);
+			UnitOfWork.Certificates.Add(certificate);
+			var certification = new Domain.Certification
+			{
+				UserId = user.Id,
+				CertificateId = certificate.Id
+			};
+			UnitOfWork.Certifications.Add(certification);
+			UnitOfWork.Complete();
+			await Service.DeleteCertificationAsync(certification.Id);
+			await Assert.ThrowsAsync<InvalidOperationException>(async () => await UnitOfWork.Certifications.GetAsync(certification.Id));
+		}
+
+		private Domain.User GetPersonalTrainer => new Domain.User
+		{
+			Type = Domain.UserType.PersonalTrainer
+		};
+
+		private Domain.Certificate GetCertificate => new Domain.Certificate(code: "NASM-CPT", description: "CPT Certificate");
 	}
 }

@@ -71,5 +71,13 @@ namespace Spotcheckr.API.Services
 
 			return certificationDetails.Verified;
 		}
+
+		public async Task<int> DeleteCertificationAsync(int certificationId)
+		{
+			var certification = await UnitOfWork.Certifications.GetAsync(certificationId);
+			UnitOfWork.Certifications.Remove(certification);
+			UnitOfWork.Complete();
+			return certificationId;
+		}
 	}
 }
