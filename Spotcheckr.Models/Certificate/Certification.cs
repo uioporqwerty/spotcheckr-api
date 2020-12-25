@@ -33,7 +33,5 @@ namespace Spotcheckr.Models
 		public DateTime DateAchieved { get; set; }
 
 		public Certificate Certificate { get; set; }
-
-		public IUser User { get; set; }
 	}
 }

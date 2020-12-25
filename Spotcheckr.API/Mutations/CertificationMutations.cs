@@ -35,7 +35,8 @@ namespace Spotcheckr.API.Mutations
 		public async Task<CreateCertificationPayload> CreateCertificationAsync(CreateCertificationInput input,
 																			   [Service] ICertificationService certificationService)
 		{
-			return new CreateCertificationPayload(new Certification());
+			var newCertification = await certificationService.CreateCertificationAsync(input.UserId, input.CertificateId, input.CertificationNumber, input.DateAchieved);
+			return new CreateCertificationPayload(newCertification);
 		}
 	}
 }

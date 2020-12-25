@@ -4,7 +4,7 @@ using HotChocolate.Types.Relay;
 namespace Spotcheckr.API.Mutations.Input
 {
 	public record CreateCertificationInput([ID] int UserId,
-										   [ID]
+										   [ID] int CertificateId,
 										   string CertificationNumber,
 										   DateTime? DateAchieved
 										   );

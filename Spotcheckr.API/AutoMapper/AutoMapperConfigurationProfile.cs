@@ -13,6 +13,7 @@ namespace Spotcheckr.API.AutoMapper
 			CreateMap<UpdateUserContactInformationInput, ContactInformation>();
 			CreateMap<Domain.Organization, Organization>();
 			CreateMap<Domain.Certificate, Certificate>();
+			CreateMap<Domain.Certification, Certification>();
 			CreateMap<Domain.User, Athlete>();
 			CreateMap<Domain.User, PersonalTrainer>();
 			CreateMap<Domain.UserType, UserType>();

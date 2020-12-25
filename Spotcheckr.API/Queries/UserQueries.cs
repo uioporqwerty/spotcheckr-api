@@ -16,6 +16,6 @@ namespace Spotcheckr.API.Queries
 		/// <param name="id"></param>
 		/// <param name="userService"></param>
 		/// <returns></returns>
-		public async Task<IUser> GetUserAsync(/*[ID]*/ int id, [Service] IUserService userService) => await userService.GetUserAsync(id);
+		public async Task<IUser> GetUserAsync([ID] int id, [Service] IUserService userService) => await userService.GetUserAsync(id);
 	}
 }

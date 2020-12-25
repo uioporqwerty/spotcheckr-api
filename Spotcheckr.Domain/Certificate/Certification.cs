@@ -12,7 +12,7 @@ namespace Spotcheckr.Domain
 
 		public DateTime? DateVerified { get; set; }
 
-		public DateTime DateAchieved { get; set; }
+		public DateTime? DateAchieved { get; set; }
 
 		public int CertificateId { get; set; }
 
