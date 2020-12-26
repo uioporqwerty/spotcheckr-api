@@ -79,5 +79,18 @@ namespace Spotcheckr.API.Services
 			UnitOfWork.Complete();
 			return certificationId;
 		}
+
+		public async Task<Certification> UpdateCertificationAsync(int certificationId,
+															int certificateId,
+															string certificationNumber,
+															DateTime? dateAchieved)
+		{
+			var certification = await UnitOfWork.Certifications.GetAsync(certificateId);
+			certification.Number = certificationNumber;
+			certification.DateAchieved = dateAchieved;
+			certification.CertificateId = certificateId;
+			UnitOfWork.Complete();
+			return Mapper.Map<Certification>(certification);
+		}
 	}
 }

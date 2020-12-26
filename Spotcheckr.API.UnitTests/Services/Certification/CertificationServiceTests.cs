@@ -47,6 +47,32 @@ namespace Spotcheckr.API.UnitTests.Services
 			await Assert.ThrowsAsync<InvalidOperationException>(async () => await UnitOfWork.Certifications.GetAsync(certification.Id));
 		}
 
+		[Fact]
+		public async void UpdateCertification_ForUser_UpdatesCertification()
+		{
+			var user = GetPersonalTrainer;
+			var certificate = GetCertificate;
+			UnitOfWork.Users.Add(user);
+			UnitOfWork.Certificates.Add(certificate);
+			var certification = new Domain.Certification
+			{
+				UserId = user.Id,
+				CertificateId = certificate.Id,
+				Number = "12345",
+				DateAchieved = new DateTime(1990, 03, 17)
+			};
+			UnitOfWork.Certifications.Add(certification);
+			UnitOfWork.Complete();
+			var updatedNumber = "67890";
+			var updatedDateAchieved = new DateTime(1991, 03, 17);
+			var updatedCertification = await Service.UpdateCertificationAsync(certification.Id,
+																			  certificate.Id,
+																			  updatedNumber,
+																			  updatedDateAchieved);
+			Assert.Equal(updatedNumber, updatedCertification.Number);
+			Assert.Equal(updatedDateAchieved, updatedCertification.DateAchieved);
+		}
+
 		private Domain.User GetPersonalTrainer => new Domain.User
 		{
 			Type = Domain.UserType.PersonalTrainer
