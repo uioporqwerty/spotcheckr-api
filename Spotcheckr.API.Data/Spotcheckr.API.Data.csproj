@@ -22,6 +22,6 @@
     <Folder Include="Repositories\Certificate\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.API.Domain.csproj" />
+    <ProjectReference Include="..\Spotcheckr.API.Domain\Spotcheckr.API.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -9,9 +9,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spotcheckr.API\Spotcheckr.API.csproj" />
-    <ProjectReference Include="..\Spotcheckr.Data\Spotcheckr.Data.csproj" />
-    <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.Domain.csproj" />
-    <ProjectReference Include="..\Spotcheckr.Models\Spotcheckr.Models.csproj" />
+    <ProjectReference Include="..\Spotcheckr.API.Data\Spotcheckr.Data.csproj" />
+    <ProjectReference Include="..\Spotcheckr.API.Domain\Spotcheckr.Domain.csproj" />
+    <ProjectReference Include="..\Spotcheckr.API.Models\Spotcheckr.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.1" />
