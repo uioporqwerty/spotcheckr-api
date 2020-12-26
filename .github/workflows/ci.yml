@@ -28,7 +28,7 @@ jobs:
       run: dotnet test Spotcheckr.API.UnitTests/Spotcheckr.API.UnitTests.csproj --configuration Debug --no-restore --collect:"XPlat Code Coverage"
 
     - name: Upload code coverage results
-      run: codecov -f "Spotcheckr.API.UnitTests/TestResults/**/*.xml" -t ${{ secrets.CODECOV_TOKEN }}
+      run: dotnet codecov -f "Spotcheckr.API.UnitTests/TestResults/**/*.xml" -t ${{ secrets.CODECOV_TOKEN }}
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
