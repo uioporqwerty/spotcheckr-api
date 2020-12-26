@@ -1,4 +1,4 @@
-﻿namespace Spotcheckr.Models
+﻿namespace Spotcheckr.API.Models
 {
 	/// <summary>
 	/// An organization is a fitness service provider that issues certifications.

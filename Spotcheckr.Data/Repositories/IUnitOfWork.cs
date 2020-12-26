@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spotcheckr.Data.Repositories
+namespace Spotcheckr.API.Data.Repositories
 {
 	public interface IUnitOfWork : IDisposable
 	{

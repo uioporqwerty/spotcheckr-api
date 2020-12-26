@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.Data.Repositories
+namespace Spotcheckr.API.Data.Repositories
 {
 	public class CertificationRepository : Repository<Certification>, ICertificationRepository
 	{

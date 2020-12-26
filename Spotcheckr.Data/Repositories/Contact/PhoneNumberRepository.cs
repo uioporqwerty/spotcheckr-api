@@ -2,7 +2,7 @@
 using System.Linq;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.Data.Repositories
+namespace Spotcheckr.API.Data.Repositories
 {
 	public class PhoneNumberRepository : Repository<PhoneNumber>, IPhoneNumberRepository
 	{

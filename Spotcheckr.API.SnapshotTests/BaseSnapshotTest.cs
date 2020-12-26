@@ -6,7 +6,7 @@ using Spotcheckr.API.Queries;
 using Spotcheckr.API.Tests.Common;
 using Spotcheckr.API.Tests.Common.Fixtures;
 using Spotcheckr.API.Types;
-using Spotcheckr.Models;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.SnapshotTests
 {

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Spotcheckr.API.Services.Validators;
-using Spotcheckr.Data.Repositories;
-using Spotcheckr.Models;
+using Spotcheckr.API.Data.Repositories;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.Services
 {

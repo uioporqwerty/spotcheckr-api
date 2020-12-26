@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Spotcheckr.API.Mutations.Inputs;
-using Spotcheckr.Models;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.AutoMapper
 {

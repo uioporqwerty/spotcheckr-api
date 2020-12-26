@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spotcheckr.Models
+namespace Spotcheckr.API.Models
 {
 	public interface IUser
 	{

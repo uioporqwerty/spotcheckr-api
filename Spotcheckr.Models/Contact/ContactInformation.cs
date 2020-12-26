@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Spotcheckr.Models
+namespace Spotcheckr.API.Models
 {
 	/// <summary>
 	/// Contact information details for the user.

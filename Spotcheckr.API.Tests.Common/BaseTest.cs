@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Tests.Common;
 using Spotcheckr.API.Tests.Common.Fixtures;
-using Spotcheckr.Data;
-using Spotcheckr.Data.Repositories;
+using Spotcheckr.API.Data;
+using Spotcheckr.API.Data.Repositories;
 using Xunit;
 
 namespace Spotcheckr.API.Tests.Common

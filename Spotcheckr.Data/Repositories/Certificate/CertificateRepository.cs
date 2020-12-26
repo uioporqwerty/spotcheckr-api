@@ -1,6 +1,6 @@
 ﻿using Spotcheckr.Domain;
 
-namespace Spotcheckr.Data.Repositories
+namespace Spotcheckr.API.Data.Repositories
 {
 	public class CertificateRepository : Repository<Certificate>, ICertificateRepository
 	{

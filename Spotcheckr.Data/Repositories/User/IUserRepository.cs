@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.Data.Repositories
+namespace Spotcheckr.API.Data.Repositories
 {
 	public interface IUserRepository : IRepository<User>
 	{

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Spotcheckr.Data.Repositories;
-using Spotcheckr.Models;
+using Spotcheckr.API.Data.Repositories;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.Services
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.Data
+namespace Spotcheckr.API.Data
 {
 	public sealed class SpotcheckrCoreContext : DbContext
 	{

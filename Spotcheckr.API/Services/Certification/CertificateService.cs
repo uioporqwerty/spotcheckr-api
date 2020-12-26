@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Spotcheckr.Data.Repositories;
-using Spotcheckr.Models;
+using Spotcheckr.API.Data.Repositories;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.Services
 {

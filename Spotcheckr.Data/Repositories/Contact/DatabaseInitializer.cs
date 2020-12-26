@@ -4,7 +4,7 @@ using System.Linq;
 using Bogus;
 using Spotcheckr.Domain;
 
-namespace Spotcheckr.Data
+namespace Spotcheckr.API.Data
 {
 	public static class DatabaseInitializer
 	{

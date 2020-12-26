@@ -5,7 +5,7 @@ using Spotcheckr.API.Mutations.Input;
 using Spotcheckr.API.Mutations.Inputs;
 using Spotcheckr.API.Mutations.Payloads;
 using Spotcheckr.API.Services;
-using Spotcheckr.Models;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.Mutations
 {

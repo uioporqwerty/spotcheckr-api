@@ -1,4 +1,4 @@
-﻿namespace Spotcheckr.Models
+﻿namespace Spotcheckr.API.Models
 {
 	public enum UserType
 	{

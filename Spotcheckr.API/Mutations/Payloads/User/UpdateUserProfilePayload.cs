@@ -1,4 +1,4 @@
-﻿using Spotcheckr.Models;
+﻿using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.Mutations.Payloads
 {

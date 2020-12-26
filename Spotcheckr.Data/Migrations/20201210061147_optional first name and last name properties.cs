@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Spotcheckr.Data.Migrations
+namespace Spotcheckr.API.Data.Migrations
 {
     public partial class optionalfirstnameandlastnameproperties : Migration
     {

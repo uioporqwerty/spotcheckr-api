@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Spotcheckr.Data;
+using Spotcheckr.API.Data;
 
-namespace Spotcheckr.Data.Migrations
+namespace Spotcheckr.API.Data.Migrations
 {
     [DbContext(typeof(SpotcheckrCoreContext))]
     partial class SpotcheckrCoreContextModelSnapshot : ModelSnapshot

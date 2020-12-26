@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Spotcheckr.Models
+namespace Spotcheckr.API.Models
 {
 	/// <summary>
 	/// Personal trainer type of user with details specific to a personal trainer.

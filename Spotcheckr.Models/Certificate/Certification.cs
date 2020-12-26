@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spotcheckr.Models
+namespace Spotcheckr.API.Models
 {
 	/// <summary>
 	/// A certification is issued by a fitness training provider to qualified recipients.

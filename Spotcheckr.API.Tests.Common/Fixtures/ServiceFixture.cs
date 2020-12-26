@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using RestSharp;
 using Spotcheckr.API.Services;
 using Spotcheckr.API.Services.Validators;
-using Spotcheckr.Data;
-using Spotcheckr.Data.Repositories;
+using Spotcheckr.API.Data;
+using Spotcheckr.API.Data.Repositories;
 
 namespace Spotcheckr.API.Tests.Common.Fixtures
 {

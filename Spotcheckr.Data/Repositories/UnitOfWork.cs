@@ -1,4 +1,4 @@
-﻿namespace Spotcheckr.Data.Repositories
+﻿namespace Spotcheckr.API.Data.Repositories
 {
 	public class UnitOfWork : IUnitOfWork
 	{

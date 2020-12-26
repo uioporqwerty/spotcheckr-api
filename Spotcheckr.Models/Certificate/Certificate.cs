@@ -1,4 +1,4 @@
-﻿namespace Spotcheckr.Models
+﻿namespace Spotcheckr.API.Models
 {
 	/// <summary>
 	/// Fitness service provider specific certificates issued to personal trainers.

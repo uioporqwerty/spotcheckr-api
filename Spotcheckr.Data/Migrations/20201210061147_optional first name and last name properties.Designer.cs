@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Spotcheckr.Data;
+using Spotcheckr.API.Data;
 
-namespace Spotcheckr.Data.Migrations
+namespace Spotcheckr.API.Data.Migrations
 {
     [DbContext(typeof(SpotcheckrCoreContext))]
     [Migration("20201210061147_optional first name and last name properties")]

@@ -1,6 +1,6 @@
 ﻿using System;
 using HotChocolate.Types.Relay;
-using Spotcheckr.Models;
+using Spotcheckr.API.Models;
 
 namespace Spotcheckr.API.Mutations.Inputs
 {

@@ -14,11 +14,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spotcheckr.API.UnitTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spotcheckr.Domain", "Spotcheckr.Domain\Spotcheckr.Domain.csproj", "{E7697F87-0C56-4799-899C-FF03ECE33DA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spotcheckr.Data", "Spotcheckr.Data\Spotcheckr.Data.csproj", "{8BA97C5C-E30C-45E0-BD66-27217C810F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spotcheckr.API.Data", "Spotcheckr.Data\Spotcheckr.API.Data.csproj", "{8BA97C5C-E30C-45E0-BD66-27217C810F3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotcheckr.API.IntegrationTests", "Spotcheckr.API.IntegrationTests\Spotcheckr.API.IntegrationTests.csproj", "{253107A6-C526-47D4-834E-9BFB3FFA7176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotcheckr.Models", "Spotcheckr.Models\Spotcheckr.Models.csproj", "{016917A6-AB3F-46FE-91D1-CCEE60F5932C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotcheckr.API.Models", "Spotcheckr.Models\Spotcheckr.API.Models.csproj", "{016917A6-AB3F-46FE-91D1-CCEE60F5932C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotcheckr.API.Tests.Common", "Spotcheckr.API.Tests.Common\Spotcheckr.API.Tests.Common.csproj", "{74DE7EF3-6FD6-4F0F-879D-45A5BAB9449D}"
 EndProject
