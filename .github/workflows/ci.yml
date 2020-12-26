@@ -1,4 +1,4 @@
-name: .NET Core
+name: CD/CD
 
 on: push
 env:
@@ -6,7 +6,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: './dist/spotcheckr-api'
 
 jobs:
-  build:
+  test_build_deploy:
 
     runs-on: ubuntu-latest
 
