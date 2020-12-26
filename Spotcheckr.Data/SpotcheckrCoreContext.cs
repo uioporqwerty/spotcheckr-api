@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Spotcheckr.Domain;
+using Spotcheckr.API.Domain;
 
 namespace Spotcheckr.API.Data
 {

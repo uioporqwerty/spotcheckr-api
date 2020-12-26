@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Spotcheckr.Domain
+namespace Spotcheckr.API.Domain
 {
 	public class PhoneNumber : IEntityTracking
 	{

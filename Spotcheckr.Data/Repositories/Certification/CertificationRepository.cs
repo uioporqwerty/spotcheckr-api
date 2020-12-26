@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Spotcheckr.Domain;
+using Spotcheckr.API.Domain;
 
 namespace Spotcheckr.API.Data.Repositories
 {

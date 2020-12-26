@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Spotcheckr.API.Services;
 using Spotcheckr.API.Tests.Common;
 using Spotcheckr.API.Tests.Common.Fixtures;
-using Spotcheckr.Domain;
+using Spotcheckr.API.Domain;
 using Xunit;
 
 namespace Spotcheckr.API.UnitTests.Services

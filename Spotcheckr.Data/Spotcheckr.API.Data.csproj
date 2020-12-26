@@ -17,13 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Repositories\Contact\" />
     <Folder Include="Repositories\Certification\" />
     <Folder Include="Repositories\Organization\" />
     <Folder Include="Repositories\Certificate\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.API.Domain.csproj" />
   </ItemGroup>
 </Project>

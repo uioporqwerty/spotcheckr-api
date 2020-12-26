@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Spotcheckr.Domain
+namespace Spotcheckr.API.Domain
 {
 	public class User : IEntityTracking
 	{

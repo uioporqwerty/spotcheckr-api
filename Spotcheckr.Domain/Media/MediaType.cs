@@ -1,4 +1,4 @@
-﻿namespace Spotcheckr.Domain
+﻿namespace Spotcheckr.API.Domain
 {
 	public enum MediaType
 	{

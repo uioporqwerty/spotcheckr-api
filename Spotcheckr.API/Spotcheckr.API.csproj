@@ -33,11 +33,13 @@
         <PackageReference Include="HtmlAgilityPack" Version="1.11.29" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.Domain.csproj" />
         <ProjectReference Include="..\Spotcheckr.Models\Spotcheckr.API.Models.csproj">
           <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
         </ProjectReference>
         <ProjectReference Include="..\Spotcheckr.Data\Spotcheckr.API.Data.csproj">
+          <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+        </ProjectReference>
+        <ProjectReference Include="..\Spotcheckr.Domain\Spotcheckr.API.Domain.csproj">
           <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
         </ProjectReference>
     </ItemGroup>

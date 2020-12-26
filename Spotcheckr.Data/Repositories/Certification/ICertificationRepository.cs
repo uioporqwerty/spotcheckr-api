@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Spotcheckr.Domain;
+using Spotcheckr.API.Domain;
 
 namespace Spotcheckr.API.Data.Repositories
 {

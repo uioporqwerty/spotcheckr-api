@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Spotcheckr.API.Data.Repositories;
 using Spotcheckr.API.Models;
-using DomainUserType = Spotcheckr.Domain.UserType;
-using DomainEmail = Spotcheckr.Domain.Email;
-using DomainPhoneNumber = Spotcheckr.Domain.PhoneNumber;
 
 namespace Spotcheckr.API.Services
 {
@@ -29,15 +26,15 @@ namespace Spotcheckr.API.Services
 
 			return (user?.Type) switch
 			{
-				DomainUserType.PersonalTrainer => Mapper.Map<PersonalTrainer>(user),
-				DomainUserType.Athlete => Mapper.Map<Athlete>(user),
+				Domain.UserType.PersonalTrainer => Mapper.Map<PersonalTrainer>(user),
+				Domain.UserType.Athlete => Mapper.Map<Athlete>(user),
 				_ => throw new Exception("Invalid user type."),
 			};
 		}
 
 		public IUser CreateUser(UserType userType)
 		{
-			var user = new Domain.User { Type = userType == UserType.Athlete ? DomainUserType.Athlete : DomainUserType.PersonalTrainer };
+			var user = new Domain.User { Type = userType == UserType.Athlete ? Domain.UserType.Athlete : Domain.UserType.PersonalTrainer };
 			UnitOfWork.Users.Add(user);
 			UnitOfWork.Complete();
 
@@ -92,9 +89,9 @@ namespace Spotcheckr.API.Services
 			return GetUserAsync(userId);
 		}
 
-		private static void UpdateEmailAddresses(ContactInformation updatedContactInformation, IEnumerable<DomainEmail> existingEmailAddresses)
+		private static void UpdateEmailAddresses(ContactInformation updatedContactInformation, IEnumerable<Domain.Email> existingEmailAddresses)
 		{
-			var updatedEmailAddresses = new HashSet<DomainEmail>(updatedContactInformation.EmailAddresses.Select(email => new DomainEmail { Id = email.Id, Address = email.Address }) ?? Enumerable.Empty<DomainEmail>());
+			var updatedEmailAddresses = new HashSet<Domain.Email>(updatedContactInformation.EmailAddresses.Select(email => new Domain.Email { Id = email.Id, Address = email.Address }) ?? Enumerable.Empty<Domain.Email>());
 			foreach (var existingEmail in existingEmailAddresses)
 			{
 				if (updatedEmailAddresses.Contains(existingEmail))
@@ -104,14 +101,14 @@ namespace Spotcheckr.API.Services
 			}
 		}
 
-		private static void UpdatePhoneNumbers(ContactInformation updatedContactInformation, IEnumerable<DomainPhoneNumber> existingPhoneNumbers)
+		private static void UpdatePhoneNumbers(ContactInformation updatedContactInformation, IEnumerable<Domain.PhoneNumber> existingPhoneNumbers)
 		{
-			var updatedPhoneNumbers = new HashSet<DomainPhoneNumber>(updatedContactInformation.PhoneNumbers.Select(phoneNumber => new DomainPhoneNumber
+			var updatedPhoneNumbers = new HashSet<Domain.PhoneNumber>(updatedContactInformation.PhoneNumbers.Select(phoneNumber => new Domain.PhoneNumber
 			{
 				Id = phoneNumber.Id,
 				Number = phoneNumber.Number,
 				Extension = phoneNumber.Extension
-			}) ?? Enumerable.Empty<DomainPhoneNumber>());
+			}) ?? Enumerable.Empty<Domain.PhoneNumber>());
 			foreach (var existingPhoneNumber in existingPhoneNumbers)
 			{
 				if (updatedPhoneNumbers.Contains(existingPhoneNumber))

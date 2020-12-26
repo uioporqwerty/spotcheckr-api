@@ -3,7 +3,7 @@ using HotChocolate;
 using HotChocolate.Execution;
 using Snapshooter.Xunit;
 using Spotcheckr.API.Tests.Common.Fixtures;
-using Spotcheckr.Domain;
+using Spotcheckr.API.Domain;
 using Xunit;
 
 namespace Spotcheckr.API.SnapshotTests
