@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Spotcheckr.API.Tests.Common
 {
-	public abstract class BaseTest : IClassFixture<ServiceFixture>, IDisposable
+	public abstract class BaseTest : IDisposable
 	{
 		protected readonly ServiceProvider ServiceProvider;
 

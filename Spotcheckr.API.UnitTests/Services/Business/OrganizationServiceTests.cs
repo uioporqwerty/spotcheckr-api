@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Spotcheckr.API.UnitTests.Services
 {
+	[Collection("Service collection")]
 	public class OrganizationServiceTests : BaseTest
 	{
 		private readonly IOrganizationService Service;

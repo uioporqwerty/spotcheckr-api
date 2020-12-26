@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Spotcheckr.API.UnitTests.Services
 {
+	[Collection("Service collection")]
 	public class UserServiceTests : BaseTest
 	{
 		private readonly IUserService Service;
