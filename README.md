@@ -1,5 +1,6 @@
 # Spotcheckr API
 [![codecov](https://codecov.io/gh/uioporqwerty/spotcheckr-api/branch/develop/graph/badge.svg?token=Q2J254YS0G)](https://codecov.io/gh/uioporqwerty/spotcheckr-api)
+
 Repository for the Spotcheckr GraphQL API.
 
 ## Getting Started
