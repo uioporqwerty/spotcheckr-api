@@ -13,10 +13,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup .NET Core
+    - name: Setup .NET Core 5.x
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100
+
+    - name: Setup .NET Core 3.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.x
 
     - name: Install dependencies
       run: dotnet restore
@@ -28,7 +33,7 @@ jobs:
       run: dotnet test Spotcheckr.API.UnitTests/Spotcheckr.API.UnitTests.csproj --configuration Debug --no-restore --collect:"XPlat Code Coverage"
 
     - name: Upload code coverage results
-      run: dotnet codecov -f "**/Spotcheckr.API.UnitTests/TestResults/**/*.xml" -t ${{ secrets.CODECOV_TOKEN }}
+      run: dotnet codecov -f "Spotcheckr.API.UnitTests/TestResults/**/*.xml" -t ${{ secrets.CODECOV_TOKEN }}
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
