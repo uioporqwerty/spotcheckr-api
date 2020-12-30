@@ -11,5 +11,6 @@
     <Folder Include="Contact\" />
     <Folder Include="Business\" />
     <Folder Include="Certificate\" />
+    <Folder Include="Post\" />
   </ItemGroup>
 </Project>
