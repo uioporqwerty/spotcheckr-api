@@ -16,6 +16,8 @@ namespace Spotcheckr.API.AutoMapper
 			CreateMap<Domain.Certification, Certification>();
 			CreateMap<Domain.User, Athlete>();
 			CreateMap<Domain.User, PersonalTrainer>();
+			CreateMap<Domain.User, IUser>().IncludeAllDerived();
+			CreateMap<Domain.ExercisePost, ExercisePost>();
 			CreateMap<Domain.UserType, UserType>();
 		}
 	}

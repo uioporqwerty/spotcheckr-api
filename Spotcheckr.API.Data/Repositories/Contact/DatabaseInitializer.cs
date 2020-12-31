@@ -62,7 +62,7 @@ namespace Spotcheckr.API.Data
 		{
 			var metrics = new Faker<PostMetrics>()
 				.RuleFor(field => field.User, fake => fake.PickRandom(_context.Users.ToList()))
-				.RuleFor(field => field.Vote, fake => fake.PickRandom(VoteType.Up, VoteType.Down, VoteType.Neutral));
+				.RuleFor(field => field.Vote, fake => fake.PickRandom(VoteType.Up, VoteType.Neutral));
 
 			if (isExercisePost)
 			{

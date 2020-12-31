@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Spotcheckr.API.Models
 {
@@ -32,15 +31,5 @@ namespace Spotcheckr.API.Models
 		/// Date exercise post created.
 		/// </summary>
 		public DateTime CreatedDate { get; set; }
-
-		/// <summary>
-		/// User that created the exercise post.
-		/// </summary>
-		public IUser CreatedBy { get; set; }
-
-		/// <summary>
-		/// Comments related to the exercise post.
-		/// </summary>
-		public IEnumerable<Comment> Comments { get; set; }
 	}
 }

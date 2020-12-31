@@ -60,5 +60,7 @@
         <Folder Include="Mutations\Inputs\Certification\" />
         <Folder Include="Types\Business\" />
         <Folder Include="Services\Business\" />
+        <Folder Include="Services\Post\" />
+        <Folder Include="Types\Post\" />
     </ItemGroup>
 </Project>

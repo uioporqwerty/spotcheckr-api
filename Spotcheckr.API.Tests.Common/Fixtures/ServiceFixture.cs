@@ -22,6 +22,7 @@ namespace Spotcheckr.API.Tests.Common.Fixtures
 							 .AddScoped<ICertificationService, CertificationService>()
 							 .AddScoped<IOrganizationService, OrganizationService>()
 							 .AddScoped<ICertificateService, CertificateService>()
+							 .AddScoped<IExercisePostService, ExercisePostService>()
 							 .AddScoped<IUnitOfWork, UnitOfWork>()
 							 .AddScoped<IUserRepository, UserRepository>()
 							 .AddScoped<IExercisePostRepository, ExercisePostRepository>()

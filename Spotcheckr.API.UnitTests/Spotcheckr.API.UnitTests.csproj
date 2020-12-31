@@ -22,5 +22,6 @@
       <Folder Include="Services\Business\" />
       <Folder Include="Services\User\" />
       <Folder Include="Services\Certification\" />
+      <Folder Include="Services\Post\" />
     </ItemGroup>
 </Project>

@@ -54,6 +54,7 @@ namespace Spotcheckr.API
 			.AddScoped<ICertificationService, CertificationService>()
 			.AddScoped<IOrganizationService, OrganizationService>()
 			.AddScoped<ICertificateService, CertificateService>()
+			.AddScoped<IExercisePostService, ExercisePostService>()
 			.AddScoped<IUnitOfWork, UnitOfWork>()
 			.AddScoped<IUserRepository, UserRepository>()
 			.AddScoped<IExercisePostRepository, ExercisePostRepository>()
@@ -80,6 +81,7 @@ namespace Spotcheckr.API
 						.AddType<UserQueries>()
 						.AddType<CertificateQueries>()
 						.AddType<OrganizationQueries>()
+						.AddType<ExercisePostQueries>()
 					 .AddMutationType(d => d.Name("Mutation"))
 						.AddType<UserMutations>()
 						.AddType<CertificationMutations>()
@@ -93,6 +95,7 @@ namespace Spotcheckr.API
 					 .AddType<CertificateInputType>()
 					 .AddType<CertificationType>()
 					 .AddType<OrganizationType>()
+					 .AddType<ExercisePostType>()
 					 .AddEnumType<UserType>()
 					 .EnableRelaySupport();
 	}
