@@ -15,6 +15,7 @@ using Spotcheckr.API.Data.Repositories;
 using Spotcheckr.API.Types;
 using RestSharp;
 using Spotcheckr.API.Services.Validators;
+using HotChocolate.Execution.Options;
 
 namespace Spotcheckr.API
 {
@@ -24,6 +25,8 @@ namespace Spotcheckr.API
 
 		private static bool _sensitiveDataLoggingEnabled;
 
+		private static bool _apolloTracingEnabled;
+
 		public IConfiguration Configuration { get; }
 
 		public Startup(IConfiguration configuration)
@@ -31,6 +34,9 @@ namespace Spotcheckr.API
 			Configuration = configuration;
 			_sensitiveDataLoggingEnabled =
 				bool.Parse(Configuration.GetSection("EntityFramework")["SensitiveDataLoggingEnabled"]);
+			_apolloTracingEnabled =
+				bool.Parse(Configuration.GetSection("GraphQL")["ApolloTracingEnabled"]);
+
 		}
 
 		public void ConfigureServices(IServiceCollection services)
@@ -77,6 +83,7 @@ namespace Spotcheckr.API
 
 		private static void ConfigureGraphQL() =>
 			_services.AddGraphQLServer()
+					 .AddApolloTracing(tracingPreference: _apolloTracingEnabled ? TracingPreference.Always : TracingPreference.Never)
 					 .AddQueryType(d => d.Name("Query"))
 						.AddType<UserQueries>()
 						.AddType<CertificateQueries>()
