@@ -32,6 +32,9 @@ namespace Spotcheckr.API.Models
 		/// </summary>
 		public DateTime DateAchieved { get; set; }
 
+		/// <summary>
+		/// Certificate this certification applies towards.
+		/// </summary>
 		public Certificate Certificate { get; set; }
 	}
 }
